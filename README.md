@@ -19,3 +19,8 @@
     ~~~
     php vendor/phpunit/phpunit/phpunit --testdox
     ~~~
+ git add .
+
+ git commit -m "style2"
+
+git push

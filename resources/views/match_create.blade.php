@@ -1,53 +1,41 @@
 @extends('base')
 
-@section('title', 'Création d\'un match')
+@section('title', 'entrer un hôtel')
 
 @section('content')
-<form   method="POST" action="{{route('matches.store')}}">
-  @if ($errors->any())
-    <div class="alert alert-warning">
-      Le match n'a pas pu être ajouté &#9785;
-    </div>
-  @endif
-  
-  <div class="form-group">
-    <label for="team0">Équipe à domicile</label>
-    <select class="form-control" id="team0" name="team0">
-      @foreach ($teams as $team)
-      <option value="{{ $team['id'] }}">{{ $team['name'] }}</option>
-      @endforeach
-    </select>
+<script src="{{assert('js/script.js')}}"></script>
+	<div class="partietotal">
+	<div class="partie1">
+	<h1> entrer un hôtel</h1>
+
+  <form action="/action_page.php">
+    
+    <label for="myfile">Sélectionner un logo:</label>
+    <input class="logo" type="file" name="applicant.fileUpload" id="logo hotel" tabindex="0" accept=".png,.JFIF,.pdf"><br><br>
+
+    <input class="chain" type="text" id="fname" name="fname" placeholder="nom d'hôtel"><br><br>
+   
+    <input class="chain" type="text" id="adresse" name="adress" placeholder="adresse de l'hôtel"><br><br>
+    
+    <input type="number" id="codepostal" name="codepostal" placeholder="code postal">
+    
+    <input type="text" id="adresse" name="ville" placeholder="Ville de l'hôtel"><br><br>
+
+    <input class="chain" type="tel" id="telephone" name="telephone" placeholder="numéro de téléphone"><br><br>
+
+
+    <input class="chain" type="email" id="email" name="mail" placeholder="l'email de l'hôtel"><br><br>
+    
+    <input class="chain" type="password" id="pass" name="mote de pass" placeholder="mote de pass"><br><br>
+    <button type="submit" value="Submit">Submit</button><br><br>
+
+
+
+  </form>
   </div>
-  <div class="form-group">
-    <label for="team1">Équipe à l'extérieur</label>
-    <select class="form-control" id="team0" name="team0" >
-      @foreach ($teams as $team)
-      <option value="{{ $team['id'] }}">{{ $team['name'] }}</option>
-      @endforeach
-    </select>
+  <div class="chambredispo">
+    <input id="addchambre" type="button" onclick="addchambrehotel()" value="chambre +"> 
+    
   </div>
-  <div class="form-group">
-    <label for="date">Date</label>
-    <input type="date" class="form-control" id="date" name="date" aria-describedby="team_name_feedback" 
-        class="form-control @error('date') is-invalid @enderror" value="{{ old('team_name') }}">
   </div>
-  <div class="form-group">
-    <label for="time">Heure</label>
-    <input type="time" class="form-control" id="time" name="time" value="{{ old('team_name') }}">
-  </div>
-  <div class="form-group">
-    <label for="score0">Nombre de buts de l'équipe à domicile</label>
-    <input type="number" class="form-control" id="score0" name="score0" min="0" value="{{ old('team_name') }}">
-  </div>
-  <div class="form-group">
-    <label for="score1">Nombre de buts de l'équipe à l'extérieur</label>
-    <input type="number" class="form-control" id="score1" name="score1" min="0" value="{{ old('team_name') }}">
-      @error('date')
-        <div id="date_feedback" class="invalid-feedback">
-          {{ $errors }}
-        </div>
-      @enderror
-  </div>
-  <button type="submit" class="btn btn-primary">Soumettre</button>
-</form>
 @endsection

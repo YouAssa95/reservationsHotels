@@ -1,4 +1,7 @@
 @extends('base')
+@section('head')
+<link href="{{assert('css/style1.css')}}" rel="stylesheet" type="text/css" />
+@endsection
 
 @section('title')
     Classement

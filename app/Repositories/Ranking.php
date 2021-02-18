@@ -4,27 +4,7 @@
 namespace App\Repositories;
 class Ranking 
 { 
-    function goalDifference(int $goalFor, int $goalAgainst): int 
-    {
-       return $goalFor - $goalAgainst;
-    }
-
-    function points(int $wonMatchCount, int $drawMatchCount): int
-    {
-            return 3*$wonMatchCount+$drawMatchCount;
-    }
-
-    function teamWinsMatch(int $teamId, array $match): bool
-    {   if ($match['team0']==$teamId) {
-                return ($match['score0']>$match['score1']);
-        }
-        else if($match['team1']==$teamId) {
-                return  ($match['score1']>$match['score0']);
-        }else {
-            return 0;
-        }
-        // return ($match['team0']==$teamId) ? ($match['score0']>$match['score1']) :   ($match['score1']>$match['score0']);
-    }
+    
 
     function teamLosesMatch(int $teamId, array $match): bool
     {

@@ -6,7 +6,7 @@
 
 @section('content')
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-<script src="{{assert('js/JSentrerUnHotel.js')}}"></script>
+<script src="{{asset('js/JSentrerUnHotel.js')}}"></script>
 	<div class="partietotal">
 	<div class="partie1">
 	<h1> entrer un hôtel</h1>

@@ -1,9 +1,12 @@
 @extends('base')
-
+@section('head')
+<link rel="stylesheet" href="{{ asset('css/styleEntrerUnHotel.css') }}">
+@endsection
 @section('title', 'entrer un hôtel')
 
 @section('content')
-<script src="{{assert('js/script.js')}}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script src="{{assert('js/JSentrerUnHotel.js')}}"></script>
 	<div class="partietotal">
 	<div class="partie1">
 	<h1> entrer un hôtel</h1>

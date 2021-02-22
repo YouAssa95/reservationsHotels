@@ -24,7 +24,11 @@ class Controller extends BaseController
         
         return view('accueil');
     }
-
+    public function entrerUnHotel()
+    {
+        
+        return view('entrerUnHotel');
+    }
     
 
     public function createMatch()

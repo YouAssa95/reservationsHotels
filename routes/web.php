@@ -14,6 +14,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Controller;
 Route::get('/', [Controller::class, 'welcome']);
+Route::get('/entrerUnHotel', [Controller::class, 'entrerUnHotel']);
 Route::get('/teams/{teamId}', [Controller::class, 'showTeam'])->where('teamId', '[0-9]+')->name('teams.show');
 Route::get('/teams/create', [Controller::class, 'createTeam'])->name('teams.create');
 Route::post('/teams', [Controller::class, 'storeTeam'])->name('teams.store');

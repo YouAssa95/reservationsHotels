@@ -19,3 +19,4 @@ Route::get('/teams/create', [Controller::class, 'createTeam'])->name('teams.crea
 Route::post('/teams', [Controller::class, 'storeTeam'])->name('teams.store');
 Route::get('/matches/create', [Controller::class, 'createMatch'])->name('matches.create');
 Route::post('/matches', [Controller::class, 'storeMatch'])->name('matches.store');
+Route::post('/team', [Controller::class, 'storeMatch'])->name('team');

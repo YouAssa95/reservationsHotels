@@ -1,0 +1,45 @@
+
+.partie1{
+    background-color: gainsboro;
+    height: 500px;
+    width: 450px;
+    float: left;
+    border: 1px solid black;
+    border: 3px solid rgb(126, 128, 18);
+    
+  
+     font-size: medium;
+     
+  }
+  h1{
+    text-align: center;
+  
+  }
+  .chambredispo{
+   
+    width: 60%;
+   
+    padding: 0px 65% 100px 10% ;
+    float: right;
+   
+    }
+  
+   #addchambre{
+   margin: auto;
+    height: 20px;
+    width: 250px;
+    border: 3px solid rgb(126, 128, 18);
+    padding: 30px;
+    }
+  .partietotal{
+     display: flex;
+     flex-wrap: nowrap;
+     justify-content: space-between;
+     padding: 10px 0px 100px 10% ;  
+  
+  }
+  
+  .chain{
+    height: 20px;
+    width: 250px;
+  }

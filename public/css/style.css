@@ -1,0 +1,103 @@
+@import url('https://fonts.googleapis.com/css?family=Advent+Pro|Dancing+Script&display=swap');
+
+body {
+  font-family: 'Advent Pro', sans-serif;
+  padding: 0;
+  margin: 0;
+}
+ul {
+  margin: 0;
+  padding: 0;
+}
+li {
+  list-style-type: none;
+}
+a {
+  text-decoration: none;
+  color: black;
+}
+
+nav {
+  overflow: hidden;
+  background-color: #FFFAE1;
+  /* position: fixed; */
+  width: 100%;
+  opacity: 0.9;
+  font-size: 30px;
+}
+#logo {
+  font-family: 'Dancing Script', cursive;
+  font-weight: bold;
+  float: left;
+}
+ li {
+  float: right;
+  font-size: 1.2em;
+}
+ li a {
+  text-decoration: none;
+  display: block;
+  text-align: center;
+  padding: 18px 16px;
+}
+/* //////////////// Buttons */
+
+#buttons{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 100px 25% 50px 25% ;  
+}
+
+button {
+    font-size: 1.5em;
+    background-color: #FFFAE1;
+    border: none;
+    width: 20%;
+    padding: 15px 10px;
+    margin: 1px 0;
+    font-size: 1.2em;
+    font-family: 'Advent Pro', sans-serif;
+    border-radius: 8px;
+  }
+  button:hover {
+    background-color: #e55039;
+    color: #FFFAE1;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+  }
+
+  /* myVido */
+  #videoPub{
+    padding: 100px 20% 50px 20% ;  
+  }
+
+  /* //// Propositons */
+  
+  #propsitions {
+    /* background-color: #FFFAE1; */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 30px 10px 30px 20px ;  
+  }
+
+  .propsitionsImg img {
+    border-radius: 10px;
+    box-shadow: 5px 5px 3px 1px rgba(0,0,0,0.7);
+    width: 250px;
+    height: 250px;
+  }
+  .propsitionsImg img:hover {
+    opacity: 0.5;
+    transform: scale(1.05);
+    transition: 0.6s ease-in-out;
+
+  }
+
+  #icons {
+    /* font-family: 'Dancing Script', cursive;
+    font-weight: bold; */
+    float: left;
+  }
+  

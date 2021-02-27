@@ -15,20 +15,69 @@ class Repository
     {
         DB::unprepared(file_get_contents('database/build.sql'));
     }
-    function insertTeam(array $team): int
+    function insertClient(array $Clients): int
     {
         
-        return DB::table('teams') -> insertGetId(['id'=> $team['id'],'name' => $team['name']]);
+        return DB::table('CLIENTS') -> insertGetId(['NumClient'=> $Clients['NumClient'],'NomClient' => $Clients['NomClient'],'PrenClient' => $Clients['PrenClient'],
+                                                    'MailClient' => $Clients['MailClient'],'TelClient' => $Clients['TelClient'],'DateNaiss' => $Clients['DateNaiss']]);
        
        
     }
 
-    function insertMatch(array $match): int
+    function insertHotel(array $Hotel): int
     {
-        return DB::table('matches')-> insertGetId(['id'=>$match['id'] ,'team0' => $match['team0'],
-        'team1' => $match['team1'],'score0' => $match['score0'],'score1'=> $match['score1'],
-        'date'=> $match['date']]);
+        // GERANTS doit intégré se champ
+        return DB::table('HOTELS') -> insertGetId(['NumHotel'=> $Hotel['NumHotel'],'logoHotel' => $Hotel['logoHotel'],'NomHotel' => $Hotel['NomHotel'],
+                                                    'emailHotel' => $Hotel['emailHotel'],'AdresseHotel' => $Hotel['AdresseHotel'],'cpHotel' => $Hotel['cpHotel'],
+                                                    'villeHotel' => $Hotel['villeHotel'],'classeHotel' => $Hotel['classeHotel']]);   
     }
+
+    function insertCHAMBRES(array $Chambre): int
+    {
+        return DB::table('HOTELS') -> insertGetId(['NumChambre'=> $Chambre['NumChambre'],'NumHotel' => $Chambre['NumHotel'],'NbreLits' => $Chambre['NbreLits'],
+                                                    'Surface' => $Chambre['Surface'],'prix' => $Chambre['prix'],'cpHotel' => $Chambre['cpHotel'],'idEquipement' => $Chambre['idEquipement']]);   
+    }
+
+
+
+    function infoComptClient ($NumClient): array
+    {
+        try{
+        return DB::table('CLIENTS')
+        ->where('NumClient', $NumClient)
+        ->get()
+        ->toArray(); 
+        } catch (Exception $exception) {
+            throw new Exception('Client inconnue');
+        }
+    }
+    function infoComptHotel ($NumHotel): array
+    {
+        try{
+        return DB::table('HOTELS')
+        ->where('NumHotel', $NumHotel)
+        ->get()
+        ->toArray(); 
+
+        } catch (Exception $exception) {
+            throw new Exception('Hotel inconnue');
+        }
+    }
+
+    function reservationEnCours ($NumClient): array
+    {
+        
+        $ReservationEnCours= DB::table('RESERVATIONS')
+        ->where('NumClient', $NumClient)
+        ->where('DateDepart', '<' , date)
+        ->orderBy('DateDepart', 'asc')
+        ->get()
+        ->toArray(); 
+       // if ($ReservationEnCours != NULL){}
+        return $ReservationEnCours; 
+    }
+
+
 
     function teams(): array
     {

@@ -4,7 +4,7 @@ function addchambrehotel(){
   i++;
   $('.chambredispo').append('<div id="info'+i+'"></div>');
 
-  fermer='<button class="btn btn-danger" class="addchambre"  onclick="deleteChambreHotel('+i+')">X</button>';
+  fermer='<button class="btn btn-danger" class="addchambre"  onclick="deleteChambreHotel('+i+')">X</button><br><br>';
   imag_chambre='<input type="file" name="applicant.fileUpload" id="image_chambre" tabindex="0" accept=".png,.JFIF,.pdf"><br><br>';
 
   nb_chambre='<input type="number" id="nb_chambre" name="nb_chambre" placeholder="nombre de chambres"><br><br>';
@@ -38,8 +38,8 @@ function addchambrehotel(){
 
   $('#info'+i).css({
     background: 'gainsboro',
-    height: '250px',
-    width: '200px',
+    height: '480px',
+    width: '250px',
     border: '3px solid rgb(126, 128, 18)',
     padding: '20px',
   });

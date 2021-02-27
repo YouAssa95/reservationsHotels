@@ -30,15 +30,21 @@
     <input class="chain" type="email" id="email" name="mail" placeholder="l'email de l'hôtel"><br><br>
     
     <input class="chain" type="password" id="pass" name="mote de pass" placeholder="mote de pass"><br><br>
-    <button type="submit" value="Submit">Submit</button><br><br>
-
+    <button type="submit" value="Submit">Valider</button><br><br>
+    <button onclick="document.location='default.asp'">Retour</button><br><br>
 
 
   </form>
   </div>
   <div class="chambredispo">
-    <input id="addchambre" type="button" onclick="addchambrehotel()" value="chambre +"> 
-    
+    <span><button  class="addchambre"  onclick="addchambrehotel()">chambre 
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+      </svg>
+
+  </button></span>
+    <span></span>
   </div>
   </div>
 @endsection

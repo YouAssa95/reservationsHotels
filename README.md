@@ -23,5 +23,5 @@
     ~~~
     git commit -m "style2"
     ~~~
-    it push
+    git push
     ~~~

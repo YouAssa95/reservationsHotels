@@ -100,4 +100,14 @@ button {
     font-weight: bold; */
     float: left;
   }
+
+  input, textarea {
+    border: none;
+    width: 55%;
+    padding: 15px 10px;
+    margin: 1px 0;
+    font-size: 1.2em;
+    font-family: 'Advent Pro', sans-serif;
+    border-radius: 8px;
+  }
   

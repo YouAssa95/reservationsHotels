@@ -14,7 +14,7 @@ icons.append(facebook,twitter,insta);
 
 
 
-var item2 = $("<li/>").attr('id','AboutUs').html('<a href="#">Contact</a>');
+var item2 = $("<li/>").attr('id','AboutUs').html('<a href="/contact">Contact</a>');
 var item3 = $("<li/>").attr('id','MonCompte').html('<a href="/login">Mon compte</a>');
 
 items.append(icons,item2,item3);

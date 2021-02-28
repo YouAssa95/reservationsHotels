@@ -29,11 +29,38 @@ class Controller extends BaseController
         
         return view('entrerUnHotel');
     }
-    
-
-    public function createMatch()
+    public function trouverUnHotel()
     {
-      return view('match_create',['teams'=>$teams]);
+        
+        return view('trouverUnHotel');
+    }
+    
+    public function aboutUs()
+    {
+        return view('aboutUs');
+    }
+    public function hotels()
+    {
+      return view('hotels');
+    }
+    
+    public function showLoginForm()
+    {
+      return view('login');
+    }
+
+    public function login()
+    {
+        return redirect()->route('accueil');
+    }
+    
+    public function showContactForm()
+    {
+      return view('contact');
+    }
+    public function contact()
+    {
+        return redirect()->route('accueil');
     }
 
    

@@ -13,11 +13,23 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Controller;
-Route::get('/', [Controller::class, 'welcome']);
-Route::get('/entrerUnHotel', [Controller::class, 'entrerUnHotel']);
+Route::get('/', [Controller::class, 'welcome'])->name('accueil');
+Route::get('/entrerUnHotel', [Controller::class, 'entrerUnHotel'])->name('entrerUnHotel');
+Route::get('/trouverUnHotel', [Controller::class, 'trouverUnHotel'])->name('trouverUnHotel');
+Route::get('/aboutUs', [Controller::class, 'aboutUs'])->name('aboutUs');
+Route::get('/hotels', [Controller::class, 'hotels'])->name('hotels');
+
+Route::get('/login', [Controller::class, 'showLoginForm'])->name('login');
+Route::post('/login', [Controller::class, 'login'])->name('login.post');
+
+Route::get('/contact', [Controller::class, 'showContactForm'])->name('contact');
+Route::post('/contact', [Controller::class, 'contact'])->name('contact.post');
+
+
+/*
 Route::get('/teams/{teamId}', [Controller::class, 'showTeam'])->where('teamId', '[0-9]+')->name('teams.show');
 Route::get('/teams/create', [Controller::class, 'createTeam'])->name('teams.create');
 Route::post('/teams', [Controller::class, 'storeTeam'])->name('teams.store');
 Route::get('/matches/create', [Controller::class, 'createMatch'])->name('matches.create');
 Route::post('/matches', [Controller::class, 'storeMatch'])->name('matches.store');
-Route::post('/team', [Controller::class, 'storeMatch'])->name('team');
+Route::post('/team', [Controller::class, 'storeMatch'])->name('team');*/

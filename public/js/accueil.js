@@ -4,13 +4,13 @@
 var trouverHotel = $('<button/>');
 trouverHotel.text("Trouver un hôtel ").attr("id","trouverHotel");
 trouverHotel.click(function() {
-    location.assign('/trouverHotel');
+    location.assign('/trouverUnHotel');
 });
 
 var entrerHotel = $('<button/>');
 entrerHotel.text("Entrer un hôtel ").attr("id","entrerHotel");
 entrerHotel.click(function() {
-    location.assign('/entrerHotel');
+    location.assign('/entrerUnHotel');
 });
 
 
@@ -31,6 +31,8 @@ videoPub.append(v);
 var propositions = $('<div/>').attr("id","propsitions");
 
 var prop1 = $('<div/>').addClass("propsitionsImg").append($('<a/>').html('<img src="media/proposition1.jpg" alt="proposition1">'));
+// prop1.attr('href',"{{route('chambres.show', ['teamId'=>$row['team_id']])}}");
+// href="{{route('teams.show', ['teamId'=>$row['team_id']])}}">{{ $row['name']}}</a>
 var prop2 = $('<div/>').addClass("propsitionsImg").append($('<a/>').html('<img src="media/proposition2.jpg" alt="proposition2">'));
 var prop3 = $('<div/>').addClass("propsitionsImg").append($('<a/>').html('<img src="media/proposition3.jpg" alt="proposition3">'));
 var prop4 =  $('<div/>').addClass("propsitionsImg").append($('<a/>').html('<img src="media/proposition4.jpg" alt="proposition4">'));

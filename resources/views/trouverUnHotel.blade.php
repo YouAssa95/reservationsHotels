@@ -4,9 +4,7 @@
 <script src="{{assert('js/JStrouverUnHotel.js')}}"></script>
 @section('content')
 
-<div>
-    <h1>Trouver un hôtel </h1>
-</div>
+
 
 <form action="/action_page.php">
 

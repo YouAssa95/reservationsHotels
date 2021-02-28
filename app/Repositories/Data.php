@@ -5,7 +5,7 @@ namespace App\Repositories;
 
 class Data
 {
-    /*dfgsdfsdf*/
+    
 
 
 }

@@ -29,6 +29,7 @@ class Controller extends BaseController
         
         return view('entrerUnHotel');
     }
+    
     public function trouverUnHotel()
     {
         
@@ -49,7 +50,7 @@ class Controller extends BaseController
       return view('login');
     }
 
-    public function login()
+    public function login($request)
     {
         return redirect()->route('accueil');
     }
@@ -62,6 +63,7 @@ class Controller extends BaseController
     {
         return redirect()->route('accueil');
     }
+    
 
    
 }

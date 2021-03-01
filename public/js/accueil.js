@@ -42,5 +42,5 @@ propositions.append(prop1,prop2,prop3,prop4);
 
 
 ///////////////////////
-$("body").append(buttons,videoPub,propositions);
+$("#content").append(buttons,videoPub,propositions);
 

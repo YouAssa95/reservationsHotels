@@ -23,8 +23,10 @@
     </div>
     <div class="form-group">
       <label for="password">Mot de passe</label>
+      <!-- <div class="col-sm-10"> -->
       <input type="password" id="password" name="password" value="{{old('password')}}"
              aria-describedby="password_feedback" class="form-control @error('password') is-invalid @enderror">  
+   
       @error('password')
       <div id="password_feedback" class="invalid-feedback">
         {{ $message }}

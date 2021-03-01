@@ -28,6 +28,7 @@ class Repository
     {
         // GERANTS doit intégré se champ
         return DB::table('HOTELS') -> insertGetId(['NumHotel'=> $Hotel['NumHotel'],'logoHotel' => $Hotel['logoHotel'],'NomHotel' => $Hotel['NomHotel'],
+                                                    'NomGerant' => $Hotel['NomGerant'],'PrenGerant' => $Hotel['PrenGerant'],'DateNaissGerant' => $Hotel['DateNaissGerant'],
                                                     'emailHotel' => $Hotel['emailHotel'],'AdresseHotel' => $Hotel['AdresseHotel'],'cpHotel' => $Hotel['cpHotel'],
                                                     'villeHotel' => $Hotel['villeHotel'],'classeHotel' => $Hotel['classeHotel']]);   
     }
@@ -35,7 +36,8 @@ class Repository
     function insertCHAMBRES(array $Chambre): int
     {
         return DB::table('HOTELS') -> insertGetId(['NumChambre'=> $Chambre['NumChambre'],'NumHotel' => $Chambre['NumHotel'],'NbreLits' => $Chambre['NbreLits'],
-                                                    'Surface' => $Chambre['Surface'],'prix' => $Chambre['prix'],'cpHotel' => $Chambre['cpHotel'],'idEquipement' => $Chambre['idEquipement']]);   
+                                                    'Surface' => $Chambre['Surface'],'prix' => $Chambre['prix'],'cpHotel' => $Chambre['cpHotel'],
+                                                    'idEquipement' => $Chambre['idEquipement']]);   
     }
 
 

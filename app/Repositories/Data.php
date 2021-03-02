@@ -33,9 +33,18 @@ class Data
     function Hotels()
     {
         return [
-            ['NumHotel' => 1, 'logoHotel' => 'jean','NomHotel' => 'max','MailClient' => 'jean.max@gmail.com','TelClient' => '0987350142'],    
-            
+            ['NumGerant'=>1, 
+            'logoHotel' => 'jean',
+            'NomHotel' => 'Hôtel 1',
+            'emailHotel' => 'jean.max@gmail.com',
+            'AdresseHotel' => 'adr',
+            'cpHotel' => 13009,
+            'villeHotel' => 'Marseille',
+            'classeHotel'=>1], 
 
+            ['NumGerant'=>2,'logoHotel' => 'jean','NomHotel' => 'Hôtel 2','emailHotel' => 'jean.max@gmail.com','AdresseHotel' => 'adr','cpHotel' => 13009,'classeHotel'=>1], 
+            ['NumGerant'=>3, 'logoHotel' => 'jean','NomHotel' => 'Hôtel 3','emailHotel' => 'jean.max@gmail.com','AdresseHotel' => 'adr','cpHotel' => 13009,'classeHotel'=>1], 
+            [ 'NumGerant'=>4,'logoHotel' => 'jean','NomHotel' => 'Hôtel 4','emailHotel' => 'jean.max@gmail.com','AdresseHotel' => 'adr','cpHotel' => 13009,'classeHotel'=>1]    
             
         ];
     }

@@ -42,7 +42,9 @@ class Controller extends BaseController
     }
     public function hotels()
     {
-      return view('hotels');
+      $hotels = $this->repository->hotels();  
+    //   return view('hotels',['hotels' => $hotels]);
+        return view('advancedHotels',['hotels' => $hotels]);
     }
     
     public function showLoginForm()

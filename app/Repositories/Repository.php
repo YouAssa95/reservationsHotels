@@ -17,16 +17,12 @@ class Repository
     }
     function insertClient(array $Clients): int
     {
-        
         return DB::table('CLIENTS') -> insertGetId(['NumClient'=> $Clients['NumClient'],'NomClient' => $Clients['NomClient'],'PrenClient' => $Clients['PrenClient'],
                                                     'MailClient' => $Clients['MailClient'],'TelClient' => $Clients['TelClient'],'DateNaiss' => $Clients['DateNaiss']]);
-       
-       
     }
 
     function insertHotel(array $Hotel): int
     {
-        // GERANTS doit intégré se champ
         return DB::table('HOTELS') -> insertGetId(['NumHotel'=> $Hotel['NumHotel'],'logoHotel' => $Hotel['logoHotel'],'NomHotel' => $Hotel['NomHotel'],
                                                     'NomGerant' => $Hotel['NomGerant'],'PrenGerant' => $Hotel['PrenGerant'],'DateNaissGerant' => $Hotel['DateNaissGerant'],
                                                     'emailHotel' => $Hotel['emailHotel'],'AdresseHotel' => $Hotel['AdresseHotel'],'cpHotel' => $Hotel['cpHotel'],
@@ -39,7 +35,21 @@ class Repository
                                                     'Surface' => $Chambre['Surface'],'prix' => $Chambre['prix'],'cpHotel' => $Chambre['cpHotel'],
                                                     'idEquipement' => $Chambre['idEquipement']]);   
     }
-
+    function insertEquipement(array $Equipement): int
+    {
+        return DB::table('EQUIPEMENTS') -> insertGetId(['idEquipemet'=> $Equipement['idEquipemet'],'wifi' => $Equipement['wifi'],'parking' => $Equipement['parking'],
+                                                    'salleSport' => $Equipement['salleSport'],'animalFriendly' => $Equipement['animalFriendly'],'Fumeur' => $Equipement['Fumeur']]);   
+    }
+    function insertReservation(array $Reservation): int
+    {
+        return DB::table('RESERVATIONS') -> insertGetId(['NumReservation'=> $Reservation['NumReservation'],'DateArrive' => $Reservation['DateArrive'],'DateDepart' => $Reservation['DateDepart'],
+                                                    'NumClient' => $Reservation['NumClient']]);   
+    }
+    function insertContenuReservation(array $ContenuReservation): int
+    {
+        return DB::table('CONTENUE_RESERVATION') -> insertGetId(['NumReservation'=> $ContenuReservation['NumReservation'],'NumChambre' => $ContenuReservation['NumChambre'],'NumHotel' => $ContenuReservation['NumHotel'],
+                                                    'DateDepart' => $ContenuReservation['DateDepart']]);   
+    }
 
 
     function infoComptClient ($NumClient): array
@@ -71,14 +81,39 @@ class Repository
         
         $ReservationEnCours= DB::table('RESERVATIONS')
         ->where('NumClient', $NumClient)
-        ->where('DateDepart', '<' , date)
+        ->where('DateDepart', '>' , date) // ????????????????? date de jour ?
         ->orderBy('DateDepart', 'asc')
         ->get()
         ->toArray(); 
        // if ($ReservationEnCours != NULL){}
         return $ReservationEnCours; 
     }
+    function reservationHistorique ($NumClient): array
+    {
+        
+        $ReservationEnCours= DB::table('RESERVATIONS')
+        ->where('NumClient', $NumClient)
+        ->where('DateDepart', '<' , date) // ????????????????? date de jour ?
+        ->orderBy('DateDepart', 'asc')
+        ->get()
+        ->toArray(); 
+       // if ($ReservationEnCours != NULL){}
+        return $ReservationEnCours; 
+    } 
+    function chambreReservees ($NumClient): array
+    {
+        $reservationEnCours =$this->reservationEnCours($NumClient)
+       
 
+        return DB::table('CONTENUE_RESERVATION')
+        ->where('NumClient', $NumClient)
+        ->where('NumReservation', 'IN' , $reservationEnCours['NumReservation']) // ????????????????? date de jour ?
+        //->orderBy('DateDepart', 'asc')
+        ->get()
+        ->toArray(); 
+       // if ($ReservationEnCours != NULL){}
+          
+    }
 
 
     function teams(): array

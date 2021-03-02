@@ -31,12 +31,11 @@ CREATE TABLE EQUIPEMENTS (
 
 CREATE TABLE HOTELS(
     NumHotel  int PRIMARY KEY,
-    NumGerant int,
     logoHotel VARCHAR,
+    NomHotel VARCHAR(40),
     NomGerant varchar(40),
     PrenGerant varchar(40),
     DateNaissGerant DATE,
-    NomHotel VARCHAR(40),
     emailHotel VARCHAR(40),
     cpHotel integer,
     villeHotel VARCHAR(40),
@@ -56,7 +55,6 @@ CREATE TABLE CHAMBRES(
 	NumChambre int,
 	NumHotel int,
 	NbreLits int,
-	NumGerant int,
 	Surface int,
 	prix int,
 	idEquipement int,

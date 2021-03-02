@@ -11,9 +11,7 @@
   <div class="partietotal">
 	  <div class="partie1">
 	    <h1> entrer un hôtel</h1>
-
       
-        
         <label for="myfile">Sélectionner un logo:</label>
         <input class="logo" type="file" name="applicant.fileUpload" id="logo hotel" tabindex="0" accept=".png,.JFIF,.pdf"><br><br>
 

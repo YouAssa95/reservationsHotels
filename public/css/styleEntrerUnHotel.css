@@ -1,8 +1,8 @@
 
 .partie1{
     background-color: gainsboro;
-    height: 500px;
-    width: 450px;
+    height: 500%;
+    width: 450%;
     float: left;
     border: 1px solid black;
     border: 3px solid rgb(126, 128, 18);
@@ -24,12 +24,12 @@
    
     }
   
-   #addchambre{
+   .addchambre{
    margin: auto;
     height: 20px;
     width: 250px;
-    border: 3px solid rgb(126, 128, 18);
-    padding: 30px;
+    border: 3px solid rgb(126, 128, 18); 
+     padding: 30px;
     }
   .partietotal{
      display: flex;

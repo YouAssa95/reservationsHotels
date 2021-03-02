@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 use App\Repositories\Data;
-use App\Repositories\Ranking;
 
 class Repository
 {
@@ -15,113 +14,134 @@ class Repository
     {
         DB::unprepared(file_get_contents('database/build.sql'));
     }
-    function insertTeam(array $team): int
+<<<<<<< HEAD
+    function insertClient(array $Clients): int
     {
-        
-        return DB::table('teams') -> insertGetId(['id'=> $team['id'],'name' => $team['name']]);
-       
-       
-    }
-
-    function insertMatch(array $match): int
-    {
-        return DB::table('matches')-> insertGetId(['id'=>$match['id'] ,'team0' => $match['team0'],
-        'team1' => $match['team1'],'score0' => $match['score0'],'score1'=> $match['score1'],
-        'date'=> $match['date']]);
-    }
-
-    function teams(): array
-    {
-        return DB::table('teams')->orderBy('id', 'asc')->get()->toArray();
-    }
-
-    function matches(): array
-    {
+        return DB::table('CLIENTS') -> insertGetId(['NumClient'=> $Clients['NumClient'],'NomClient' => $Clients['NomClient'],'PrenClient' => $Clients['PrenClient'],
+                                                    'MailClient' => $Clients['MailClient'],'TelClient' => $Clients['TelClient'],'DateNaiss' => $Clients['DateNaiss']]);
+=======
     
-        return DB::table('matches')->orderBy('id', 'asc')->get()->toArray();
+    function insertClient(array $Client): int
+    {   
+        return DB::table('CLIENTS') -> insertGetId($Client);
+       
+>>>>>>> 4b0611b57fc588777c0b001266c42202c92a7884
     }
 
-    function fillDatabase(): void 
+    function insertHotel(array $Hotel): int
+    {
+<<<<<<< HEAD
+        return DB::table('HOTELS') -> insertGetId(['NumHotel'=> $Hotel['NumHotel'],'logoHotel' => $Hotel['logoHotel'],'NomHotel' => $Hotel['NomHotel'],
+                                                    'NomGerant' => $Hotel['NomGerant'],'PrenGerant' => $Hotel['PrenGerant'],'DateNaissGerant' => $Hotel['DateNaissGerant'],
+                                                    'emailHotel' => $Hotel['emailHotel'],'AdresseHotel' => $Hotel['AdresseHotel'],'cpHotel' => $Hotel['cpHotel'],
+                                                    'villeHotel' => $Hotel['villeHotel'],'classeHotel' => $Hotel['classeHotel']]);   
+=======
+        return DB::table('HOTELS') -> insertGetId($Hotel);   
+>>>>>>> 4b0611b57fc588777c0b001266c42202c92a7884
+    }
+    
+    function insertChambre(array $Chambre): int
+    {
+        return DB::table('HOTELS') -> insertGetId($Chambre);   
+    }
+    function hotels(): array
+    {
+        return DB::table('HOTELS')->orderBy('id', 'asc')->get()->toArray();
+    }
+   
+    
+    function fillDatabase(): void
     {
         $this->data = new Data();
-        $teams = $this->data->teams();
-        $matches = $this->data->matches();
+        $hotels = $this->data->Hotels();
+        $clients =$this->data->Clients();
 
-        foreach ($matches as $match) {
-            $this->insertMatch($match);
+        foreach ($hotels as $hotel) {
+            $this->insertHotel($hotel);
         }
-        foreach ($teams as $team) {
-            $this-> insertTeam($team);
+        foreach ($clients as $client) {
+            $this->insertClient($client);
         }
     }
-
-    function team($teamId) : array 
+    function insertEquipement(array $Equipement): int
     {
-        try {
-            
-            $row = DB::table('teams')->where('id', $teamId)->get()->toArray();
-            return ['id'=> $row[0]['id'],'name' => $row[0]['name']]; 
-            
-          } catch (Exception $exception) {
-            throw new Exception('Équipe inconnue');
-          }
-       
+        return DB::table('EQUIPEMENTS') -> insertGetId(['idEquipemet'=> $Equipement['idEquipemet'],'wifi' => $Equipement['wifi'],'parking' => $Equipement['parking'],
+                                                    'salleSport' => $Equipement['salleSport'],'animalFriendly' => $Equipement['animalFriendly'],'Fumeur' => $Equipement['Fumeur']]);   
+    }
+    function insertReservation(array $Reservation): int
+    {
+        return DB::table('RESERVATIONS') -> insertGetId(['NumReservation'=> $Reservation['NumReservation'],'DateArrive' => $Reservation['DateArrive'],'DateDepart' => $Reservation['DateDepart'],
+                                                    'NumClient' => $Reservation['NumClient']]);   
+    }
+    function insertContenuReservation(array $ContenuReservation): int
+    {
+        return DB::table('CONTENUE_RESERVATION') -> insertGetId(['NumReservation'=> $ContenuReservation['NumReservation'],'NumChambre' => $ContenuReservation['NumChambre'],'NumHotel' => $ContenuReservation['NumHotel'],
+                                                    'DateDepart' => $ContenuReservation['DateDepart']]);   
     }
 
+    /// Requettes de gestion 
 
-    
-
-    function updateRanking(): void 
+    function infoComptClient ($NumClient): array
     {
-        DB::table('ranking')->delete();
-        $ranking = new Ranking();
-        $sortedRanking = $ranking -> sortedRanking( $this->teams() , $this->matches());
-       
-        foreach ($sortedRanking as $row) {
-            DB::table('ranking')-> insert($row);
-        }
-
-    }
-
-    function sortedRanking(): array 
-    {
-        return DB::table('ranking')
-        ->join('teams', 'ranking.team_id', '=', 'teams.id')
-        ->orderBy('rank')
-        ->get(['ranking.*','teams.name'])
+        try{
+        return DB::table('CLIENTS')
+        ->where('NumClient', $NumClient)
+        ->get()
         ->toArray(); 
+        } catch (Exception $exception) {
+            throw new Exception('Client inconnue');
+        }
     }
-
-    function teamMatches($teamId) : array
+    function infoComptHotel ($NumHotel): array
     {
-        $rows = DB::table('matches as m')
-        ->join('teams as t0', 'm.team0', '=', 't0.id')
-        ->join('teams as t1', 'm.team1', '=', 't1.id')
-        ->where('m.team0',$teamId)
-        ->orwhere('m.team1',$teamId)
-        ->orderBy('date')
-        ->get(['m.*','t0.name as name0','t1.name as name1'])
+        try{
+        return DB::table('HOTELS')
+        ->where('NumHotel', $NumHotel)
+        ->get()
         ->toArray(); 
-        return $rows;
+
+        } catch (Exception $exception) {
+            throw new Exception('Hotel inconnue');
+        }
     }
 
-    function rankingRow($teamId) : array 
+    function reservationEnCours ($NumClient): array
     {
-        try {
-            
-                $row= DB::table('ranking')
-            ->join('teams', 'ranking.team_id', '=', 'teams.id')
-            ->where('ranking.team_id',$teamId)     
-            ->get(['ranking.rank','teams.name','ranking.team_id','ranking.match_played_count','ranking.won_match_count','ranking.lost_match_count',
-            'ranking.draw_match_count','ranking.goal_for_count','ranking.goal_against_count','ranking.goal_difference','ranking.points'])
-            ->toArray(); 
-            return $row[0];
-
-          } catch (Exception $exception) {
-            throw new Exception('Équipe inconnue');
-          }
-
         
+        $ReservationEnCours= DB::table('RESERVATIONS')
+        ->where('NumClient', $NumClient)
+        ->where('DateDepart', '>' , date) // ????????????????? date de jour ?
+        ->orderBy('DateDepart', 'asc')
+        ->get()
+        ->toArray(); 
+       // if ($ReservationEnCours != NULL){}
+        return $ReservationEnCours; 
+    }
+    function reservationHistorique ($NumClient): array
+    {
+        
+        $ReservationEnCours= DB::table('RESERVATIONS')
+        ->where('NumClient', $NumClient)
+        ->where('DateDepart', '<' , date) // ????????????????? date de jour ?
+        ->orderBy('DateDepart', 'asc')
+        ->get()
+        ->toArray(); 
+       // if ($ReservationEnCours != NULL){}
+        return $ReservationEnCours; 
+    } 
+    function chambreReservees ($NumClient): array
+    {
+        $reservationEnCours =$this->reservationEnCours($NumClient)
+       
+
+        return DB::table('CONTENUE_RESERVATION')
+        ->where('NumClient', $NumClient)
+        ->where('NumReservation', 'IN' , $reservationEnCours['NumReservation']) // ????????????????? date de jour ?
+        //->orderBy('DateDepart', 'asc')
+        ->get()
+        ->toArray(); 
+       // if ($ReservationEnCours != NULL){}
+          
     }
 
 }

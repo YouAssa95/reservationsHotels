@@ -16,7 +16,6 @@ class DatabaseSeeder extends Seeder
         $repository = new Repository();
         $repository->createDatabase();
         $repository->fillDatabase();
-        $repository->updateRanking();
     }
 
 }

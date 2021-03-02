@@ -9,7 +9,7 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
-
+use Symfony\Component\VarDumper\VarDumper;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
@@ -43,8 +43,7 @@ class Controller extends BaseController
     public function hotels()
     {
       $hotels = $this->repository->hotels();  
-    //   return view('hotels',['hotels' => $hotels]);
-        return view('advancedHotels',['hotels' => $hotels]);
+      return view('hotels',['hotels' => $hotels]);
     }
     
     public function showLoginForm()
@@ -65,7 +64,13 @@ class Controller extends BaseController
     {
         return redirect()->route('accueil');
     }
-    
+
+
+    public function showHotel(int $NumHotel)
+    {
+        $hotel=$this->repository->infoComptHotel($NumHotel);
+        return view('hotel', ['hotel' => $hotel[0]]);
+    }
 
    
 }

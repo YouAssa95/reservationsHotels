@@ -34,6 +34,7 @@ class Repository
     {
         return DB::table('HOTELS')->orderBy('id', 'asc')->get()->toArray();
     }
+   
     
     function fillDatabase(): void
     {

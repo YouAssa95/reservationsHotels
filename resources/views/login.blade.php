@@ -33,17 +33,7 @@
       </div>
       @enderror
     </div>
-    <!-- // Informations generales  -->
-    <div class="form-group" >
-      <button onclick="">Infos</button>
-      <!-- <label for="password">Infos</label> // -->
-      
-      @error('password')
-      <div id="password_feedback" class="invalid-feedback">
-        {{ $message }}
-      </div>
-      @enderror
-    </div>
+
     <button type="submit" class="btn btn-primary">Se connecter</button>
 </form>
 @endsection

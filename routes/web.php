@@ -25,11 +25,4 @@ Route::post('/login', [Controller::class, 'login'])->name('login.post');
 Route::get('/contact', [Controller::class, 'showContactForm'])->name('contact');
 Route::post('/contact', [Controller::class, 'contact'])->name('contact.post');
 
-
-/*
-Route::get('/teams/{teamId}', [Controller::class, 'showTeam'])->where('teamId', '[0-9]+')->name('teams.show');
-Route::get('/teams/create', [Controller::class, 'createTeam'])->name('teams.create');
-Route::post('/teams', [Controller::class, 'storeTeam'])->name('teams.store');
-Route::get('/matches/create', [Controller::class, 'createMatch'])->name('matches.create');
-Route::post('/matches', [Controller::class, 'storeMatch'])->name('matches.store');
-Route::post('/team', [Controller::class, 'storeMatch'])->name('team');*/
+Route::get('/hotels/{NumHotel}', [Controller::class, 'showHotel'])->where('NumHotel', '[0-9]+')->name('hotels.show');

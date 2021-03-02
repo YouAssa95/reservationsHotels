@@ -45,6 +45,7 @@ class Data
     function CHAMBRES()
     {
         return [
+<<<<<<< HEAD
             ['NumChambre' => 1, 'NumHotel' => '1','NbreLits' => '2','Surface' => '20','prix' => '120','idEquipement' => '1'],    
             ['NumChambre' => 2, 'NumHotel' => '1','NbreLits' => '2','Surface' => '30','prix' => '150','idEquipement' => '1'],    
             ['NumChambre' => 3, 'NumHotel' => '2','NbreLits' => '1','Surface' => '10','prix' => '70','idEquipement' => '2'],    
@@ -66,6 +67,20 @@ class Data
             ['NumReservation' => 4, 'DateArrive' => '2021-03-04 13:00:00','DateDepart' => '2021-03-12 13:00:00','NumClient' => '2'],    
             ['NumReservation' => 5, 'DateArrive' => '2021-03-01 13:00:00','DateDepart' => '2021-03-04 13:00:00','NumClient' => '3'],    
             ['NumReservation' => 6, 'DateArrive' => '2021-03-01 13:00:00','DateDepart' => '2021-03-02 13:00:00','NumClient' => '4'],    
+=======
+            ['NumGerant'=>1, 
+            'logoHotel' => 'jean',
+            'NomHotel' => 'Hôtel 1',
+            'emailHotel' => 'jean.max@gmail.com',
+            'AdresseHotel' => 'adr',
+            'cpHotel' => 13009,
+            'villeHotel' => 'Marseille',
+            'classeHotel'=>1], 
+
+            ['NumGerant'=>2,'logoHotel' => 'jean','NomHotel' => 'Hôtel 2','emailHotel' => 'jean.max@gmail.com','AdresseHotel' => 'adr','cpHotel' => 13009,'classeHotel'=>1], 
+            ['NumGerant'=>3, 'logoHotel' => 'jean','NomHotel' => 'Hôtel 3','emailHotel' => 'jean.max@gmail.com','AdresseHotel' => 'adr','cpHotel' => 13009,'classeHotel'=>1], 
+            [ 'NumGerant'=>4,'logoHotel' => 'jean','NomHotel' => 'Hôtel 4','emailHotel' => 'jean.max@gmail.com','AdresseHotel' => 'adr','cpHotel' => 13009,'classeHotel'=>1]    
+>>>>>>> 4b0611b57fc588777c0b001266c42202c92a7884
             
         
         

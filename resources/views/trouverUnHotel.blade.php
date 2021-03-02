@@ -66,13 +66,3 @@
 </div> 
 </div>
 
-<!--Partie JavaScript avec Jquery-->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script>
-
-// A FAIRE PARTIE JS AVEC JQUERY
-i=0;
- function trouverunechambre(){
-
-</script>
-@endsection

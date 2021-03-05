@@ -6,7 +6,7 @@
 
 
 
-<form action="/action_page.php">
+<form >
 
     <div>
         <h1>Trouver un hôtel </h1>
@@ -57,6 +57,7 @@
             <div class="text-center">
                 <button type="button" class="btn btn-primary" onclick="trouverunechambre()">Rechercher</button>
             </div>
+            <!-- // si ona les propositions on les affiches sinn -->
             <div class="row">
                 <div class="col test"></div>
                 <div class="col test"></div>

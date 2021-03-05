@@ -22,6 +22,9 @@ Route::get('/hotels', [Controller::class, 'hotels'])->name('hotels');
 Route::get('/login', [Controller::class, 'showLoginForm'])->name('login');
 Route::post('/login', [Controller::class, 'login'])->name('login.post');
 
+Route::get('/register', [Controller::class, 'showRegisterForm'])->name('register');
+Route::post('/register', [Controller::class, 'register'])->name('register.post');
+
 Route::get('/contact', [Controller::class, 'showContactForm'])->name('contact');
 Route::post('/contact', [Controller::class, 'contact'])->name('contact.post');
 

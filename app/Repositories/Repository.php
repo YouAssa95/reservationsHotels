@@ -85,7 +85,7 @@ class Repository
         if (Hash::check($password, $passwordHash)) {
             return true;
         } else {
-            throw new Exception('Utilisateur inconnu');
+            throw new Exception('Mot de passe incorrect');
             return false;
         }
     }
@@ -117,6 +117,10 @@ class Repository
         } catch (Exception $exception) {
             throw new Exception('Hotel inconnue');
         }
+    }
+    function infoComptAdmin($NumHotel): array
+    {
+      return [];
     }
 
     function reservationEnCours($NumClient): array

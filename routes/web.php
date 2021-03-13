@@ -13,7 +13,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Controller;
-<<<<<<< HEAD
+<<<<<<< HEAD 
 Route::get('/', [Controller::class, 'showRanking'])->name('ranking.show');
 Route::get('/teams/{teamId}', [Controller::class, 'showTeam'])->where('teamId', '[0-9]+')->name('teams.show');
 Route::get('/teams/create', [Controller::class, 'createTeam'])->name('teams.create');
@@ -36,3 +36,4 @@ Route::post('/contact', [Controller::class, 'contact'])->name('contact.post');
 
 Route::get('/hotels/{NumHotel}', [Controller::class, 'showHotel'])->where('NumHotel', '[0-9]+')->name('hotels.show');
 >>>>>>> 4ce86a34ee739891db170de9562230b148d4402d
+

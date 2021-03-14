@@ -16,7 +16,10 @@ use App\Http\Controllers\Controller;
 
 Route::get('/', [Controller::class, 'welcome'])->name('accueil');
 Route::get('/entrerUnHotel', [Controller::class, 'entrerUnHotel'])->name('entrerUnHotel');
+
 Route::get('/trouverUnHotel', [Controller::class, 'trouverUnHotel'])->name('trouverUnHotel');
+Route::post('/trouverUnHotel', [Controller::class, 'trouverUnHotelResults'])->name('trouverUnHotel.post');
+
 Route::get('/aboutUs', [Controller::class, 'aboutUs'])->name('aboutUs');
 Route::get('/hotels', [Controller::class, 'hotels'])->name('hotels');
 

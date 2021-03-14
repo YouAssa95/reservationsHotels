@@ -36,6 +36,30 @@ class Controller extends BaseController
         
         return view('trouverUnHotel');
     }
+
+    public function trouverUnHotelResults(Request $request)
+    {
+        $rules = [
+            'destination' => ['required'],
+            'dateA' => ['nullable'],
+            'dateD' => ['nullable'],
+            'nbreLits' => ['nullable'],
+            'Prixmin' => ['nullable'],
+            'Prixmax' => ['nullable'],
+        ];
+
+        $messages = ['destination.required' => 'Entrer une destination'];
+        
+        $validatedData = $request->validate($rules, $messages);
+        $hotels=$this->repository->hotelsVille($validatedData['destination']);
+
+        $chambresProposes =[];
+        foreach($hotels as $hotel){
+            $chambresProposes =array_merge($chambresProposes,chambreDisponibles($hotel['NumHotel']));
+        }
+        VarDumper::dump($chambresProposes);
+        return  view('trouverUnHotel',['chambresProposes'=>$chambresProposes]);
+    }
     
     public function aboutUs()
     {
@@ -46,6 +70,7 @@ class Controller extends BaseController
       $hotels = $this->repository->hotels();  
       return view('hotels',['hotels' => $hotels]);
     }
+   
     
     public function showLoginForm()
     {
@@ -67,8 +92,6 @@ class Controller extends BaseController
         ];
        
         $validatedData = $request->validate($rules, $messages);
-        // VarDumper::dump($validatedData);
-        // return;
         try {
             try {
                 if ($validatedData['statut']==1) {
@@ -79,8 +102,7 @@ class Controller extends BaseController
                     $user=$repository->infoComptAdmin($validatedData['email'], $validatedData['password']);   
                 }
                 $request->session()->put('user', $user);
-                // VarDumper::dump($request->session());
-                // return;
+           
                 return redirect()->route('accueil');
                 
             } catch (Exception $e) {

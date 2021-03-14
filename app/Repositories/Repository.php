@@ -15,19 +15,19 @@ class Repository
     {
         DB::unprepared(file_get_contents('database/build.sql'));
     }
-    function insertClient(array $client,string $password):int
+    function insertClient(array $client, string $password): int
     {
-        $id= DB::table('CLIENTS')->insertGetId($client);        
-        $this->insertPassword($id,'client',$password);
+        $id = DB::table('CLIENTS')->insertGetId($client);
+        $this->insertPassword($id, 'client', $password);
         return $id;
     }
 
-    function insertPassword(int $idCompte,string $statut,string $password): bool
+    function insertPassword(int $idCompte, string $statut, string $password): bool
     {
         $passwordHash =  Hash::make($password);
 
         try {
-            return DB::table('MOTDEPASSE')->insertGetId(['idCompte'=>$idCompte,'Statut' => $statut, 'MtdPass' => $passwordHash]);
+            return DB::table('MOTDEPASSE')->insertGetId(['idCompte' => $idCompte, 'Statut' => $statut, 'MtdPass' => $passwordHash]);
         } catch (Exception $exception) {
             throw new Exception('utilisateur existe  existe déjà');
         }
@@ -58,7 +58,7 @@ class Repository
             $this->insertHotel($hotel);
         }
         foreach ($clients as $client) {
-            $this->insertClient($client,'test');
+            $this->insertClient($client, 'test');
         }
 
         // ////Ajout d'un utilisateur de statut client  Juste pour tester
@@ -90,37 +90,39 @@ class Repository
         }
     }
 
-    
 
-    function infoComptClient($MailClient,string $password) :array
-    {        
+
+    function infoComptClient($MailClient, string $password): array
+    {
         try {
-            $client= DB::table('CLIENTS')->where('MailClient', $MailClient)->get()->toArray();
-            
-           $row = DB::table('MOTDEPASSE')->where('IdCompte', $client[0]['NumClient'])->get()->toArray();
-            
+            $client = DB::table('CLIENTS')->where('MailClient', $MailClient)->get()->toArray();
+
+            $row = DB::table('MOTDEPASSE')->where('IdCompte', $client[0]['NumClient'])->get()->toArray();
+
             if ($this->checkPassword($password, $row[0]['MtdPass'])) {
-                    return $client[0];
-            }          
+                return $client[0];
+            }
         } catch (Exception $exception) {
             throw new Exception('Client inconnue');
         }
     }
 
-    function infoComptHotel($NumHotel): array
+    function infoComptHotel($emailHotel, string $password): array
     {
         try {
-            return DB::table('HOTELS')
-                ->where('NumHotel', $NumHotel)
-                ->get()
-                ->toArray();
+            $hotel = DB::table('HOTELS')->where('emailHotel', $emailHotel)->get()->toArray();
+
+            $row = DB::table('MOTDEPASSE')->where('IdCompte', $hotel[0]['NumHotel'])->get()->toArray();
+            if ($this->checkPassword($password, $row[0]['MtdPass'])) {
+                return $hotel[0];
+            }
         } catch (Exception $exception) {
             throw new Exception('Hotel inconnue');
         }
     }
     function infoComptAdmin($NumHotel): array
     {
-      return [];
+        return [];
     }
 
     function reservationEnCours($NumClient): array
@@ -159,6 +161,29 @@ class Repository
             ->get()
             ->toArray();
         // if ($ReservationEnCours != NULL){}
-
     }
+
+
+
+    /**##################" Trouver un Hotel  */
+
+    public function hotelsVille($ville)
+    {
+        return DB::table('HOTELS')->where('villeHotel', $ville)->get()->toArray();
+    }
+
+
+    public function chambreDisponibles($NumHotel)
+    {
+
+        /// La possibilite de la date ....
+
+        return DB::table('CHAMBRES')
+            ->select('NumChambre')
+            ->where('NumHotel', $NumHotel)
+            ->whereNotIn('NumChambre', DB::table('CONTENUE_RESERVATION')->select('NumChambre')->get()->toArray())
+            ->get();
+        
+    }
+    //// 
 }

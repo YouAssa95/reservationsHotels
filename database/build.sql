@@ -50,26 +50,28 @@ CREATE TABLE RESERVATIONS (
 
 
 CREATE TABLE CHAMBRES(
+    idChambre integer PRIMARY KEY AUTOINCREMENT,
 	NumChambre integer ,
 	NumHotel integer,
 	NbreLits integer,
 	Surface integer,
 	prix integer,
-	idEquipement integer,
-	PRIMARY KEY(NumChambre, NumHotel),
-	FOREIGN KEY(NumHotel) REFERENCES HOTELS(NumHotel),
-   	FOREIGN KEY(idEquipement) REFERENCES EQUIPEMENTS(idEquipemet)
+	-- idEquipement integer,
+    reserve boolean,
+	UNIQUE(NumChambre, NumHotel),
+	FOREIGN KEY(NumHotel) REFERENCES HOTELS(NumHotel)
+   	-- FOREIGN KEY(idEquipement) REFERENCES EQUIPEMENTS(idEquipemet)
 );
 
 CREATE TABLE CONTENUE_RESERVATION(
     NumReservation integer,
-    NumChambre integer,
+    idChambre integer,
     NumHotel integer,
-    DateDepart Datetime,
+    DateDepart DATETIME,
+    PRIMARY KEY ( NumReservation,idChambre,NumHotel),
     FOREIGN KEY(NumReservation) REFERENCES RESERVATIONS (NumReservation),
-    FOREIGN KEY(NumChambre) REFERENCES CHAMBRES(NumChambre),
-    FOREIGN KEY(NumHotel) REFERENCES HOTELS(NumHotel),
-    PRIMARY KEY ( NumReservation,NumChambre,NumHotel)
+    FOREIGN KEY(idChambre) REFERENCES CHAMBRES(idChambre),
+    FOREIGN KEY(NumHotel) REFERENCES HOTELS(NumHotel)
 );
 
 CREATE TABLE MOTDEPASSE (

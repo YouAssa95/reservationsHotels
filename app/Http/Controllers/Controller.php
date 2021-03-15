@@ -39,8 +39,10 @@ class Controller extends BaseController
 
     public function trouverUnHotelResults(Request $request)
     {
+        
+
         $rules = [
-            'destination' => ['required'],
+            'destination' => ['nullable'],
             'dateA' => ['nullable'],
             'dateD' => ['nullable'],
             'nbreLits' => ['nullable'],
@@ -48,17 +50,16 @@ class Controller extends BaseController
             'Prixmax' => ['nullable'],
         ];
 
-        $messages = ['destination.required' => 'Entrer une destination'];
+        // $messages = ['destination.required' => 'Entrer une destination'];
         
-        $validatedData = $request->validate($rules, $messages);
+        $validatedData = $request->validate($rules);
         $hotels=$this->repository->hotelsVille($validatedData['destination']);
-
         $chambresProposes =[];
         foreach($hotels as $hotel){
-            $chambresProposes =array_merge($chambresProposes,chambreDisponibles($hotel['NumHotel']));
-        }
-        VarDumper::dump($chambresProposes);
-        return  view('trouverUnHotel',['chambresProposes'=>$chambresProposes]);
+            $chambresProposes =array_merge($chambresProposes,$this->repository->chambreDisponibles($hotel['NumHotel'],$validatedData['dateA']));
+        }    
+        $request->session()->put('chambresProposes',$chambresProposes);
+        return  view('trouverUnHotel');
     }
     
     public function aboutUs()

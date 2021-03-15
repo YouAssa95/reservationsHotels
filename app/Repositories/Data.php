@@ -10,7 +10,7 @@ function HOTELS()
             ['NumHotel' => 2, 'logoHotel' => 'ssss','NomHotel' => 'Renaissance','NomGerant' => 'Capera','PrenGerant' => 'Natalie','emailHotel' => 'Renaissance@gmail.com','cpHotel' => '13001','villeHotel' => 'Marseille','classeHotel' => 3],    
             ['NumHotel' => 3, 'logoHotel' => 'ssss','NomHotel' => 'AC Hotel','NomGerant' => 'Smith','PrenGerant' => 'Kimberly','emailHotel' => 'AC.Hotel@gmail.com','cpHotel' => '13005','villeHotel' => 'Marseille','classeHotel' => 4],    
             ['NumHotel' => 4, 'logoHotel' => 'ssss','NomHotel' => 'les Bords De Mer','NomGerant' => 'Taleb','PrenGerant' => 'Nassim','emailHotel' => 'Bords.De.Mer@gmail.com','cpHotel' => '13002','villeHotel' => 'Marseille','classeHotel' => 1],    
-            ['NumHotel' => 5, 'logoHotel' => 'ssss','NomHotel' => 'Grand Hôtel','NomGerant' => 'Conan','PrenGerant' => 'Joliot','emailHotel' =>'Grand.Hotel@gmail.com','cpHotel' => '13001','villeHotel' => 'Marseille','classeHotel' => 5],       
+            ['NumHotel' => 5, 'logoHotel' => 'ssss','NomHotel' => 'Grand Hôtel','NomGerant' => 'Conan','PrenGerant' => 'Joliot','emailHotel' =>'Grand.Hotel@gmail.com','cpHotel' => '13001','villeHotel' => 'Paris','classeHotel' => 5],       
         ];
     }
 
@@ -43,25 +43,25 @@ function HOTELS()
     function CHAMBRES()
     {
         return [
-            ['NumChambre' => 1, 'NumHotel' => 1],
-            ['NumChambre' => 2, 'NumHotel' => 1],
-            ['NumChambre' => 3, 'NumHotel' => 2],    
-            ['NumChambre' => 4, 'NumHotel' => 3],    
-            ['NumChambre' => 5, 'NumHotel' => 4],    
-            ['NumChambre' => 6, 'NumHotel' => 5]
+            ['idChambre'=>1,'NumChambre' => 1, 'NumHotel' => 1,'reserve'=>false],
+            ['idChambre'=>2,'NumChambre' => 2, 'NumHotel' => 1,'reserve'=>true],
+            ['idChambre'=>3,'NumChambre' => 3, 'NumHotel' => 2,'reserve'=>false],    
+            ['idChambre'=>4,'NumChambre' => 4, 'NumHotel' => 3,'reserve'=>false],    
+            ['idChambre'=>5,'NumChambre' => 5, 'NumHotel' => 5,'reserve'=>false],    
+            ['idChambre'=>6,'NumChambre' => 6, 'NumHotel' => 5,'reserve'=>false]
         ];
     }     
 
-    /*
+   
     function RESERVATIONS()
     {
         return [
-            ['NumReservation' => 1, 'DateArrive' => '2021-03-04 13:00:00','DateDepart' => '2021-03-05 13:00:00','NumClient' => '1'],    
-            ['NumReservation' => 2, 'DateArrive' => '2021-03-01 13:00:00','DateDepart' => '2021-03-02 13:00:00','NumClient' => '1'],
-            ['NumReservation' => 3, 'DateArrive' => '2021-03-01 13:00:00','DateDepart' => '2021-03-09 13:00:00','NumClient' => '1'],    
-            ['NumReservation' => 4, 'DateArrive' => '2021-03-04 13:00:00','DateDepart' => '2021-03-12 13:00:00','NumClient' => '2'],    
-            ['NumReservation' => 5, 'DateArrive' => '2021-03-01 13:00:00','DateDepart' => '2021-03-04 13:00:00','NumClient' => '3'],    
-            ['NumReservation' => 6, 'DateArrive' => '2021-03-01 13:00:00','DateDepart' => '2021-03-02 13:00:00','NumClient' => '4'],    
+            ['NumReservation' => 1, 'DateArrive' => '2021-03-15 13:00:00','DateDepart' => '2021-03-05 13:00:00','NumClient' => '1'],    
+            ['NumReservation' => 2, 'DateArrive' => '2021-03-15 13:00:00','DateDepart' => '2021-03-02 13:00:00','NumClient' => '1'],
+            ['NumReservation' => 3, 'DateArrive' => '2021-03-15 13:00:00','DateDepart' => '2021-03-09 13:00:00','NumClient' => '1'],    
+            ['NumReservation' => 4, 'DateArrive' => '2021-03-15 13:00:00','DateDepart' => '2021-03-12 13:00:00','NumClient' => '2'],    
+            ['NumReservation' => 5, 'DateArrive' => '2021-03-15 13:00:00','DateDepart' => '2021-03-04 13:00:00','NumClient' => '3'],    
+            ['NumReservation' => 6, 'DateArrive' => '2021-03-15 13:00:00','DateDepart' => '2021-03-02 13:00:00','NumClient' => '4'],    
             
         
         
@@ -72,14 +72,15 @@ function HOTELS()
     {
         return [
             //date de départ est présent 2 fois
-            ['NumReservation' => 1, 'NumChambre' => '1','NumHotel' => '1','DateDepart' => '2021-03-05 13:00:00'],    
-            ['NumReservation' => 2, 'NumChambre' => '2','NumHotel' => '1','DateDepart' => '2021-03-02 13:00:00'],    
-            ['NumReservation' => 3, 'NumChambre' => '3','NumHotel' => '2','DateDepart' => '2021-03-09 13:00:00'],    
-            ['NumReservation' => 4, 'NumChambre' => '4','NumHotel' => '3','DateDepart' => '2021-03-12 13:00:00'],    
-            ['NumReservation' => 5, 'NumChambre' => '5','NumHotel' => '4','DateDepart' => '2021-03-04 13:00:00'],    
-            ['NumReservation' => 6, 'NumChambre' => '6','NumHotel' => '5','DateDepart' => '2021-03-02 13:00:00'],    
+            ['NumReservation' => 1, 'idChambre' => 1,'NumHotel' => 1,'DateDepart' => '2021-03-15 13:00:00'],    
+            ['NumReservation' => 2, 'idChambre' => 2,'NumHotel' => 1,'DateDepart' => '2021-03-15 13:00:00'],    
+            ['NumReservation' => 3, 'idChambre' => 3,'NumHotel' => 2,'DateDepart' => '2021-03-15 13:00:00'],    
+            ['NumReservation' => 4, 'idChambre' => 4,'NumHotel' => 3,'DateDepart' => '2021-03-15 13:00:00'] ,
+            // ['NumReservation' => 4, 'idChambre' => 5,'NumHotel' => 5,'DateDepart' => '2021-03-12 13:00:00']  
+            // ['NumReservation' => 5, 'NumChambre' => 5,'NumHotel' => 4,'DateDepart' => '2021-03-04 13:00:00'],    
+            // ['NumReservation' => 6, 'NumChambre' => 6,'NumHotel' => 5,'DateDepart' => '2021-03-02 13:00:00'],    
      
         ];
     }
-*/
+
 }

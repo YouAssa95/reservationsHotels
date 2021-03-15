@@ -47,12 +47,31 @@ class Repository
         return DB::table('HOTELS')->orderBy('id', 'asc')->get()->toArray();
     }
 
+    function insertEquipement(array $Equipement): int
+    {
+        return DB::table('EQUIPEMENTS')->insertGetId($Equipement);
+    }
+    function insertReservation(array $reservation): int
+    {
+        return DB::table('RESERVATIONS')->insertGetId($reservation);
+    }
+    function insertContenuReservation($contenuReservation): int
+    {
+        return DB::table('CONTENUE_RESERVATION')->insertGetId($contenuReservation);
+    }
+
 
     function fillDatabase(): void
     {
         $this->data = new Data();
         $hotels = $this->data->Hotels();
         $clients = $this->data->Clients();
+        $chambres = $this->data->chambres();
+        $reservations = $this->data->RESERVATIONS();
+        $contenu_reservations = $this->data->CONTENUE_RESERVATION();
+
+
+
 
         foreach ($hotels as $hotel) {
             $this->insertHotel($hotel);
@@ -60,23 +79,20 @@ class Repository
         foreach ($clients as $client) {
             $this->insertClient($client, 'test');
         }
+        foreach ($chambres as $chambre) {
+            $this->insertChambre($chambre);
+        }
 
-        // ////Ajout d'un utilisateur de statut client  Juste pour tester
-        // $mdp =['MtdPass'=>  Hash::make('test'),'Statut'=>'client','IdCompte'=>1];
-        // DB::table('MOTDEPASSE')->insertGetId($mdp);
+        foreach ($reservations as $reservation) {
+            $this->insertReservation($reservation);
+        }
+
+        foreach ($contenu_reservations as $contenu_reservation) {
+            // var_export($contenu_reservation);
+            $this->insertContenuReservation($contenu_reservation);
+        }
     }
-    function insertEquipement(array $Equipement): int
-    {
-        return DB::table('EQUIPEMENTS')->insertGetId($Equipement);
-    }
-    function insertReservation(array $Reservation): int
-    {
-        return DB::table('RESERVATIONS')->insertGetId($Reservation);
-    }
-    function insertContenuReservation(array $ContenuReservation): int
-    {
-        return DB::table('CONTENUE_RESERVATION')->insertGetId($ContenuReservation);
-    }
+
 
     /// Requettes de gestion 
 
@@ -169,21 +185,31 @@ class Repository
 
     public function hotelsVille($ville)
     {
-        return DB::table('HOTELS')->where('villeHotel', $ville)->get()->toArray();
+        if ($ville) {
+            return DB::table('HOTELS')->where('villeHotel', $ville)->get()->toArray();
+        }
+        return $this->hotels();
     }
 
 
-    public function chambreDisponibles($NumHotel)
+    public function chambreDisponibles($NumHotel, $dateA)
     {
 
-        /// La possibilite de la date ....
 
-        return DB::table('CHAMBRES')
-            ->select('NumChambre')
+        // chambreReserves qui seront dispo a la date d'arrive du client
+        $time = "13:00:00";
+        $datetime = "$dateA $time";
+
+        return  DB::table('CHAMBRES')
+            ->select()
             ->where('NumHotel', $NumHotel)
-            ->whereNotIn('NumChambre', DB::table('CONTENUE_RESERVATION')->select('NumChambre')->get()->toArray())
-            ->get();
-        
+            ->where('reserve', false)
+            ->orwhereIn('idChambre', DB::table('CONTENUE_RESERVATION')->select('idChambre')->where('DateDepart', '<', $datetime)->get()->toArray())
+            ->get()
+            ->toArray();
+
+        // VarDumper::dump($ChambreDisp);
+
+        // ->whereNotIn('NumChambre', DB::table('CONTENUE_RESERVATION')->select('NumChambre')->get()->toArray())
     }
-    //// 
 }

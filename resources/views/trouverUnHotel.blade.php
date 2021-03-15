@@ -1,11 +1,11 @@
 @extends('base')
 
-@section('title', 'Inscription')
+@section('title', 'Trouver un hôtel')
 
 @section('content')
 <form method="POST" action="{{route('trouverUnHotel.post')}}">
 
-     <!-- Première rangée -->
+    <!-- Première rangée -->
     <div class="row" role="group" aria-label="...">
         <div class="col">
             <input class="form-control" name="destination" id="destination" type="text" placeholder="Saisissez votre destination" />
@@ -27,7 +27,7 @@
             </select>
         </div>
     </div>
-     <!-- Deuxième rangée -->
+    <!-- Deuxième rangée -->
     <div class="row" role="group" aria-label="...">
         <div class="col">
             <input class="form-control " name="Prixmin" id="Prixmin" type="Number" placeholder="Prix minimum" />
@@ -49,6 +49,28 @@
         </div>
         <button type="submit" class="btn btn-primary">Rechercher</button>
     </div>
-   
+
+    @if(session()->get('chambresProposes'))
+
+    <div class="row">
+        @foreach (session()->get('chambresProposes') as $chambre)
+        <div class="col-md-4 col-sm-6">
+            <div class="product-grid2">
+                <div class="product-image2"> <a href="#"> <img class="pic-1" src='media/proposition3.jpg'> <img class="pic-2" src='media/proposition1.jpg'> </a>
+                    <ul class="social">
+                        <li><a href="#" data-tip="Quick View"><i class="fa"></i></a></li>
+                        <li><a href="#" data-tip="Add to Cart"><i class="fa fa-shopping-cart"></i></a></li>
+                    </ul>
+                </div>
+                <div class="product-content">
+                    <h3 class="title"><a href="{{route('hotels.show', ['NumHotel'=>$chambre['NumHotel']])}}"> {{$chambre['NumHotel']}}</a></h3> <span class="price">30</span>
+                </div>
+            </div>
+        </div>
+        @endforeach
+    </div>
+    @endif
+
+
 </form>
 @endsection

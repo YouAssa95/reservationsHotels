@@ -194,10 +194,8 @@ class Repository
 
     public function chambreDisponibles($NumHotel, $dateA)
     {
-
-
         // chambreReserves qui seront dispo a la date d'arrive du client
-        $time = "13:00:00";
+        $time = "00:00:00";
         $datetime = "$dateA $time";
 
         return  DB::table('CHAMBRES')
@@ -207,9 +205,5 @@ class Repository
             ->orwhereIn('idChambre', DB::table('CONTENUE_RESERVATION')->select('idChambre')->where('DateDepart', '<', $datetime)->get()->toArray())
             ->get()
             ->toArray();
-
-        // VarDumper::dump($ChambreDisp);
-
-        // ->whereNotIn('NumChambre', DB::table('CONTENUE_RESERVATION')->select('NumChambre')->get()->toArray())
     }
 }

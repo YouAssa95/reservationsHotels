@@ -55,20 +55,20 @@
   </div>
   @endif
 
-  <div class="form-group">
-    <label for="statut">Votre statut</label>
-    <select  id="statut" name="statut" required class="form-control @error('team1') is-invalid @enderror" aria-describedby="team1_feedback">
-      <option value="0">Vous êtes ? </option>
-      <option value="1">client</option>
-      <option value="2">manager</option>
-      <option value="3">admin</option>
-    </select>
+  <div class="form-check form-check-inline">
+    <input class="form-check-input" type="radio" name="client" id="inlineRadio1" value="client">
+    <label class="form-check-label" for="inlineRadio1">client</label>
   </div>
-  
+  <div class="form-check form-check-inline">
+    <input class="form-check-input" type="radio" name="manager" id="inlineRadio2" value="manager">
+    <label class="form-check-label" for="inlineRadio2">manager</label>
+  </div>
 
   <div class="form-group">
     <label for="password">Vous n'avez pas de compte? </label>
-    <a href="/register" style="color: blue; font-size:large"> S'inscire ici</a>
+    <label for="inscription" style="color: grey; font-size:large">S'inscire</label>
+    <a href="/register/client" style="color: blue; font-size:large"> client</a>
+    <a href="/entrerUnHotel" style="color: blue; font-size:large"> hôtel</a>
   </div>
   <button type="submit" class="btn btn-primary">Se connecter</button>
 </form>

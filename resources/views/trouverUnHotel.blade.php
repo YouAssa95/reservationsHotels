@@ -56,7 +56,7 @@
         @foreach (session()->get('chambresProposes') as $chambre)
         <div class="col-md-4 col-sm-6">
             <div class="product-grid2">
-                <div class="product-image2"> <a href="#"> <img class="pic-1" src='media/proposition3.jpg'> <img class="pic-2" src='media/proposition1.jpg'> </a>
+                <div class="product-image2"> <a href="#"> <img class="pic-1" src='media/proposition3.jpg'>  </a>
                     <ul class="social">
                         <li><a href="#" data-tip="Quick View"><i class="fa"></i></a></li>
                         <li><a href="#" data-tip="Add to Cart"><i class="fa fa-shopping-cart"></i></a></li>

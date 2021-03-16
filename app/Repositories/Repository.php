@@ -6,8 +6,10 @@ use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Symfony\Component\VarDumper\VarDumper;
+use Carbon\Carbon;
 
 use App\Repositories\Data;
+use DateTime;
 
 class Repository
 {
@@ -144,9 +146,10 @@ class Repository
     function reservationEnCours($NumClient): array
     {
 
+        //$today = Carbon::today();//
         $ReservationEnCours = DB::table('RESERVATIONS')
             ->where('NumClient', $NumClient)
-            ->where('DateDepart', '>', $date) // ????????????????? date de jour ?
+            ->where('DateDepart', '>', new DateTime('now')) // ????????????????? date de jour ?
             ->orderBy('DateDepart', 'asc')
             ->get()
             ->toArray();
@@ -158,7 +161,7 @@ class Repository
 
         $ReservationEnCours = DB::table('RESERVATIONS')
             ->where('NumClient', $NumClient)
-            ->where('DateDepart', '<', $date) // ????????????????? date de jour ?
+            ->where('DateDepart', '<', new DateTime('now')) // ????????????????? date de jour ?
             ->orderBy('DateDepart', 'asc')
             ->get()
             ->toArray();
@@ -194,16 +197,23 @@ class Repository
 
     public function chambreDisponibles($NumHotel, $dateA)
     {
+        VarDumper::dump($NumHotel);
+        // return;
         // chambreReserves qui seront dispo a la date d'arrive du client
         $time = "00:00:00";
         $datetime = "$dateA $time";
 
-        return  DB::table('CHAMBRES')
+        $u= DB::table('CHAMBRES')
+            ->join('HOTELS', 'HOTELS.NumHotel', '=', 'CHAMBRES.NumHotel')
             ->select()
-            ->where('NumHotel', $NumHotel)
-            ->where('reserve', false)
+            ->where('HOTELS.NumHotel', $NumHotel)
+            ->whereNotIn('idChambre', DB::table('CONTENUE_RESERVATION')->select('idChambre')->get()->toArray())
             ->orwhereIn('idChambre', DB::table('CONTENUE_RESERVATION')->select('idChambre')->where('DateDepart', '<', $datetime)->get()->toArray())
             ->get()
             ->toArray();
+            return $u;
+            // VarDumper::dump($u);
+            
     }
 }
+                                                                                       

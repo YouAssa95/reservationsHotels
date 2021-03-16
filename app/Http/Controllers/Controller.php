@@ -51,17 +51,44 @@ class Controller extends BaseController
             'dateD' => ['nullable'],
             'nbreLits' => ['nullable'],
             'Prixmin' => ['nullable'],
-            'Prixmax' => ['nullable'],
+            'Prixmax' => 'nullable',
+            'wifi'=> 'nullable',
+            'parking'=> 'nullable',
+            'fumeur'=> 'nullable',
+            'salleSport'=> 'nullable',
+            'animalFriendly'=> 'nullable',
         ];
 
+        
         // $messages = ['destination.required' => 'Entrer une destination'];
         
         $validatedData = $request->validate($rules);
-        $hotels=$this->repository->hotelsVille($validatedData['destination']);
+
+       
+        //// Liste des equipements cherchees 
+       $equipements =[
+        'wifi'=> isset($validatedData['wifi']) ? $validatedData['wifi']:null,
+        'parking'=>isset($validatedData['parking'])?$validatedData['parking'] :null,
+        'fumeur'=>isset($validatedData['fumeur'])?$validatedData['fumeur']:null,
+        'salleSport'=>isset($validatedData['salleSport'])?$validatedData['salleSport']:null,
+        'animalFriendly'=>isset($validatedData['animalFriendly'])?$validatedData['animalFriendly']:null
+        ];
+
+        $hotels=$this->repository->hotelsVille($validatedData['destination']); //// Critere destination
+
+        
+
+        
         $chambresProposes =[];
         foreach($hotels as $hotel){
-            $chambresProposes =array_merge($chambresProposes,$this->repository->chambreDisponibles($hotel['NumHotel'],$validatedData['dateA']));
+            $chambresProposes =array_merge($chambresProposes,$this->repository->chambreDisponibles($hotel['NumHotel'],$validatedData['dateA'])); /// critere disponibilité
+            
         }    
+        // VarDumper::dump($hotels);
+        // return;
+        /// faut ajouter critere du prix  et des equipements 
+        // VarDumper::dump($chambresProposes);
+        // return;
         $request->session()->put('chambresProposes',$chambresProposes);
         return  view('trouverUnHotel');
     }

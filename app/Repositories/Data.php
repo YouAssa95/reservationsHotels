@@ -43,12 +43,12 @@ function HOTELS()
     function CHAMBRES()
     {
         return [
-            ['idChambre'=>1,'NumChambre' => 1, 'NumHotel' => 1,'reserve'=>false],
-            ['idChambre'=>2,'NumChambre' => 2, 'NumHotel' => 1,'reserve'=>true],
-            ['idChambre'=>3,'NumChambre' => 3, 'NumHotel' => 2,'reserve'=>false],    
-            ['idChambre'=>4,'NumChambre' => 4, 'NumHotel' => 3,'reserve'=>false],    
-            ['idChambre'=>5,'NumChambre' => 5, 'NumHotel' => 5,'reserve'=>false],    
-            ['idChambre'=>6,'NumChambre' => 6, 'NumHotel' => 5,'reserve'=>false]
+            ['idChambre'=>1,'NumChambre' => 1, 'NumHotel' => 1 ],
+            ['idChambre'=>2,'NumChambre' => 2, 'NumHotel' => 1],
+            ['idChambre'=>3,'NumChambre' => 3, 'NumHotel' => 2 ],    
+            ['idChambre'=>4,'NumChambre' => 4, 'NumHotel' => 3 ],    
+            ['idChambre'=>5,'NumChambre' => 5, 'NumHotel' => 5 ],    
+            ['idChambre'=>6,'NumChambre' => 6, 'NumHotel' => 5 ]
         ];
     }     
 
@@ -72,13 +72,13 @@ function HOTELS()
     {
         return [
             //date de départ est présent 2 fois
-            ['NumReservation' => 1, 'idChambre' => 1,'NumHotel' => 1,'DateDepart' => '2021-03-15 13:00:00'],    
-            ['NumReservation' => 2, 'idChambre' => 2,'NumHotel' => 1,'DateDepart' => '2021-03-15 13:00:00'],    
-            ['NumReservation' => 3, 'idChambre' => 3,'NumHotel' => 2,'DateDepart' => '2021-03-15 13:00:00'],    
-            ['NumReservation' => 4, 'idChambre' => 4,'NumHotel' => 3,'DateDepart' => '2021-03-15 13:00:00'] ,
-            // ['NumReservation' => 4, 'idChambre' => 5,'NumHotel' => 5,'DateDepart' => '2021-03-12 13:00:00']  
-            // ['NumReservation' => 5, 'NumChambre' => 5,'NumHotel' => 4,'DateDepart' => '2021-03-04 13:00:00'],    
-            // ['NumReservation' => 6, 'NumChambre' => 6,'NumHotel' => 5,'DateDepart' => '2021-03-02 13:00:00'],    
+            ['NumReservation' => 1, 'idChambre' => 1,'DateDepart' => '2021-03-07 13:00:00'],    
+            ['NumReservation' => 2, 'idChambre' => 2,'DateDepart' => '2021-03-15 13:00:00'],    
+            ['NumReservation' => 3, 'idChambre' => 3,'DateDepart' => '2021-03-18 13:00:00'],    
+            ['NumReservation' => 4, 'idChambre' => 4,'DateDepart' => '2021-03-15 13:00:00'] ,
+            // ['NumReservation' => 4, 'idChambre' => 5,'DateDepart' => '2021-03-12 13:00:00']  
+            // ['NumReservation' => 5, 'NumChambre' => 5,'DateDepart' => '2021-03-04 13:00:00'],    
+            // ['NumReservation' => 6, 'NumChambre' => 6,'DateDepart' => '2021-03-02 13:00:00'],    
      
         ];
     }

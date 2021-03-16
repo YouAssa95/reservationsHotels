@@ -5,6 +5,7 @@
 @section('title', 'entrer un hôtel')
 
 @section('content')
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 <script src="{{asset('js/JSentrerUnHotel.js')}}"></script>
 <form method="POST" >

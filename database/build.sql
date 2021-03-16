@@ -6,14 +6,14 @@ DROP TABLE IF EXISTS  EQUIPEMENTS;
 DROP TABLE IF EXISTS  CLIENTS;
 DROP TABLE IF EXISTS  MOTDEPASSE;
 
-
 CREATE TABLE CLIENTS (
     NumClient integer PRIMARY KEY AUTOINCREMENT,
     NomClient varchar(40),
     PrenClient varchar(40),
     MailClient varchar(40),
     TelClient varchar(40),
-    DateNaiss DATE
+    DateNaiss DATE,
+    UNIQUE(MailClient)
 );
 
 CREATE TABLE EQUIPEMENTS (
@@ -27,15 +27,18 @@ CREATE TABLE EQUIPEMENTS (
 
 CREATE TABLE HOTELS(
     NumHotel  integer PRIMARY KEY AUTOINCREMENT,
-    NumGerant integer,
-    logoHotel VARCHAR,
+    NomGerant VARCHAR(40),
+    PrenGerant VARCHAR(40), 
+    logoHotel VARCHAR(40),
     NomHotel VARCHAR(40),
     emailHotel VARCHAR(40),
     AdresseHotel VARCHAR(40),
-    cpHotel integer,
+    cpHotel VARCHAR(40),
     villeHotel VARCHAR(40),
-    classeHotel integer
+    classeHotel integer,
+    UNIQUE(emailHotel)
 );
+
 
 CREATE TABLE RESERVATIONS (
     NumReservation integer PRIMARY KEY AUTOINCREMENT,
@@ -45,11 +48,11 @@ CREATE TABLE RESERVATIONS (
     FOREIGN KEY(NumClient) REFERENCES CLIENTS(NumClient)
 );
 
+
 CREATE TABLE CHAMBRES(
 	NumChambre integer ,
 	NumHotel integer,
 	NbreLits integer,
-	NumGerant integer,
 	Surface integer,
 	prix integer,
 	idEquipement integer,
@@ -72,5 +75,9 @@ CREATE TABLE CONTENUE_RESERVATION(
 CREATE TABLE MOTDEPASSE (
 	MtdPass varchar(40),
     Statut varchar(6),
-    IdCompte integer
+    IdCompte integer, 
+    PRIMARY KEY ( MtdPass,Statut,IdCompte)
 );
+
+
+

@@ -5,143 +5,156 @@ namespace App\Repositories;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Symfony\Component\VarDumper\VarDumper;
 
 use App\Repositories\Data;
 
 class Repository
 {
-    function createDatabase(): void 
+    function createDatabase(): void
     {
         DB::unprepared(file_get_contents('database/build.sql'));
     }
-<<<<<<< HEAD
-    function insertClient(array $Clients): int
+    function insertClient(array $client,string $password):int
     {
-        return DB::table('CLIENTS') -> insertGetId(['NumClient'=> $Clients['NumClient'],'NomClient' => $Clients['NomClient'],'PrenClient' => $Clients['PrenClient'],
-                                                    'MailClient' => $Clients['MailClient'],'TelClient' => $Clients['TelClient'],'DateNaiss' => $Clients['DateNaiss']]);
-=======
-    
-    function insertClient(array $Client): int
-    {   
-        return DB::table('CLIENTS') -> insertGetId($Client);
-       
->>>>>>> 4b0611b57fc588777c0b001266c42202c92a7884
+        $id= DB::table('CLIENTS')->insertGetId($client);        
+        $this->insertPassword($id,'client',$password);
+        return $id;
+    }
+
+    function insertPassword(int $idCompte,string $statut,string $password): bool
+    {
+        $passwordHash =  Hash::make($password);
+
+        try {
+            return DB::table('MOTDEPASSE')->insertGetId(['idCompte'=>$idCompte,'Statut' => $statut, 'MtdPass' => $passwordHash]);
+        } catch (Exception $exception) {
+            throw new Exception('utilisateur existe  existe déjà');
+        }
     }
 
     function insertHotel(array $Hotel): int
     {
-<<<<<<< HEAD
-        return DB::table('HOTELS') -> insertGetId(['NumHotel'=> $Hotel['NumHotel'],'logoHotel' => $Hotel['logoHotel'],'NomHotel' => $Hotel['NomHotel'],
-                                                    'NomGerant' => $Hotel['NomGerant'],'PrenGerant' => $Hotel['PrenGerant'],'DateNaissGerant' => $Hotel['DateNaissGerant'],
-                                                    'emailHotel' => $Hotel['emailHotel'],'AdresseHotel' => $Hotel['AdresseHotel'],'cpHotel' => $Hotel['cpHotel'],
-                                                    'villeHotel' => $Hotel['villeHotel'],'classeHotel' => $Hotel['classeHotel']]);   
-=======
-        return DB::table('HOTELS') -> insertGetId($Hotel);   
->>>>>>> 4b0611b57fc588777c0b001266c42202c92a7884
+        return DB::table('HOTELS')->insertGetId($Hotel);
     }
-    
+
     function insertChambre(array $Chambre): int
     {
-        return DB::table('HOTELS') -> insertGetId($Chambre);   
+        return DB::table('CHAMBRES')->insertGetId($Chambre);
     }
     function hotels(): array
     {
         return DB::table('HOTELS')->orderBy('id', 'asc')->get()->toArray();
     }
-   
-    
+
+
     function fillDatabase(): void
     {
         $this->data = new Data();
         $hotels = $this->data->Hotels();
-        $clients =$this->data->Clients();
+        $clients = $this->data->Clients();
 
         foreach ($hotels as $hotel) {
             $this->insertHotel($hotel);
         }
         foreach ($clients as $client) {
-            $this->insertClient($client);
+            $this->insertClient($client,'test');
         }
+
+        // ////Ajout d'un utilisateur de statut client  Juste pour tester
+        // $mdp =['MtdPass'=>  Hash::make('test'),'Statut'=>'client','IdCompte'=>1];
+        // DB::table('MOTDEPASSE')->insertGetId($mdp);
     }
     function insertEquipement(array $Equipement): int
     {
-        return DB::table('EQUIPEMENTS') -> insertGetId(['idEquipemet'=> $Equipement['idEquipemet'],'wifi' => $Equipement['wifi'],'parking' => $Equipement['parking'],
-                                                    'salleSport' => $Equipement['salleSport'],'animalFriendly' => $Equipement['animalFriendly'],'Fumeur' => $Equipement['Fumeur']]);   
+        return DB::table('EQUIPEMENTS')->insertGetId($Equipement);
     }
     function insertReservation(array $Reservation): int
     {
-        return DB::table('RESERVATIONS') -> insertGetId(['NumReservation'=> $Reservation['NumReservation'],'DateArrive' => $Reservation['DateArrive'],'DateDepart' => $Reservation['DateDepart'],
-                                                    'NumClient' => $Reservation['NumClient']]);   
+        return DB::table('RESERVATIONS')->insertGetId($Reservation);
     }
     function insertContenuReservation(array $ContenuReservation): int
     {
-        return DB::table('CONTENUE_RESERVATION') -> insertGetId(['NumReservation'=> $ContenuReservation['NumReservation'],'NumChambre' => $ContenuReservation['NumChambre'],'NumHotel' => $ContenuReservation['NumHotel'],
-                                                    'DateDepart' => $ContenuReservation['DateDepart']]);   
+        return DB::table('CONTENUE_RESERVATION')->insertGetId($ContenuReservation);
     }
 
     /// Requettes de gestion 
 
-    function infoComptClient ($NumClient): array
+    function checkPassword(String $password, string $passwordHash): bool
     {
-        try{
-        return DB::table('CLIENTS')
-        ->where('NumClient', $NumClient)
-        ->get()
-        ->toArray(); 
+        if (Hash::check($password, $passwordHash)) {
+            return true;
+        } else {
+            throw new Exception('Utilisateur inconnu');
+            return false;
+        }
+    }
+
+    
+
+    function infoComptClient($MailClient,string $password) :array
+    {        
+        try {
+            $client= DB::table('CLIENTS')->where('MailClient', $MailClient)->get()->toArray();
+            
+           $row = DB::table('MOTDEPASSE')->where('IdCompte', $client[0]['NumClient'])->get()->toArray();
+            
+            if ($this->checkPassword($password, $row[0]['MtdPass'])) {
+                    return $client[0];
+            }          
         } catch (Exception $exception) {
             throw new Exception('Client inconnue');
         }
     }
-    function infoComptHotel ($NumHotel): array
-    {
-        try{
-        return DB::table('HOTELS')
-        ->where('NumHotel', $NumHotel)
-        ->get()
-        ->toArray(); 
 
+    function infoComptHotel($NumHotel): array
+    {
+        try {
+            return DB::table('HOTELS')
+                ->where('NumHotel', $NumHotel)
+                ->get()
+                ->toArray();
         } catch (Exception $exception) {
             throw new Exception('Hotel inconnue');
         }
     }
 
-    function reservationEnCours ($NumClient): array
+    function reservationEnCours($NumClient): array
     {
-        
-        $ReservationEnCours= DB::table('RESERVATIONS')
-        ->where('NumClient', $NumClient)
-        ->where('DateDepart', '>' , date) // ????????????????? date de jour ?
-        ->orderBy('DateDepart', 'asc')
-        ->get()
-        ->toArray(); 
-       // if ($ReservationEnCours != NULL){}
-        return $ReservationEnCours; 
+
+        $ReservationEnCours = DB::table('RESERVATIONS')
+            ->where('NumClient', $NumClient)
+            ->where('DateDepart', '>', $date) // ????????????????? date de jour ?
+            ->orderBy('DateDepart', 'asc')
+            ->get()
+            ->toArray();
+        // if ($ReservationEnCours != NULL){}
+        return $ReservationEnCours;
     }
-    function reservationHistorique ($NumClient): array
+    function reservationHistorique($NumClient): array
     {
-        
-        $ReservationEnCours= DB::table('RESERVATIONS')
-        ->where('NumClient', $NumClient)
-        ->where('DateDepart', '<' , date) // ????????????????? date de jour ?
-        ->orderBy('DateDepart', 'asc')
-        ->get()
-        ->toArray(); 
-       // if ($ReservationEnCours != NULL){}
-        return $ReservationEnCours; 
-    } 
-    function chambreReservees ($NumClient): array
+
+        $ReservationEnCours = DB::table('RESERVATIONS')
+            ->where('NumClient', $NumClient)
+            ->where('DateDepart', '<', $date) // ????????????????? date de jour ?
+            ->orderBy('DateDepart', 'asc')
+            ->get()
+            ->toArray();
+        // if ($ReservationEnCours != NULL){}
+        return $ReservationEnCours;
+    }
+
+    function chambreReservees($NumClient): array
     {
-        $reservationEnCours =$this->reservationEnCours($NumClient)
-       
+        $reservationEnCours = $this->reservationEnCours($NumClient);
 
         return DB::table('CONTENUE_RESERVATION')
-        ->where('NumClient', $NumClient)
-        ->where('NumReservation', 'IN' , $reservationEnCours['NumReservation']) // ????????????????? date de jour ?
-        //->orderBy('DateDepart', 'asc')
-        ->get()
-        ->toArray(); 
-       // if ($ReservationEnCours != NULL){}
-          
-    }
+            ->where('NumClient', $NumClient)
+            ->where('NumReservation', 'IN', $reservationEnCours['NumReservation']) // ????????????????? date de jour ?
+            //->orderBy('DateDepart', 'asc')
+            ->get()
+            ->toArray();
+        // if ($ReservationEnCours != NULL){}
 
+    }
 }

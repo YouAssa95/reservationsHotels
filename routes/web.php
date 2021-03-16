@@ -14,6 +14,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Controller;
 
+
 Route::get('/', [Controller::class, 'welcome'])->name('accueil');
 Route::get('/entrerUnHotel', [Controller::class, 'entrerUnHotel'])->name('entrerUnHotel');
 
@@ -36,3 +37,4 @@ Route::get('/contact', [Controller::class, 'showContactForm'])->name('contact');
 Route::post('/contact', [Controller::class, 'contact'])->name('contact.post');
 
 Route::get('/hotels/{NumHotel}', [Controller::class, 'showHotel'])->where('NumHotel', '[0-9]+')->name('hotels.show');
+

@@ -20,14 +20,19 @@ Route::get('/entrerUneChambre', [Controller::class, 'entrerUneChambre'])->name('
 Route::post('/entrerUneChambre', [Controller::class, 'registerUneChambre'])->name('registerUneChambre.post');
 
 Route::get('/trouverUnHotel', [Controller::class, 'trouverUnHotel'])->name('trouverUnHotel');
+Route::post('/trouverUnHotel', [Controller::class, 'trouverUnHotelResults'])->name('trouverUnHotel.post');
+
 Route::get('/aboutUs', [Controller::class, 'aboutUs'])->name('aboutUs');
 Route::get('/hotels', [Controller::class, 'hotels'])->name('hotels');
 
 Route::get('/login', [Controller::class, 'showLoginForm'])->name('login');
 Route::post('/login', [Controller::class, 'login'])->name('login.post');
 
-Route::get('/register', [Controller::class, 'showRegisterForm'])->name('register');
-Route::post('/register', [Controller::class, 'register'])->name('register.post');
+Route::get('/register/client', [Controller::class, 'showRegisterForm'])->name('register');
+Route::post('/register/client', [Controller::class, 'registerClient'])->name('register.post');
+
+Route::get('/logout', [Controller::class, 'logout'])->name('logout');
+
 
 
 
@@ -35,3 +40,4 @@ Route::get('/contact', [Controller::class, 'showContactForm'])->name('contact');
 Route::post('/contact', [Controller::class, 'contact'])->name('contact.post');
 
 Route::get('/hotels/{NumHotel}', [Controller::class, 'showHotel'])->where('NumHotel', '[0-9]+')->name('hotels.show');
+

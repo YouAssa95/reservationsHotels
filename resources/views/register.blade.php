@@ -8,6 +8,7 @@
   @if ($errors->any())
   <div class="alert alert-warning">
     Inscription échouée &#9785;
+    {{$errors}}
   </div>
   @endif
 
@@ -56,15 +57,6 @@
       {{ $message }}
     </div>
     @enderror
-  </div>
-  <div class="form-group">
-    <label for="statut">Votre statut</label>
-    <select id="statut" name="statut" required class="form-control @error('team1') is-invalid @enderror" aria-describedby="team1_feedback">
-      <option value="0">Vous êtes ? </option>
-      <option value="1">client</option>
-      <option value="2">manager</option>
-      <option value="3">admin</option>
-    </select>
   </div>
   <div class="form-group">
     <label for="password">Mot de passe</label>

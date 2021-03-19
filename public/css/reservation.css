@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css?family=Advent+Pro|Dancing+Script&display=swap');
+
+body {
+  font-family: 'Advent Pro', sans-serif;
+  padding: 0;
+  margin: 0;
+}
+
+#form1{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 10px 20% 50px 20% ;  
+    margin-left: 650px;
+}
+button {
+    font-size: 1.5em;
+    background-color: #FFFAE1;
+    border: none;
+    width: 100%;
+    padding: 15px 10px;
+    margin: 1px 0;
+    font-size: 1.2em;
+    font-family: 'Advent Pro', sans-serif;
+    border-radius: 8px;
+  }
+  button:hover {
+    background-color: #e55039;
+    color: #FFFAE1;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+  }
+
+.Paragraphe1 {
+  position: absolute;
+  top:0;
+  margin-left: 50px;
+  
+}

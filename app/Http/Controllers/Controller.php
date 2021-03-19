@@ -4,13 +4,17 @@ namespace App\Http\Controllers;
 
 use Exception;
 use App\Repositories\Repository;
+use Facade\FlareClient\Http\Client;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
+use Mockery\Undefined;
 use PhpParser\Node\Stmt\Return_;
 use Symfony\Component\VarDumper\VarDumper;
+use Symfony\Contracts\Service\Attribute\Required;
+
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
@@ -132,7 +136,7 @@ class Controller extends BaseController
         for ($num=1;$num<= $validatedData['nb_chambre'];$num++){
             $ChambreId = $this->repository->insertChambre([
                 'NumChambre'=> $num,
-                'ImagChambre' => $validatedData['ImagChambre'],
+                'imageCh' => $validatedData['ImagChambre'],
                 'NumHotel' => $hotelId,
                 'NbreLits' => $validatedData['NbreLits'],
                 'Surface' => $validatedData['Surface'],
@@ -183,6 +187,58 @@ class Controller extends BaseController
         
         return view('trouverUnHotel');
     }
+
+    public function trouverUnHotelResults(Request $request)
+    {
+        
+
+        $rules = [
+            'destination' => ['nullable'],
+            'dateA' => ['nullable'],
+            'dateD' => ['nullable'],
+            'nbreLits' => ['nullable'],
+            'Prixmin' => ['nullable'],
+            'Prixmax' => 'nullable',
+            'wifi'=> 'nullable',
+            'parking'=> 'nullable',
+            'fumeur'=> 'nullable',
+            'salleSport'=> 'nullable',
+            'animalFriendly'=> 'nullable',
+        ];
+
+        
+        // $messages = ['destination.required' => 'Entrer une destination'];
+        
+        $validatedData = $request->validate($rules);
+
+       
+        //// Liste des equipements cherchees 
+       $equipements =[
+        'wifi'=> isset($validatedData['wifi']) ? $validatedData['wifi']:null,
+        'parking'=>isset($validatedData['parking'])?$validatedData['parking'] :null,
+        'fumeur'=>isset($validatedData['fumeur'])?$validatedData['fumeur']:null,
+        'salleSport'=>isset($validatedData['salleSport'])?$validatedData['salleSport']:null,
+        'animalFriendly'=>isset($validatedData['animalFriendly'])?$validatedData['animalFriendly']:null
+        ];
+
+        $hotels=$this->repository->hotelsVille($validatedData['destination']); //// Critere destination
+
+        
+
+        
+        $chambresProposes =[];
+        foreach($hotels as $hotel){
+            $chambresProposes =array_merge($chambresProposes,$this->repository->chambreDisponibles($hotel['NumHotel'],$validatedData['dateA'])); /// critere disponibilité
+            
+        }    
+        // VarDumper::dump($hotels);
+        // return;
+        /// faut ajouter critere du prix  et des equipements 
+        // VarDumper::dump($chambresProposes);
+        // return;
+        $request->session()->put('chambresProposes',$chambresProposes);
+        return  view('trouverUnHotel');
+    }
     
     public function aboutUs()
     {
@@ -193,60 +249,20 @@ class Controller extends BaseController
       $hotels = $this->repository->hotels();  
       return view('hotels',['hotels' => $hotels]);
     }
+   
     
     public function showLoginForm()
     {
       return view('login');
     }
-
-    
-    public function register(Request $request, Repository $repository)
-    {
-        $rules = [
-            'email' => ['required', 'email'],
-            'password' => ['required'],
-            'lastname' => ['string'],
-            'firstname' => ['string'],
-            'firstname' => ['nullable'],
-            'lastname' => ['nullable'],
-            'statut' => ['required'],
-            'dateNaiss' => ['required'],
-            'tel' => ['required'],
-        ];
-        $messages = [
-            'email.required' => 'Vous devez saisir un e-mail.',
-            'email.email' => 'Vous devez saisir un e-mail valide.',
-            'password.required' => "Vous devez saisir un mot de passe.",
-
-            'lastname.string' => "Vous devez saisir un nom valide",
-            'firstname.string' => "Vous devez saisir un prénom valide",
-        ];
-        $validatedData = $request->validate($rules, $messages);
-        
-        if ($validatedData['statut']==1) {
-            $client = [
-                'NomClient' => $validatedData['lastname'], 
-                'PrenClient' => $validatedData['firstname'], 
-                'MailClient' => $validatedData['email'],
-                'TelClient' => $validatedData['tel'],
-                'DateNaiss' => $validatedData['dateNaiss'],
-            ];
-        }
-
-        try {
-           $repository->insertClient($client, $validatedData['password']);
-            return redirect()->route('accueil');
-        } catch (Exception $e) {
-            return view('register');
-        }
-    }
-    
     public function login(Request $request, Repository $repository)
     {
     
         $rules = [
             'email' => ['required', 'email', 'exists:CLIENTS,MailClient'],
-            'password' => ['required']
+            'password' => ['required'],
+            'manager' => 'nullable',
+            'client' => 'nullable'
         ];
         $messages = [
             'email.required' => 'Vous devez saisir un e-mail.',
@@ -254,12 +270,20 @@ class Controller extends BaseController
             'email.exists' => "Cet utilisateur n'existe pas.",
             'password.required' => "Vous devez saisir un mot de passe.",
         ];
+
+        
        
         $validatedData = $request->validate($rules, $messages);
+        
         try {
             try {
-                $client=$repository->infoComptClient($validatedData['email'], $validatedData['password']);
-                $request->session()->put('user', $client);
+                if (isset($validatedData['client'])) {
+                    $user=$repository->infoComptClient($validatedData['email'], $validatedData['password']);
+                } 
+                if(isset($validatedData['manager'])){
+                    $user=$repository->infoComptHotel($validatedData['email'], $validatedData['password']);
+                }
+                $request->session()->put('user', $user);
                 return redirect()->route('accueil');
                 
             } catch (Exception $e) {
@@ -276,6 +300,60 @@ class Controller extends BaseController
     {
       return view('register');
     }
+
+    public function registerClient(Request $request, Repository $repository)
+    {
+        $rules = [
+            'email' => ['required', 'email'],
+            'password' => ['required'],
+            'lastname' => ['string'],
+            'lastname' => ['nullable'],
+            'firstname' => ['string'],
+            'firstname' => ['nullable'],
+            'dateNaiss' => ['required'],
+            'tel' => ['required'],
+        ];
+
+        $messages = [
+            'email.required' => 'Vous devez saisir un e-mail.',
+            'email.email' => 'Vous devez saisir un e-mail valide.',
+            'password.required' => "Vous devez saisir un mot de passe.",
+
+            'lastname.string' => "Vous devez saisir un nom valide",
+            'firstname.string' => "Vous devez saisir un prénom valide",
+        ];
+        
+        $validatedData = $request->validate($rules, $messages);
+        
+            $client = [
+                'NomClient' => $validatedData['lastname'], 
+                'PrenClient' => $validatedData['firstname'], 
+                'MailClient' => $validatedData['email'],
+                'TelClient' => $validatedData['tel'],
+                'DateNaiss' => $validatedData['dateNaiss'],
+            ];
+     
+
+        try {
+           $repository->insertClient($client, $validatedData['password']);
+            
+           $request->session()->put(['redirectFromRegister' => true, 'redirectEmail' => $validatedData['email'], 'redirectPassword' => $validatedData['password']]);
+           return redirect()->route('login');
+            // return redirect()->route('accueil');
+        } catch (Exception $e) {
+            return view('register');
+        }
+    }
+    
+
+
+    public function logout(Request $request)
+    {
+        $request->session()->forget('user');
+        return redirect()->route('accueil');
+    }
+    
+   
     public function showContactForm()
     {
       return view('contact');

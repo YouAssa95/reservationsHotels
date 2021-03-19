@@ -28,7 +28,154 @@ class Controller extends BaseController
     public function entrerUnHotel()
     {
         
-        return view('entrerUnHotel');
+        return view('entrerUnHotel',['lol'=>'4']);
+    }
+    public function registerUnHotel(Request $request, Repository $repository){
+        $rules = [
+
+             'logoHotel' => ['required'],
+            'NomHotel' => ['required', 'min:3', 'max:20'],
+            'NomGerant' => ['required', 'min:3', 'max:20'],
+            'PrenGerant' => ['required', 'min:3', 'max:20'],
+            'DateNaissGerant' => ['required'],
+
+            'AdresseHotel' => ['required'],
+            'cpHotel' => ['required'],
+            'villeHotel' => ['required'],
+            'classeHotel' => ['required'],
+            'emailHotel' => ['required', 'email'],
+            'MtdPass' => ['required'],
+
+             /* ********************************** chambre ********************* */   
+            'ImagChambre' => ['required'],
+            'nb_chambre' => ['required'],
+            'NbreLits' => ['required'],
+            'Surface' => ['required'],
+            'prix' => ['required'],
+            /* ********************************** équipement ********************* */ 
+            'parking' => [''],
+            'wifi' => [''],
+            'salleSport' => [''],
+            'animalFriendly' => [''],
+            'Fumeur' => [''],
+
+        ];
+        $messages = [
+             'logoHotel.required' => "Vous devez choisir un fichier valide",
+            
+            'NomHotel.required' => "Vous devez saisir un nom valide",
+            'NomHotel.min' => "Le nom doit contenir au moins :min caractères.",
+            'NomHotel.max' => "Le nom doit contenir au plus :max caractères.",
+            
+            'NomGerant.required' => "Vous devez saisir un nom valide",
+            'NomGerant.min' => "Le nom doit contenir au moins :min caractères.",
+            'NomGerant.max' => "Le nom doit contenir au plus :max caractères.",
+
+            'PrenGerant.required' => "Vous devez saisir un prénom valide",
+            'PrenGerant.min' => "Le nom doit contenir au moins :min caractères.",
+            'PrenGerant.max' => "Le nom doit contenir au plus :max caractères.",
+
+            
+            'DateNaissGerant.required' => "Vous devez saisir une date valide",
+            'AdresseHotel.required' => "Vous devez saisir une adresse valide",
+            'cpHotel.required' => "Vous devez saisir un code postal valide",
+            'villeHotel.required' => "Vous devez saisir un nom de ville valide",
+            'classeHotel.required' => "Vous devez choisir une classe Hotel valide",
+            
+            'emailHotel.required' => 'Vous devez saisir un e-mail.',
+            'emailHotel.email' => 'Vous devez saisir un e-mail valide.',
+            'MtdPass.required' => "Vous devez saisir un mot de passe.",
+            /* ********************************** chambre ********************* */    
+            'ImagChambre.required' => "Vous devez choisir un fichier valide",
+            'nb_chambre.required' => 'Vous devez saisir nombre de chambre valide.',
+            'NbreLits.required' => 'Vous devez saisir nombre de lits valide.',
+            'Surface.required' => "Vous devez saisir un nombre valide.",
+            'prix.required' => "Vous devez saisir un nombre valide."
+
+            /* ********************************** équipement ********************* */ 
+              
+
+        ];
+        $validatedData = $request->validate($rules, $messages);
+
+        
+        try {
+        // add Hotel :    
+        $hotelId = $this->repository->insertHotel([
+                'NomGerant' => $validatedData['NomGerant'],
+                'PrenGerant' => $validatedData['PrenGerant'],
+                'DateNaissGerant' => $validatedData['DateNaissGerant'],
+                'logoHotel' => $validatedData['logoHotel'],
+                'NomHotel' => $validatedData['NomHotel'],
+                'emailHotel' => $validatedData['emailHotel'],
+                'AdresseHotel' => $validatedData['AdresseHotel'],
+                'cpHotel' => $validatedData['cpHotel'],
+                'villeHotel' => $validatedData['villeHotel'],
+                'classeHotel' => $validatedData['classeHotel']
+                
+                
+                ]);
+
+                /*VarDumper::dump($parking);
+                return;*/
+        
+        // add Equipement :      
+        $EquipementId = $this->repository->insertEquipement([ 
+            'parking' =>(isset($validatedData['parking'])) ? $validatedData['parking'] : NULL,
+            'wifi' =>(isset($validatedData['wifi'])) ? $validatedData['wifi'] : NULL,
+            'salleSport' => (isset($validatedData['salleSport'])) ? $validatedData['salleSport'] : NULL,
+            'animalFriendly' => (isset($validatedData['animalFriendly'])) ? $validatedData['animalFriendly'] : NULL,
+            'Fumeur' => (isset($validatedData['Fumeur'])) ? $validatedData['Fumeur'] : NULL 
+        ]);
+
+        // add Chambres :
+        for ($num=1;$num<= $validatedData['nb_chambre'];$num++){
+            $ChambreId = $this->repository->insertChambre([
+                'NumChambre'=> $num,
+                'ImagChambre' => $validatedData['ImagChambre'],
+                'NumHotel' => $hotelId,
+                'NbreLits' => $validatedData['NbreLits'],
+                'Surface' => $validatedData['Surface'],
+                'prix' => $validatedData['prix'],
+                'idEquipement'=>$EquipementId
+                ]);
+            }       
+     
+        } catch (Exception $exception) {
+           
+            return redirect()->route('entrerUnHotel')->withInput()->withErrors("L'hôtel n'a pas pu être ajoutée.");
+        }
+        return redirect()->route('entrerUneChambre');
+        
+    }
+    public function entrerUneChambre(){
+         
+      
+        return view('addChambre');
+
+    }
+
+
+
+
+    public function registerEquipements(Request $request, Repository $repository){
+       /* $rules = [
+
+             'parking' => ['required'],
+            'wifi' => ['required'],
+            'salleSport' => ['required'],
+            'animalFriendly' => ['required'],
+            'Fumeur' => ['required'],
+        ];
+        $messages = [
+            'parking.required' => "Vous devez choisir un fichier valide",
+            'nb_chambre.required' => 'Vous devez saisir nombre de chambre valide.',
+            'NbreLits.required' => 'Vous devez saisir nombre de lits valide.',
+            'Surface.required' => "Vous devez saisir un nombre valide.",
+            'prix.required' => "Vous devez saisir un nombre valide."
+        ]
+        $validatedData = $request->validate($rules, $messages);
+        */
     }
     
     public function trouverUnHotel()

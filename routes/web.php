@@ -13,17 +13,12 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Controller;
-<<<<<<< HEAD
-Route::get('/', [Controller::class, 'showRanking'])->name('ranking.show');
-Route::get('/teams/{teamId}', [Controller::class, 'showTeam'])->where('teamId', '[0-9]+')->name('teams.show');
-Route::get('/teams/create', [Controller::class, 'createTeam'])->name('teams.create');
-Route::post('/teams', [Controller::class, 'storeTeam'])->name('teams.store');
-Route::get('/matches/create', [Controller::class, 'createMatch'])->name('matches.create');
-Route::post('/matches', [Controller::class, 'storeMatch'])->name('matches.store');
-Route::post('/wahaby', [Controller::class, 'storeMatch'])->name('team');
-=======
 Route::get('/', [Controller::class, 'welcome'])->name('accueil');
 Route::get('/entrerUnHotel', [Controller::class, 'entrerUnHotel'])->name('entrerUnHotel');
+Route::post('/entrerUnHotel', [Controller::class, 'registerUnHotel'])->name('registerUnHotel.post');
+Route::get('/entrerUneChambre', [Controller::class, 'entrerUneChambre'])->name('entrerUneChambre');
+Route::post('/entrerUneChambre', [Controller::class, 'registerUneChambre'])->name('registerUneChambre.post');
+
 Route::get('/trouverUnHotel', [Controller::class, 'trouverUnHotel'])->name('trouverUnHotel');
 Route::get('/aboutUs', [Controller::class, 'aboutUs'])->name('aboutUs');
 Route::get('/hotels', [Controller::class, 'hotels'])->name('hotels');
@@ -34,8 +29,9 @@ Route::post('/login', [Controller::class, 'login'])->name('login.post');
 Route::get('/register', [Controller::class, 'showRegisterForm'])->name('register');
 Route::post('/register', [Controller::class, 'register'])->name('register.post');
 
+
+
 Route::get('/contact', [Controller::class, 'showContactForm'])->name('contact');
 Route::post('/contact', [Controller::class, 'contact'])->name('contact.post');
 
 Route::get('/hotels/{NumHotel}', [Controller::class, 'showHotel'])->where('NumHotel', '[0-9]+')->name('hotels.show');
->>>>>>> 4ce86a34ee739891db170de9562230b148d4402d

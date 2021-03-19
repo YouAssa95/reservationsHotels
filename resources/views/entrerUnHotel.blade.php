@@ -6,44 +6,257 @@
 
 @section('content')
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-<script src="{{asset('js/JSentrerUnHotel.js')}}"></script>
-<form method="POST" >
+
+<form method="POST" action="{{route('registerUnHotel.post')}}" >
+<!-- novalidate -->
   <div class="partietotal">
 	  <div class="partie1">
 	    <h1> entrer un hôtel</h1>
+      <!-- ************************************************************* -->
+    @if ($errors->any())
+        <div class="alert alert-warning">
+            L'hôtel n'a pas pu être ajoutée &#9785;
+        </div>
+    @endif
+    <!-- ************************************************************* -->
+        <div class="form-group">
+          <label for="logoHotel">Sélectionner un logo :</label><br>
+          <input  type="file" name="logoHotel" id="logoHotel" tabindex="0" accept=".png,.JFIF,.pdf" aria-describedby="logoHotel_feedback" class="form-control @error('logoHotel') is-invalid @enderror" required><br>
+          @error('logoHotel')
+            <div id="logoHotel_feedback" class="invalid-feedback">
+              {{ $message }}
+            </div>
+            @enderror
+        </div> 
+ <!-- ************************************************************* -->
+        <div class="form-group">
+          <label for="NomHotel"> nom d'hôtel :</label><br>
+          <input  type="text" id="NomHotel" name="NomHotel" value="{{ old('NomHotel') }}" placeholder="nom d'hôtel" aria-describedby="NomHotel_feedback" class="form-control @error('NomHotel') is-invalid @enderror" required><br>
+          @error('NomHotel')
+            <div id="NomHotel_feedback" class="invalid-feedback">
+              {{ $message }}
+            </div>
+            @enderror
+        </div>
+ <!-- ************************************************************* -->
+ 
+        <div class="form-group">
+          <label for="NomGerant">nom de gérant :</label><br>
+          <input  type="text" id="NomGerant" name="NomGerant" value="{{ old('NomGerant') }}" placeholder="nom de gérant" aria-describedby="NomGerant_feedback" class="form-control @error('NomGerant') is-invalid @enderror" required><br>
+          @error('NomGerant')
+            <div id="NomGerant_feedback" class="invalid-feedback">
+              {{ $message }}
+            </div>
+            @enderror
+        </div>
+ <!-- ************************************************************* -->
+        <div class="form-group" >
+          <label for="PrenGerant">prénom de gérant :</label><br>
+          <input  type="text" id="PrenGerant" name="PrenGerant" value="{{ old('PrenGerant') }}" placeholder="prénom de gérant" aria-describedby="PrenGerant_feedback" class="form-control @error('PrenGerant') is-invalid @enderror" required><br>
+          @error('PrenGerant')
+            <div id="PrenGerant_feedback" class="invalid-feedback">
+              {{ $message }}
+            </div>
+            @enderror
+        </div>
+ <!-- ************************************************************* -->
+        <div class="form-group">
+          <label for="DateNaissGerant">date de naissance :</label><br>
+          <input  type="date" id="DateNaissGerant" name="DateNaissGerant" value="{{ old('DateNaissGerant') }}" aria-describedby="DateNaissGerant_feedback" class="form-control @error('DateNaissGerant') is-invalid @enderror" required><br>
+          @error('DateNaissGerant')
+            <div id="DateNaissGerant_feedback" class="invalid-feedback">
+              {{ $message }}
+            </div>
+            @enderror
+        </div>
+<!-- ************************************************************* -->
+        <div class="form-group">
+          <label for="AdresseHotel">adresse de l'hôtel :</label><br>
+        <input  type="text" id="AdresseHotel" name="AdresseHotel" placeholder="adresse de l'hôtel" value="{{ old('AdresseHotel') }}" aria-describedby="AdresseHotel_feedback" class="form-control @error('AdresseHotel') is-invalid @enderror" required><br>
+        @error('AdresseHotel')
+            <div id="AdresseHotel_feedback" class="invalid-feedback">
+              {{ $message }}
+            </div>
+            @enderror
+        </div>
+<!-- ************************************************************* -->
+        <div class="form-group">
+          <label for="cpHotel">code postal :</label><br>
+        <input type="number" id="cpHotel" name="cpHotel" placeholder="code postal" value="{{ old('cpHotel') }}" aria-describedby="cpHotel_feedback" class="form-control @error('cpHotel') is-invalid @enderror" required><br>
+        @error('cpHotel')
+            <div id="cpHotel_feedback" class="invalid-feedback">
+              {{ $message }}
+            </div>
+            @enderror
+        </div>
+<!-- ************************************************************* -->
+        <div class="form-group">
+          <label for="villeHotel">Ville de l'hôtel :</label><br>
+          <input type="text" id="villeHotel" name="villeHotel" placeholder="Ville de l'hôtel" value="{{ old('villeHotel') }}" aria-describedby="villeHotel_feedback" class="form-control @error('villeHotel') is-invalid @enderror" required><br>
+          @error('villeHotel')
+            <div id="villeHotel_feedback" class="invalid-feedback">
+              {{ $message }}
+            </div>
+            @enderror
+        </div>
+<!-- ************************************************************* -->
+        <div class="form-group">
+          <label for="classeHotel">class de l'hôtel :</label><br>
+          <select id="classeHotel" name="classeHotel" aria-describedby="classeHotel_feedback" class="form-control @error('classeHotel') is-invalid @enderror" >
+            <option value="1"> 1 étoile </option>
+            <option value="2"> 2 étoiles</option>
+            <option value="3"> 3 étoiles</option>
+            <option value="4"> 4 étoiles</option>
+            <option value="5"> 5 étoiles</option> 
+          </select>
+          @error('classeHotel')
+            <div id="classeHotel_feedback" class="invalid-feedback">
+              {{ $message }}
+            </div>
+          @enderror
+        </div>
+<!-- ************************************************************* -->
+        <div class="form-group">
+          <label for="emailHotel">l'email de l'hôtel :</label><br>
+          <input type="email" id="emailHotel" name="emailHotel" placeholder="l'email de l'hôtel" value="{{ old('emailHotel') }}" aria-describedby="emailHotel_feedback" class="form-control @error('emailHotel') is-invalid @enderror" required><br>
+          @error('emailHotel')
+            <div id="emailHotel_feedback" class="invalid-feedback">
+              {{ $message }}
+            </div>
+          @enderror
+        </div>
+
+<!-- ************************************************************* -->
+        <div class="form-group">
+          <label for="MtdPass">mot de passe :</label><br>
+          <input  type="password" id="MtdPass" name="MtdPass" placeholder="mot de passe" value="{{ old('MtdPass') }}" aria-describedby="MtdPass_feedback" class="form-control @error('MtdPass') is-invalid @enderror" required><br>
+          @error('MtdPass')
+            <div id="MtdPass_feedback" class="invalid-feedback">
+              {{ $message }}
+            </div>
+          @enderror
+        </div>
+<!-- ************************************************************* -->
       
-        <label for="myfile">Sélectionner un logo:</label>
-        <input class="logo" type="file" name="applicant.fileUpload" id="logo hotel" tabindex="0" accept=".png,.JFIF,.pdf"><br><br>
-
-        <input class="chain" type="text" id="fname" name="fname" placeholder="nom d'hôtel"><br><br>
-      
-        <input class="chain" type="text" id="adresse" name="adress" placeholder="adresse de l'hôtel"><br><br>
-        
-        <input type="number" id="codepostal" name="codepostal" placeholder="code postal">
-        
-        <input type="text" id="adresse" name="ville" placeholder="Ville de l'hôtel"><br><br>
-
-        <input class="chain" type="tel" id="telephone" name="telephone" placeholder="numéro de téléphone"><br><br>
-
-
-        <input class="chain" type="email" id="email" name="mail" placeholder="l'email de l'hôtel"><br><br>
-        
-        <input class="chain" type="password" id="pass" name="mote de pass" placeholder="mote de pass"><br><br>
-        <button type="submit" value="Submit">Valider</button><br><br>
-        <button onclick="document.location='default.asp'">Retour</button><br><br>
-
-
-      
+       
+         
     </div>
+
+
+
+
+  
+
     <div class="chambredispo">
-      <input type="bouton"  class="addchambre"  onclick="addchambrehotel()">chambre 
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
-         <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-         <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-        </svg>
+      <div id="0">
+        <!-- **************************************************************************************************************************************************** -->
+          <div class="form-group">
+             <label for="ImagChambre">Sélectionner une Image :</label><br>
+             <input  type="file" name="ImagChambre" id="ImagChambre" tabindex="0" accept=".png,.JFIF,.pdf" aria-describedby="ImagChambre_feedback" class="form-control @error('ImagChambre') is-invalid @enderror" required><br>
+             @error('ImagChambre')
+               <div id="ImagChambre_feedback" class="invalid-feedback">
+                  {{ $message }}
+                </div>
+              @enderror
+          </div> 
+  <!-- ************************************************************* -->
+          <div class="form-group">
+            <label for="nb_chambre">nombre de chambres :</label><br>
+            <input type="number" id="nb_chambre" name="nb_chambre" placeholder="nombre de chambres" value="{{ old('nb_chambre') }}"  aria-describedby="nb_chambre_feedback" class="form-control @error('nb_chambre') is-invalid @enderror" required><br>
+            @error('nb_chambre')
+              <div id="nb_chambre_feedback" class="invalid-feedback">
+                {{ $message }}
+              </div>
+            @enderror
+          </div>
+  <!-- ************************************************************* -->
+          <div class="form-group">
+            <label for="NbreLits">nombre de lit par chambres :</label><br>
+            <input type="number" id="NbreLits" name="NbreLits" placeholder="nombre de lit" value="{{ old('NbreLits') }}"  aria-describedby="NbreLits_feedback" class="form-control @error('NbreLits') is-invalid @enderror" required><br>
+            @error('NbreLits')
+              <div id="NbreLits_feedback" class="invalid-feedback">
+                {{ $message }}
+              </div>
+            @enderror
+          </div>
+  <!-- ************************************************************* -->
+      
+          <div class="form-group">
+            <label for="Surface">Surface d'un chambre en m² :</label><br>
+            <input type="number" id="Surface" name="Surface" placeholder="Surface" value="{{ old('Surface') }}"  aria-describedby="Surface_feedback" class="form-control @error('Surface') is-invalid @enderror" required><br>
+            @error('Surface')
+              <div id="Surface_feedback" class="invalid-feedback">
+                {{ $message }}
+              </div>
+            @enderror
+          </div>
+  <!-- ************************************************************* -->
+          <div class="form-group">
+            <label for="prix">prix d'un chambres :</label><br>
+            <input type="number" id="prix" name="prix" placeholder="prix" value="{{ old('prix') }}"  aria-describedby="prix_feedback" class="form-control @error('prix') is-invalid @enderror" required><br>
+            @error('prix')
+              <div id="prix_feedback" class="invalid-feedback">
+                {{ $message }}
+              </div>
+            @enderror
+          </div>
+  <!-- ************************************************************* -->
+          <div class="form-group">
+            <input type="checkbox" id="parking" name="parking" value="parking" aria-describedby="parking_feedback" class="form-control @error('parking') is-invalid @enderror" >
+            <label for="parking"> Parking</label><br>
+            @error('parking')
+                <div id="parking_feedback" class="invalid-feedback">
+                  {{ $message }}
+                </div>
+            @enderror
+          </div>
+  <!-- ************************************************************* -->
+          <div class="form-group">
+            <input type="checkbox" id="wifi" name="wifi" value="connexion wifi" aria-describedby="wifi_feedback" class="form-control @error('wifi') is-invalid @enderror" >
+            <label for="wifi">  Connexion Wi-Fi</label><br>
+            @error('wifi')
+                <div id="wifi_feedback" class="invalid-feedback">
+                  {{ $message }}
+                </div>
+            @enderror
+          </div>
+  <!-- ************************************************************* -->
+          <div class="form-group">
+            <input type="checkbox" id="salleSport" name="salleSport" value="salle de sport" aria-describedby="salleSport_feedback" class="form-control @error('salleSport') is-invalid @enderror" >
+            <label for="salleSport">  Salle de sport</label><br>
+            @error('salleSport')
+                <div id="salleSport_feedback" class="invalid-feedback">
+                  {{ $message }}
+                </div>
+              @enderror
+          </div>
+  <!-- ************************************************************* -->
+          <div class="form-group">
+            <input type="checkbox" id="animalFriendly" name="animalFriendly" value="animal friendly" aria-describedby="animalFriendly_feedback" class="form-control @error('animalFriendly') is-invalid @enderror" >
+            <label for="animalFriendly">  Animaux domestiques admis</label><br>
+            @error('animalFriendly')
+                <div id="animalFriendly_feedback" class="invalid-feedback">
+                  {{ $message }}
+                </div>
+              @enderror
+          </div>
+  <!-- ************************************************************* -->
+          <div class="form-group">
+            <input type="checkbox" id="Fumeur" name="Fumeur" value="Fumeur" aria-describedby="Fumeur_feedback" class="form-control @error('Fumeur') is-invalid @enderror">
+            <label for="animalFriendly">  Fumeur admis</label><br>
+            @error('Fumeur')
+                <div id="Fumeur_feedback" class="invalid-feedback">
+                  {{ $message }}
+                </div>
+              @enderror
+          </div>
+  <!-- *************************************************************************************************************************************************** -->
 
-      </input>
     </div>
-  </div>
+
+    <button type="submit" onclick="addchambrehotel()" >Valider</button><br><br>
   </form>
+
+  <div class="retours" ><script src="{{asset('js/retour.js')}}"></script></div>
+ 
 @endsection

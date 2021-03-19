@@ -18,17 +18,18 @@ CREATE TABLE CLIENTS (
 
 CREATE TABLE EQUIPEMENTS (
     idEquipemet integer PRIMARY KEY AUTOINCREMENT,
-    wifi boolean,
-    parking boolean,
-    salleSport boolean,
-    animalFriendly boolean,
-    Fumeur boolean
+    wifi varchar(40),
+    parking varchar(40),
+    salleSport varchar(40),
+    animalFriendly varchar(40),
+    Fumeur varchar(40)
 );
 
 CREATE TABLE HOTELS(
     NumHotel  integer PRIMARY KEY AUTOINCREMENT,
     NomGerant VARCHAR(40),
     PrenGerant VARCHAR(40), 
+    DateNaissGerant DATE,
     logoHotel VARCHAR(40),
     NomHotel VARCHAR(40),
     emailHotel VARCHAR(40),
@@ -50,7 +51,8 @@ CREATE TABLE RESERVATIONS (
 
 
 CREATE TABLE CHAMBRES(
-	NumChambre integer ,
+	NumChambre integer,
+    ImagChambre VARCHAR(40),
 	NumHotel integer,
 	NbreLits integer,
 	Surface integer,
@@ -58,7 +60,7 @@ CREATE TABLE CHAMBRES(
 	idEquipement integer,
 	PRIMARY KEY(NumChambre, NumHotel),
 	FOREIGN KEY(NumHotel) REFERENCES HOTELS(NumHotel),
-   	FOREIGN KEY(idEquipement) REFERENCES EQUIPEMENTS(idEquipemet)
+   FOREIGN KEY(idEquipement) REFERENCES EQUIPEMENTS(idEquipemet)
 );
 
 CREATE TABLE CONTENUE_RESERVATION(

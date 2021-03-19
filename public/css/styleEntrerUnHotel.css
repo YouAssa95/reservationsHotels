@@ -1,5 +1,5 @@
 
-.partie1{
+.partie1 {
     background-color: gainsboro;
     height: 500%;
     width: 450%;
@@ -17,14 +17,13 @@
   }
   .chambredispo{
    
-    width: 60%;
-   
+    
     padding: 0px 65% 100px 10% ;
     float: right;
    
     }
   
-   .addchambre{
+   .addchambre {
    margin: auto;
     height: 20px;
     width: 250px;

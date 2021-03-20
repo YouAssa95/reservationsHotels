@@ -49,50 +49,35 @@ class Repository
         return DB::table('HOTELS')->orderBy('id', 'asc')->get()->toArray();
     }
 
-    function insertEquipement(array $Equipement): int
-    {
-        return DB::table('EQUIPEMENTS')->insertGetId($Equipement);
-    }
-    function insertReservation(array $reservation): int
-    {
-        return DB::table('RESERVATIONS')->insertGetId($reservation);
-    }
-    function insertContenuReservation($contenuReservation): int
-    {
-        return DB::table('CONTENUE_RESERVATION')->insertGetId($contenuReservation);
-    }
-
 
     function fillDatabase(): void
     {
         $this->data = new Data();
         $hotels = $this->data->Hotels();
         $clients = $this->data->Clients();
-        $chambres = $this->data->chambres();
-        $reservations = $this->data->RESERVATIONS();
-        $contenu_reservations = $this->data->CONTENUE_RESERVATION();
-
-
-
 
         foreach ($hotels as $hotel) {
             $this->insertHotel($hotel);
         }
         foreach ($clients as $client) {
-            $this->insertClient($client, 'test');
-        }
-        foreach ($chambres as $chambre) {
-            $this->insertChambre($chambre);
+            $this->insertClient($client,'test');
         }
 
-        foreach ($reservations as $reservation) {
-            $this->insertReservation($reservation);
-        }
-
-        foreach ($contenu_reservations as $contenu_reservation) {
-            // var_export($contenu_reservation);
-            $this->insertContenuReservation($contenu_reservation);
-        }
+        // ////Ajout d'un utilisateur de statut client  Juste pour tester
+        // $mdp =['MtdPass'=>  Hash::make('test'),'Statut'=>'client','IdCompte'=>1];
+        // DB::table('MOTDEPASSE')->insertGetId($mdp);
+    }
+    function insertEquipement(array $Equipement): int
+    {
+        return DB::table('EQUIPEMENTS')->insertGetId($Equipement);
+    }
+    function insertReservation(array $Reservation): int
+    {
+        return DB::table('RESERVATIONS')->insertGetId($Reservation);
+    }
+    function insertContenuReservation(array $ContenuReservation): int
+    {
+        return DB::table('CONTENUE_RESERVATION')->insertGetId($ContenuReservation);
     }
 
 
@@ -103,45 +88,55 @@ class Repository
         if (Hash::check($password, $passwordHash)) {
             return true;
         } else {
-            throw new Exception('Mot de passe incorrect');
+            throw new Exception('Utilisateur inconnu');
             return false;
         }
     }
 
+    
 
-
-    function infoComptClient($MailClient, string $password): array
-    {
+    function infoComptClient($MailClient,string $password) :array
+    {        
         try {
-            $client = DB::table('CLIENTS')->where('MailClient', $MailClient)->get()->toArray();
-
-            $row = DB::table('MOTDEPASSE')->where('IdCompte', $client[0]['NumClient'])->get()->toArray();
-
+            $client= DB::table('CLIENTS')->where('MailClient', $MailClient)->get()->toArray();
+            
+           $row = DB::table('MOTDEPASSE')->where('IdCompte', $client[0]['NumClient'])->get()->toArray();
+            
             if ($this->checkPassword($password, $row[0]['MtdPass'])) {
-                return $client[0];
-            }
+                    return $client[0];
+            }          
         } catch (Exception $exception) {
             throw new Exception('Client inconnue');
         }
     }
-
-    function infoComptHotel($emailHotel, string $password): array
+    function infoComptHotel($Mailgerant,string $password): array
     {
         try {
-            $hotel = DB::table('HOTELS')->where('emailHotel', $emailHotel)->get()->toArray();
+            //statu n'est pas présent peux confondre avec idH=idC
+            $gerant= DB::table('HOTELS')->where('emailHotel', $Mailgerant)->get()->toArray();
+            
+            $row = DB::table('MOTDEPASSE')->where('IdCompte', $gerant[0]['NumHotel'])->get()->toArray();
+             
+             if ($this->checkPassword($password, $row[0]['MtdPass'])) {
+                     return $gerant[0];
+             }
 
-            $row = DB::table('MOTDEPASSE')->where('IdCompte', $hotel[0]['NumHotel'])->get()->toArray();
-            if ($this->checkPassword($password, $row[0]['MtdPass'])) {
-                return $hotel[0];
-            }
         } catch (Exception $exception) {
             throw new Exception('Hotel inconnue');
         }
     }
-    function infoComptAdmin($NumHotel): array
+
+   /* function infoComptHotel($NumHotel): array
     {
-        return [];
-    }
+        try {
+            return DB::table('HOTELS')
+                ->where('NumHotel', $NumHotel)
+                ->get()
+                ->toArray();
+        } catch (Exception $exception) {
+            throw new Exception('Hotel inconnue');
+        }
+    }*/
 
     function reservationEnCours($NumClient): array
     {

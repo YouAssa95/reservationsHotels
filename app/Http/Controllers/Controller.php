@@ -100,10 +100,9 @@ class Controller extends BaseController
               
 
         ];
-        $validatedData = $request->validate($rules, $messages);
 
-        
         try {
+        $validatedData = $request->validate($rules, $messages);
         // add Hotel :    
         $hotelId = $this->repository->insertHotel([
                 'NomGerant' => $validatedData['NomGerant'],
@@ -119,8 +118,13 @@ class Controller extends BaseController
                 
                 
                 ]);
+        $motdepassId = $this->repository->insertPassword(
+            $hotelId,
+            "manager",
+            $validatedData['MtdPass']
+        );
 
-                /*VarDumper::dump($parking);
+                /*VarDumper::dump($motdepassId);
                 return;*/
         
         // add Equipement :      
@@ -159,27 +163,58 @@ class Controller extends BaseController
 
     }
 
+    public function registerUneChambre(Request $request, Repository $repository){
+            $rules = [
 
-
-
-    public function registerEquipements(Request $request, Repository $repository){
-       /* $rules = [
-
-             'parking' => ['required'],
-            'wifi' => ['required'],
-            'salleSport' => ['required'],
-            'animalFriendly' => ['required'],
-            'Fumeur' => ['required'],
-        ];
-        $messages = [
-            'parking.required' => "Vous devez choisir un fichier valide",
-            'nb_chambre.required' => 'Vous devez saisir nombre de chambre valide.',
-            'NbreLits.required' => 'Vous devez saisir nombre de lits valide.',
-            'Surface.required' => "Vous devez saisir un nombre valide.",
-            'prix.required' => "Vous devez saisir un nombre valide."
-        ]
-        $validatedData = $request->validate($rules, $messages);
-        */
+                /* ********************************** chambre ********************* */   
+                'ImagChambre' => ['required'],
+                'nb_chambre' => ['required'],
+                'NbreLits' => ['required'],
+                'Surface' => ['required'],
+                'prix' => ['required'],
+                /* ********************************** équipement ********************* */ 
+                'parking' => [''],
+                'wifi' => [''],
+                'salleSport' => [''],
+                'animalFriendly' => [''],
+                'Fumeur' => ['']
+            ];
+            $messages = [
+                
+                'ImagChambre.required' => "Vous devez choisir un fichier valide",
+                'nb_chambre.required' => 'Vous devez saisir nombre de chambre valide.',
+                'NbreLits.required' => 'Vous devez saisir nombre de lits valide.',
+                'Surface.required' => "Vous devez saisir un nombre valide.",
+                'prix.required' => "Vous devez saisir un nombre valide."
+            ];
+        try{
+            $validatedData = $request->validate($rules, $messages);
+            // add Equipement :      
+            $EquipementId = $this->repository->insertEquipement([ 
+                'parking' =>(isset($validatedData['parking'])) ? $validatedData['parking'] : NULL,
+                'wifi' =>(isset($validatedData['wifi'])) ? $validatedData['wifi'] : NULL,
+                'salleSport' => (isset($validatedData['salleSport'])) ? $validatedData['salleSport'] : NULL,
+                'animalFriendly' => (isset($validatedData['animalFriendly'])) ? $validatedData['animalFriendly'] : NULL,
+                'Fumeur' => (isset($validatedData['Fumeur'])) ? $validatedData['Fumeur'] : NULL 
+            ]);
+            // add Chambres :
+            for ($num=1;$num<= $validatedData['nb_chambre'];$num++){
+                $ChambreId = $this->repository->insertChambre([
+                    'NumChambre'=> $num,
+                    'imageCh' => $validatedData['ImagChambre'],
+                    'NumHotel' => $hotelId,
+                    'NbreLits' => $validatedData['NbreLits'],
+                    'Surface' => $validatedData['Surface'],
+                    'prix' => $validatedData['prix'],
+                    'idEquipement'=>$EquipementId
+                ]);
+            }  
+        
+        } catch (Exception $exception) {
+            
+            return redirect()->route('entrerUneChambre')->withInput()->withErrors("La chambre n'a pas pu être ajoutée.");
+        }
+        return redirect()->route('entrerUneChambre');
     }
     
     public function trouverUnHotel()

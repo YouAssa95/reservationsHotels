@@ -199,6 +199,8 @@ class Controller extends BaseController
                 'Fumeur' => (isset($validatedData['Fumeur'])) ? $validatedData['Fumeur'] : NULL 
             ]);
             // add Chambres :
+            $hotelId = $request->session()->get('hotelId');
+            
             for ($num=1;$num<= $validatedData['nb_chambre'];$num++){
                 $ChambreId = $this->repository->insertChambre([
                     'NumChambre'=> $num,

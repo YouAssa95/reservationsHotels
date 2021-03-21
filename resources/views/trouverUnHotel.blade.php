@@ -45,27 +45,27 @@
                 <input class="form-control " name="Prixmin" id="Prixmin" type="Number" value="{{old('Prixmin')}}" min="0" placeholder="Prix minimum" />
             </div>
             <div class="col">
-                <input class="form-control col" id="Prixmax" name="Prixmax" type="Number"  value="{{old('Prixmax')}}"  min="20" placeholder="Prix maximum" />
+                <input class="form-control col" id="Prixmax" name="Prixmax" type="Number" value="{{old('Prixmax')}}" min="20" placeholder="Prix maximum" />
+            </div>
+            <div class="form-check form-check-inline ">
+                <input type="checkbox" id="inlineRadio1" class="mr-2" name="wifi" class="form-control" @if(old('wifi')=='on' )) checked @endif>
+                <label class="form-check-label mr-2" for="inlineRadio1"> Wifi</label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="wifi" id="inlineRadio1" value="wifi">
-                <label class="form-check-label" for="inlineRadio1">Wifi</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="parking" id="inlineRadio2" value="parking">
+                <input type="checkbox" id="inlineRadio2" class="mr-2" name="parking" class="form-control" @if(old('parking')=='on' )) checked @endif>
                 <label class="form-check-label" for="inlineRadio2">Parking</label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="fumeur" id="inlineRadio2" value="fumeur">
-                <label class="form-check-label" for="inlineRadio2">fumeur</label>
+                <input type="checkbox" id="inlineRadio3" class="mr-2" name="fumeur" class="form-control" @if(old('fumeur')=='on' )) checked @endif>
+                <label class="form-check-label" for="inlineRadio3">fumeur</label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="salleSport" id="inlineRadio2" value="salleSport">
-                <label class="form-check-label" for="inlineRadio2">salle de Sport</label>
+                <input type="checkbox" id="inlineRadio4" class="mr-2" name="salleSport" class="form-control" @if(old('salleSport')=='on' )) checked @endif>
+                <label class="form-check-label" for="inlineRadio4">salle de Sport</label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="animalFriendly" id="inlineRadio2" value="animalFriendly">
-                <label class="form-check-label" for="inlineRadio2">Animal de compagnie</label>
+                <input type="checkbox" id="inlineRadio5" class="mr-2" name="animalFriendly" class="form-control" @if(old('animalFriendly')=='on' )) checked @endif>
+                <label class="form-check-label" for="inlineRadio5">Animal de compagnie</label>
             </div>
             <br>
             <button type="submit" class="btn btn-primary">Rechercher</button>

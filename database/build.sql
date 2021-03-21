@@ -17,7 +17,7 @@ CREATE TABLE CLIENTS (
 );
 
 CREATE TABLE EQUIPEMENTS (
-    idEquipemet integer PRIMARY KEY AUTOINCREMENT,
+    idEquipement integer PRIMARY KEY AUTOINCREMENT,
     wifi varchar(40),
     parking varchar(40),
     salleSport varchar(40),
@@ -59,9 +59,9 @@ CREATE TABLE CHAMBRES(
 	prix integer,
 	idEquipement integer,
     imageCh varchar(40),
-	UNIQUE(NumChambre, NumHotel),
+	-- UNIQUE(NumChambre, NumHotel),
 	FOREIGN KEY(NumHotel) REFERENCES HOTELS(NumHotel)
-   	FOREIGN KEY(idEquipement) REFERENCES EQUIPEMENTS(idEquipemet)
+   	FOREIGN KEY(idEquipement) REFERENCES EQUIPEMENTS(idEquipement)
 );
 
 CREATE TABLE CONTENUE_RESERVATION(

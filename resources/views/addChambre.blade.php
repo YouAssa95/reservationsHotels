@@ -15,7 +15,7 @@
 
 
    
-     
+     <input type="hidden">
         <!-- ************************************************************* -->
           <div class="form-group">
              <label for="ImagChambre">Sélectionner une Image :</label><br>

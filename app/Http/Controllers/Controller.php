@@ -14,6 +14,7 @@ use Mockery\Undefined;
 use PhpParser\Node\Stmt\Return_;
 use Symfony\Component\VarDumper\VarDumper;
 use Symfony\Contracts\Service\Attribute\Required;
+use DateTime;
 
 class Controller extends BaseController
 {
@@ -26,12 +27,10 @@ class Controller extends BaseController
 
     public function welcome()
     {
-        
         return view('accueil');
     }
     public function entrerUnHotel()
-    {
-        
+    {   
         return view('entrerUnHotel',['lol'=>'4']);
     }
     public function registerUnHotel(Request $request, Repository $repository){
@@ -96,9 +95,7 @@ class Controller extends BaseController
             'Surface.required' => "Vous devez saisir un nombre valide.",
             'prix.required' => "Vous devez saisir un nombre valide."
 
-            /* ********************************** équipement ********************* */ 
-              
-
+            /* ********************************** équipement ********************* */
         ];
         $validatedData = $request->validate($rules, $messages);
 
@@ -116,8 +113,6 @@ class Controller extends BaseController
                 'cpHotel' => $validatedData['cpHotel'],
                 'villeHotel' => $validatedData['villeHotel'],
                 'classeHotel' => $validatedData['classeHotel']
-                
-                
                 ]);
 
                 /*VarDumper::dump($parking);
@@ -131,6 +126,12 @@ class Controller extends BaseController
             'animalFriendly' => (isset($validatedData['animalFriendly'])) ? $validatedData['animalFriendly'] : NULL,
             'Fumeur' => (isset($validatedData['Fumeur'])) ? $validatedData['Fumeur'] : NULL 
         ]);
+        $motdepassId = $this->repository->insertPassword(
+            $hotelId,
+            "manager",
+            $validatedData['MtdPass']);
+
+
 
         // add Chambres :
         for ($num=1;$num<= $validatedData['nb_chambre'];$num++){
@@ -149,17 +150,104 @@ class Controller extends BaseController
            
             return redirect()->route('entrerUnHotel')->withInput()->withErrors("L'hôtel n'a pas pu être ajoutée.");
         }
+        $request->session()->put('hotelId',$hotelId);
         return redirect()->route('entrerUneChambre');
         
     }
     public function entrerUneChambre(){
          
-      
         return view('addChambre');
 
     }
 
+    public function registerUneChambre(Request $request, Repository $repository){
+        
+        $rules = [
 
+            /* ********************************** chambre ********************* */   
+            'ImagChambre' => ['required'],
+            'nb_chambre' => ['required'],
+            'NbreLits' => ['required'],
+            'Surface' => ['required'],
+            'prix' => ['required'],
+            /* ********************************** équipement ********************* */ 
+            'parking' => [''],
+            'wifi' => [''],
+            'salleSport' => [''],
+            'animalFriendly' => [''],
+            'Fumeur' => ['']
+        ];
+        $messages = [
+            
+            'ImagChambre.required' => "Vous devez choisir un fichier valide",
+            'nb_chambre.required' => 'Vous devez saisir nombre de chambre valide.',
+            'NbreLits.required' => 'Vous devez saisir nombre de lits valide.',
+            'Surface.required' => "Vous devez saisir un nombre valide.",
+            'prix.required' => "Vous devez saisir un nombre valide."
+        ];
+    try{
+        $validatedData = $request->validate($rules, $messages);
+        // add Equipement :      
+        $EquipementId = $this->repository->insertEquipement([ 
+            'parking' =>(isset($validatedData['parking'])) ? $validatedData['parking'] : NULL,
+            'wifi' =>(isset($validatedData['wifi'])) ? $validatedData['wifi'] : NULL,
+            'salleSport' => (isset($validatedData['salleSport'])) ? $validatedData['salleSport'] : NULL,
+            'animalFriendly' => (isset($validatedData['animalFriendly'])) ? $validatedData['animalFriendly'] : NULL,
+            'Fumeur' => (isset($validatedData['Fumeur'])) ? $validatedData['Fumeur'] : NULL 
+        ]);
+        // add Chambres :
+        $hotelId = $request->session()->get('hotelId');
+        // VarDumper::dump($validatedData);
+        // VarDumper::dump([
+        //     'NumChambre'=> 1,
+        //     'imageCh' => $validatedData['ImagChambre'],
+        //     'NumHotel' => $hotelId,
+        //     'NbreLits' => $validatedData['NbreLits'],
+        //     'Surface' => $validatedData['Surface'],
+        //     'prix' => $validatedData['prix'],
+        //     'idEquipement'=>$EquipementId
+        // ]);
+
+        // $this->repository->insertChambre([
+        //     'NumChambre'=> 3,
+        //     'imageCh' => $validatedData['ImagChambre'],
+        //     'NumHotel' => 5]);
+        // return;
+       
+        for ($num=1;$num<= 3;$num++){
+            // VarDumper::dump($validatedData['nb_chambre']);
+            
+            $ChambreId = $this->repository->insertChambre([
+                'NumChambre'=> $num,
+                'imageCh' => $validatedData['ImagChambre'],
+                'NumHotel' => $hotelId,
+                'NbreLits' => $validatedData['NbreLits'],
+                'Surface' => $validatedData['Surface'],
+                'prix' => $validatedData['prix'],
+                'idEquipement'=>$EquipementId
+            ]);
+            $ChambreId = $this->repository->insertChambre([
+                'NumChambre'=> $num,
+                'imageCh' => $validatedData['ImagChambre'],
+                'NumHotel' =>4,
+                'NbreLits' =>12,
+                'Surface' => 33,
+                'prix' => 33,
+                'idEquipement'=>$EquipementId
+            ]);
+            VarDumper::dump($ChambreId);
+            return;
+        }  
+        return redirect()->route('accueil');
+    
+    } catch (Exception $exception) {
+        
+        return redirect()->route('entrerUneChambre')->withInput()->withErrors("La chambre n'a pas pu être ajoutée.");
+    }
+   
+
+
+    }
 
 
     public function registerEquipements(Request $request, Repository $repository){
@@ -181,17 +269,37 @@ class Controller extends BaseController
         $validatedData = $request->validate($rules, $messages);
         */
     }
-    
-    public function trouverUnHotel()
+
+    public function chambresDisponibles( $ville,$dateA) : array
     {
-        
-        return view('trouverUnHotel');
+        $hotels=$this->repository->hotelsVille($ville); //// Critere destination
+
+        $chambresDisponibles =[];
+        foreach($hotels as $hotel){
+            $chambresDisponibles =array_merge($chambresDisponibles,$this->repository->chambreDisponibles($hotel['NumHotel'],$dateA)); /// critere disponibilité
+        }
+        return $chambresDisponibles; 
     }
 
+    
+    /// display  search form 
+    public function trouverUnHotel()
+    {
+        $chambresProposes = [];
+        $chambres = $this->chambresDisponibles(null,date('Y-m-d'));
+        // eviter les repetitions
+        foreach ($chambres as $chambre) {
+            if ((count($chambresProposes) >0) && $this->repository->appartenance($chambre,$chambresProposes)) {
+                continue;
+            }
+            $chambresProposes[]=$chambre;
+        }
+        return  view('trouverUnHotel',['chambresProposes'=>$chambresProposes]);
+    }
+    
     public function trouverUnHotelResults(Request $request)
     {
         
-
         $rules = [
             'destination' => ['nullable'],
             'dateA' => ['nullable'],
@@ -206,38 +314,29 @@ class Controller extends BaseController
             'animalFriendly'=> 'nullable',
         ];
 
-        
         // $messages = ['destination.required' => 'Entrer une destination'];
         
         $validatedData = $request->validate($rules);
-
        
-        //// Liste des equipements cherchees 
-       $equipements =[
+        //// Liste des equipements recherchees 
+       $equipements = [
         'wifi'=> isset($validatedData['wifi']) ? $validatedData['wifi']:null,
         'parking'=>isset($validatedData['parking'])?$validatedData['parking'] :null,
         'fumeur'=>isset($validatedData['fumeur'])?$validatedData['fumeur']:null,
         'salleSport'=>isset($validatedData['salleSport'])?$validatedData['salleSport']:null,
         'animalFriendly'=>isset($validatedData['animalFriendly'])?$validatedData['animalFriendly']:null
         ];
-
-        $hotels=$this->repository->hotelsVille($validatedData['destination']); //// Critere destination
-
+        /// disponibilité et destination
+        $chambresDisponibles = $this->chambresDisponibles($validatedData['destination'],$validatedData['dateA']);
+        // prix max et min
+        $chambresAvecPrix=$this->repository->priceCheck($validatedData['Prixmin'] ? $validatedData['Prixmin'] : 0,$validatedData['Prixmax']? $validatedData['Prixmax']:1000,$chambresDisponibles);
+       
+        /// equipemnts et Nbre de Lits
+        $nbreLits =  isset($validatedData['nbreLits']) ? $validatedData['nbreLits']:null;
+        $chambresProposes =  $this->repository->chambresAvecEquipements($chambresAvecPrix,$equipements, $nbreLits) ;
         
-
-        
-        $chambresProposes =[];
-        foreach($hotels as $hotel){
-            $chambresProposes =array_merge($chambresProposes,$this->repository->chambreDisponibles($hotel['NumHotel'],$validatedData['dateA'])); /// critere disponibilité
-            
-        }    
-        // VarDumper::dump($hotels);
-        // return;
-        /// faut ajouter critere du prix  et des equipements 
-        // VarDumper::dump($chambresProposes);
-        // return;
-        $request->session()->put('chambresProposes',$chambresProposes);
-        return  view('trouverUnHotel');
+        session()->flashInput($request->input());
+        return  view('trouverUnHotel',['chambresProposes'=>$chambresProposes]);
     }
     
     public function aboutUs()
@@ -259,7 +358,8 @@ class Controller extends BaseController
     {
     
         $rules = [
-            'email' => ['required', 'email', 'exists:CLIENTS,MailClient'],
+            'email' => ['required', 'email'],
+            // 'email' => ['required', 'email', 'exists:CLIENTS,MailClient'],
             'password' => ['required'],
             'manager' => 'nullable',
             'client' => 'nullable'
@@ -274,16 +374,23 @@ class Controller extends BaseController
         
        
         $validatedData = $request->validate($rules, $messages);
+        // VarDumper::dump($validatedData );
+        // return;
+
         
         try {
             try {
                 if (isset($validatedData['client'])) {
                     $user=$repository->infoComptClient($validatedData['email'], $validatedData['password']);
+                    $mail =$user['MailClient'];
                 } 
                 if(isset($validatedData['manager'])){
                     $user=$repository->infoComptHotel($validatedData['email'], $validatedData['password']);
+                    $mail =$user['emailHotel'];
                 }
-                $request->session()->put('user', $user);
+                
+                $request->session()->put(['user'=>$user,'mail'=>$mail]);
+
                 return redirect()->route('accueil');
                 
             } catch (Exception $e) {
@@ -366,7 +473,7 @@ class Controller extends BaseController
 
     public function showHotel(int $NumHotel)
     {
-        $hotel=$this->repository->infoComptHotel($NumHotel);
+        $hotel=$this->repository->getHotel($NumHotel);
         return view('hotel', ['hotel' => $hotel[0]]);
     }
 

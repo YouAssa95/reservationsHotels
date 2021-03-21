@@ -20,7 +20,7 @@
         <!-- Première rangée -->
         <div class="row" role="group" aria-label="...">
             <div class="col">
-                <input class="form-control" name="destination" id="destination" type="text" placeholder="Saisissez votre destination" />
+                <input class="form-control" name="destination" id="destination" type="text" value="{{old('destination')}}" placeholder="Saisissez votre destination" />
             </div>
             <div class="input-group mb-3 col">
                 <span class="input-group-text">Date d'arrivée</span>
@@ -42,10 +42,10 @@
         <!-- Deuxième rangée -->
         <div class="row" role="group" aria-label="...">
             <div class="col">
-                <input class="form-control " name="Prixmin" id="Prixmin" type="Number" min="0" placeholder="Prix minimum" />
+                <input class="form-control " name="Prixmin" id="Prixmin" type="Number" value="{{old('Prixmin')}}" min="0" placeholder="Prix minimum" />
             </div>
             <div class="col">
-                <input class="form-control col" id="Prixmax" name="Prixmax" type="Number" min="100"  placeholder="Prix maximum" />
+                <input class="form-control col" id="Prixmax" name="Prixmax" type="Number"  value="{{old('Prixmax')}}"  min="20" placeholder="Prix maximum" />
             </div>
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" name="wifi" id="inlineRadio1" value="wifi">
@@ -77,38 +77,37 @@
 
     </form>
 
-    @if(session()->get('chambresProposes'))
+    @if(isset($chambresProposes))
 
     <div class="container" style="margin-top: 20px;">
         <div class="row">
-            
-            @foreach (session()->get('chambresProposes') as $chambre)
+            @foreach ($chambresProposes as $chambre)
             <div class="col-md-4 col-sm-6">
                 <div class="product-grid2">
                     <div class="product-image2"> <a href="#" id="linkImage"></a>
                         <div class="product-image" id="imageBox">
-                           
+
                             <script type="text/javascript">
-                            // 
+                                // 
                                 document.getElementById('linkImage').innerHTML = '<img src="media/' + 'hotel' + '{{$chambre["NumHotel"]}}' + '.jpg" />';
                                 document.getElementById("linkImage").removeAttribute("id");
                             </script>
-                            
+
                             <ul class="social">
                                 <li><a href="#" data-tip="Quick View"><i class="fa"></i></a></li>
                                 <li><a href="#" data-tip="Add to Cart"><i class="fa fa-shopping-cart"></i></a></li>
                             </ul>
                         </div>
                         <div class="product-content">
-                            <h3 class="title"><a href="{{route('hotels.show', ['NumHotel'=>$chambre['NumHotel']])}}"> {{$chambre['NomHotel']}}</a></h3> <span class="price"> &#8364; 33 {{$chambre['prix']}}</span>
+                            <h3 class="title"><a href="{{route('hotels.show', ['NumHotel'=>$chambre['NumHotel']])}}"> {{$chambre['NomHotel']}}</a></h3> <span class="price"> &#8364; {{$chambre['prix']}}</span>
                         </div>
                     </div>
                 </div>
-                </div>
-                @endforeach
-            
+            </div>
+            @endforeach
         </div>
-        @endif
+    </div>
+    @endif
 </body>
 
 </html>

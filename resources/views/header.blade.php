@@ -21,7 +21,7 @@
                 <a href="/logout">Déconnexion</a>
             </li>
             <li id="MonCompte">
-                <a href="/"> {{session()->get('user')['MailClient'] }}</a>
+                <a href="/"> {{session()->get('mail') }}</a>
             </li>
             @else
             <li id="MonCompte">

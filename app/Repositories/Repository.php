@@ -40,8 +40,10 @@ class Repository
         return DB::table('HOTELS')->insertGetId($Hotel);
     }
 
-    function insertChambre(array $Chambre): int
+    function insertChambre(array $Chambre)
     {
+        // VarDumper::dump($Chambre);
+        
         return DB::table('CHAMBRES')->insertGetId($Chambre);
     }
     function hotels(): array
@@ -61,38 +63,46 @@ class Repository
     {
         return DB::table('CONTENUE_RESERVATION')->insertGetId($contenuReservation);
     }
+    
 
 
     function fillDatabase(): void
     {
         $this->data = new Data();
+
         $hotels = $this->data->Hotels();
         $clients = $this->data->Clients();
         $chambres = $this->data->chambres();
         $reservations = $this->data->RESERVATIONS();
         $contenu_reservations = $this->data->CONTENUE_RESERVATION();
+        $equipements = $this->data->EQUIPEMENTS();
 
 
-
-
-        foreach ($hotels as $hotel) {
-            $this->insertHotel($hotel);
-        }
         foreach ($clients as $client) {
             $this->insertClient($client, 'test');
         }
-        foreach ($chambres as $chambre) {
-            $this->insertChambre($chambre);
+
+        foreach ($equipements as $equipement) {
+            $this->insertEquipement($equipement);
+        }
+
+        foreach ($hotels as $hotel) {
+            $this->insertHotel($hotel);
         }
 
         foreach ($reservations as $reservation) {
             $this->insertReservation($reservation);
         }
 
+        foreach ($chambres as $chambre) {
+            $this->insertChambre($chambre);
+        }
+
         foreach ($contenu_reservations as $contenu_reservation) {
             // var_export($contenu_reservation);
             $this->insertContenuReservation($contenu_reservation);
         }
+        
     }
 
 
@@ -124,13 +134,21 @@ class Repository
             throw new Exception('Client inconnue');
         }
     }
+    public function getHotel(int $numHotel) : array
+    {   
+        try {
+            return DB::table('HOTELS')->where('NumHotel', $numHotel)->get()->toArray();
+        } catch (Exception $exception) {
+            throw new Exception('Hotel inconnue');
+        }
+    }
 
     function infoComptHotel($emailHotel, string $password): array
     {
         try {
             $hotel = DB::table('HOTELS')->where('emailHotel', $emailHotel)->get()->toArray();
 
-            $row = DB::table('MOTDEPASSE')->where('IdCompte', $hotel[0]['NumHotel'])->get()->toArray();
+            $row = DB::table('MOTDEPASSE')->where('Statut','manager')->where('IdCompte', $hotel[0]['NumHotel'])->get()->toArray();
             if ($this->checkPassword($password, $row[0]['MtdPass'])) {
                 return $hotel[0];
             }
@@ -194,26 +212,116 @@ class Repository
         return $this->hotels();
     }
 
-
     public function chambreDisponibles($NumHotel, $dateA)
     {
-        VarDumper::dump($NumHotel);
-        // return;
         // chambreReserves qui seront dispo a la date d'arrive du client
+        
         $time = "00:00:00";
+        if (!$dateA) {
+            $dateA = date('Y-m-d');
+        }
         $datetime = "$dateA $time";
 
-        $u= DB::table('CHAMBRES')
+        /// chambres non reservees
+        $chambresNonReservees = DB::table('CHAMBRES')
             ->join('HOTELS', 'HOTELS.NumHotel', '=', 'CHAMBRES.NumHotel')
             ->select()
             ->where('HOTELS.NumHotel', $NumHotel)
             ->whereNotIn('idChambre', DB::table('CONTENUE_RESERVATION')->select('idChambre')->get()->toArray())
-            ->orwhereIn('idChambre', DB::table('CONTENUE_RESERVATION')->select('idChambre')->where('DateDepart', '<', $datetime)->get()->toArray())
             ->get()
             ->toArray();
-            return $u;
-            // VarDumper::dump($u);
+
+        /// chambres reservees qui seront ibéres avant la date d'arrivée du client
+        $chambresReservees = DB::table('CHAMBRES')
+            ->join('HOTELS', 'HOTELS.NumHotel', '=', 'CHAMBRES.NumHotel')
+            ->where('HOTELS.NumHotel', $NumHotel)
+            ->whereIn('idChambre', DB::table('CONTENUE_RESERVATION')->select('idChambre')->where('DateDepart', '<', $datetime)->get()->toArray())
+            ->get()
+            ->toArray();
+        
+        //// fonction pour verifier le prix 
+
+        return  array_merge($chambresNonReservees, $chambresReservees);
             
     }
+
+    public function priceCheck(int $prixMin,int $prixMax,$chambres) : array
+    {
+        $result =[];
+       
+        
+        foreach($chambres as $chambre){
+            if (($chambre['prix'] >=  $prixMin) && ($chambre['prix'] <= $prixMax ) ) {
+                $result[]=$chambre;
+            }
+        }   
+       return $result;
+    }
+
+    /// equipements pour une chambre donnée
+
+    public function equipements(int $idEquipement)
+    {
+        
+       return DB::table('EQUIPEMENTS')
+        ->where('idEquipement', $idEquipement)
+        ->get()
+        ->toArray();
+    }
+    public function criteresEquipements($chambre,$critere) 
+    {
+            if ($this->equipements($chambre['idEquipement'])[0][$critere] ) {
+                return true;
+            }
+            return false;
+    }
+    
+    /// check if chambre appartient déjà aux résultats retournés ou non
+    /// Pour ne pas afficher les chambres avec les mêmes caractéristiques
+
+    public function appartenance($chambre,$res) 
+    {
+        foreach ($res as $ch) {
+            if (array_slice($ch,2) == array_slice($chambre,2)) {
+                return true;
+            }       
+        }
+    }
+
+    public function chambresAvecEquipements($chambres,$equipements,$nbreLits) 
+    {
+        $res = [];
+      
+        foreach ($chambres as $chambre) {
+            
+
+            if ((count($res) >0) && $this->appartenance($chambre,$res)) {
+                continue;
+            }
+            if ($equipements['parking'] && !$this->criteresEquipements($chambre,'parking') ) {
+                continue;
+            }
+            
+            if ($equipements['wifi'] && !$this->criteresEquipements($chambre,'wifi') ) {
+                continue;
+            }
+            if ($equipements['salleSport'] && !$this->criteresEquipements($chambre,'salleSport') ) {
+                continue;
+            }
+            if ($equipements['animalFriendly'] && !$this->criteresEquipements($chambre,'animalFriendly') ) {
+                continue;
+            }
+            if ($equipements['fumeur'] && !$this->criteresEquipements($chambre,'Fumeur') ) {
+                continue;
+            }
+            if ($nbreLits && !($chambre['NbreLits'] == $nbreLits ) ) {
+                continue;
+            }
+            $res[] = $chambre;
+
+        }
+        return $res;
+    }
+
 }
                                                                                        

@@ -113,53 +113,55 @@ class Repository
         if (Hash::check($password, $passwordHash)) {
             return true;
         } else {
-            throw new Exception('Mot de passe incorrect');
+            throw new Exception('Utilisateur inconnu');
             return false;
         }
     }
 
+    
 
-
-    function infoComptClient($MailClient, string $password): array
-    {
+    function infoComptClient($MailClient,string $password) :array
+    {        
         try {
-            $client = DB::table('CLIENTS')->where('MailClient', $MailClient)->get()->toArray();
-
-            $row = DB::table('MOTDEPASSE')->where('IdCompte', $client[0]['NumClient'])->get()->toArray();
-
+            $client= DB::table('CLIENTS')->where('MailClient', $MailClient)->get()->toArray();
+            
+           $row = DB::table('MOTDEPASSE')->where('IdCompte', $client[0]['NumClient'])->get()->toArray();
+            
             if ($this->checkPassword($password, $row[0]['MtdPass'])) {
-                return $client[0];
-            }
+                    return $client[0];
+            }          
         } catch (Exception $exception) {
             throw new Exception('Client inconnue');
         }
     }
-    public function getHotel(int $numHotel) : array
-    {   
+    function infoComptHotel($Mailgerant,string $password): array
+    {
         try {
-            return DB::table('HOTELS')->where('NumHotel', $numHotel)->get()->toArray();
+            //statu n'est pas présent peux confondre avec idH=idC
+            $gerant= DB::table('HOTELS')->where('emailHotel', $Mailgerant)->get()->toArray();
+            
+            $row = DB::table('MOTDEPASSE')->where('IdCompte', $gerant[0]['NumHotel'])->get()->toArray();
+             
+             if ($this->checkPassword($password, $row[0]['MtdPass'])) {
+                     return $gerant[0];
+             }
+
         } catch (Exception $exception) {
             throw new Exception('Hotel inconnue');
         }
     }
 
-    function infoComptHotel($emailHotel, string $password): array
+   /* function infoComptHotel($NumHotel): array
     {
         try {
-            $hotel = DB::table('HOTELS')->where('emailHotel', $emailHotel)->get()->toArray();
-
-            $row = DB::table('MOTDEPASSE')->where('Statut','manager')->where('IdCompte', $hotel[0]['NumHotel'])->get()->toArray();
-            if ($this->checkPassword($password, $row[0]['MtdPass'])) {
-                return $hotel[0];
-            }
+            return DB::table('HOTELS')
+                ->where('NumHotel', $NumHotel)
+                ->get()
+                ->toArray();
         } catch (Exception $exception) {
             throw new Exception('Hotel inconnue');
         }
-    }
-    function infoComptAdmin($NumHotel): array
-    {
-        return [];
-    }
+    }*/
 
     function reservationEnCours($NumClient): array
     {

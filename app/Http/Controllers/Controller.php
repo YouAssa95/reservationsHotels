@@ -36,25 +36,50 @@ class Controller extends BaseController
     public function registerUnHotel(Request $request, Repository $repository){
         $rules = [
 
-             'logoHotel' => ['required'],
-            'NomHotel' => ['required', 'min:3', 'max:20'],
-            'NomGerant' => ['required', 'min:3', 'max:20'],
-            'PrenGerant' => ['required', 'min:3', 'max:20'],
-            'DateNaissGerant' => ['required'],
+            //  'logoHotel' => ['required'],
+            // 'NomHotel' => ['required', 'min:3', 'max:20'],
+            // 'NomGerant' => ['required', 'min:3', 'max:20'],
+            // 'PrenGerant' => ['required', 'min:3', 'max:20'],
+            // 'DateNaissGerant' => ['required'],
 
-            'AdresseHotel' => ['required'],
-            'cpHotel' => ['required'],
-            'villeHotel' => ['required'],
-            'classeHotel' => ['required'],
+            // 'AdresseHotel' => ['required'],
+            // 'cpHotel' => ['required'],
+            // 'villeHotel' => ['required'],
+            // 'classeHotel' => ['required'],
+            // 'emailHotel' => ['required', 'email'],
+            // 'MtdPass' => ['required'],
+
+            //  /* ********************************** chambre ********************* */   
+            // 'ImagChambre' => ['required'],
+            // 'nb_chambre' => ['required'],
+            // 'NbreLits' => ['required'],
+            // 'Surface' => ['required'],
+            // 'prix' => ['required'],
+            // /* ********************************** équipement ********************* */ 
+            // 'parking' => [''],
+            // 'wifi' => [''],
+            // 'salleSport' => [''],
+            // 'animalFriendly' => [''],
+            // 'Fumeur' => [''],
+            'logoHotel' => ['nullable'],
+            'NomHotel' => ['required'],
+            'NomGerant' => ['nullable'],
+            'PrenGerant' => ['nullable'],
+            'DateNaissGerant' => ['nullable'],
+
+            'AdresseHotel' => ['nullable'],
+            'cpHotel' => ['nullable'],
+            'villeHotel' => ['nullable'],
+            'classeHotel' => ['nullable'],
             'emailHotel' => ['required', 'email'],
             'MtdPass' => ['required'],
 
              /* ********************************** chambre ********************* */   
-            'ImagChambre' => ['required'],
+            'ImagChambre' => ['nullable'],
             'nb_chambre' => ['required'],
-            'NbreLits' => ['required'],
-            'Surface' => ['required'],
-            'prix' => ['required'],
+            'NbreLits' => ['nullable'],
+            'Surface' => ['nullable'],
+            'prix' => ['nullable'],
             /* ********************************** équipement ********************* */ 
             'parking' => [''],
             'wifi' => [''],
@@ -119,8 +144,7 @@ class Controller extends BaseController
             $validatedData['MtdPass']
         );
 
-                /*VarDumper::dump($motdepassId);
-                return;*/
+              
         
         // add Equipement :      
         $EquipementId = $this->repository->insertEquipement([ 
@@ -130,11 +154,7 @@ class Controller extends BaseController
             'animalFriendly' => (isset($validatedData['animalFriendly'])) ? $validatedData['animalFriendly'] : NULL,
             'Fumeur' => (isset($validatedData['Fumeur'])) ? $validatedData['Fumeur'] : NULL 
         ]);
-        $motdepassId = $this->repository->insertPassword(
-            $hotelId,
-            "manager",
-            $validatedData['MtdPass']);
-
+        
 
 
         // add Chambres :
@@ -200,7 +220,7 @@ class Controller extends BaseController
             ]);
             // add Chambres :
             $hotelId = $request->session()->get('hotelId');
-            
+
             for ($num=1;$num<= $validatedData['nb_chambre'];$num++){
                 $ChambreId = $this->repository->insertChambre([
                     'NumChambre'=> $num,
@@ -242,6 +262,8 @@ class Controller extends BaseController
             if ((count($chambresProposes) >0) && $this->repository->appartenance($chambre,$chambresProposes)) {
                 continue;
             }
+            $chambre['equipement'] = $this->repository->equipements($chambre['idEquipement'])[0];
+            $chambre['logoHotel'] =$this->repository->getHotel($chambre['NumHotel'])[0]['logoHotel'];
             $chambresProposes[]=$chambre;
         }
         return  view('trouverUnHotel',['chambresProposes'=>$chambresProposes]);
@@ -284,7 +306,8 @@ class Controller extends BaseController
         /// equipemnts et Nbre de Lits
         $nbreLits =  isset($validatedData['nbreLits']) ? $validatedData['nbreLits']:null;
         $chambresProposes =  $this->repository->chambresAvecEquipements($chambresAvecPrix,$equipements, $nbreLits) ;
-        
+        // VarDumper::dump($chambresProposes);
+        // return;
         session()->flashInput($request->input());
         return  view('trouverUnHotel',['chambresProposes'=>$chambresProposes]);
     }
@@ -331,16 +354,30 @@ class Controller extends BaseController
         try {
             try {
                 if (isset($validatedData['client'])) {
-                    $user=$repository->infoComptClient($validatedData['email'], $validatedData['password']);
-                    $mail =$user['MailClient'];
+                    $client=$repository->infoComptClient($validatedData['email'], $validatedData['password']);
+                    
+                    $user = ['firstName'=>$client['PrenClient'],
+                    'lastName' => $client['NomClient'],
+                    'email'=>$client['MailClient'],
+                    'statut'=>'client'
+                ];
+                    $request->session()->put(['user'=>$user]);
                 } 
                 if(isset($validatedData['manager'])){
-                    $user=$repository->infoComptHotel($validatedData['email'], $validatedData['password']);
-                    $mail =$user['emailHotel'];
-                }
-                
-                $request->session()->put(['user'=>$user,'mail'=>$mail]);
+                    
+                    $manager=$repository->infoComptHotel($validatedData['email'], $validatedData['password']);
+                    $user = ['firstName'=>$manager['PrenGerant'],
+                    'lastName' => $manager['NomGerant'],
+                    'email'=>$manager['emailHotel'],
+                    'statut'=>'manager'
+                  ];
 
+                  $request->session()->put(['user'=>$user]);
+                    
+                }
+               
+                
+                
                 return redirect()->route('accueil');
                 
             } catch (Exception $e) {
@@ -427,5 +464,51 @@ class Controller extends BaseController
         return view('hotel', ['hotel' => $hotel[0]]);
     }
 
+    //// Reservation
+    public function showReservationForm()
+    {
+        return view('reservation');
+        // return view('login');
+    }
+    public function storeReservation(Request $request)
+    {
+        $rules = [
+            'email' => ['required', 'email'],
+            // 'email' => ['required', 'email', 'exists:CLIENTS,MailClient'],
+            'password' => ['required'],
+            'manager' => 'nullable',
+            'client' => 'nullable'
+        ];
+        $messages = [
+            'email.required' => 'Vous devez saisir un e-mail.',
+            'email.email' => 'Vous devez saisir un e-mail valide.',
+            'email.exists' => "Cet utilisateur n'existe pas.",
+            'password.required' => "Vous devez saisir un mot de passe.",
+        ];
+        $rules = [
+            'email' => ['required', 'email'],
+            'password' => ['required'],
+            'lastname' => ['string'],
+            'lastname' => ['nullable'],
+            'firstname' => ['string'],
+            'firstname' => ['nullable'],
+            'dateNaiss' => ['required'],
+            'tel' => ['required'],
+        ];
+        
+       
+        $validatedData = $request->validate($rules);
+    }
+
+
+    ///// Compte Hotel et client 
+    public function showProfil(Request $request)
+    {
+        $user = $request->session()->get('user');
+        if ($user['statut']=='client') {
+            return view('compteClient');
+        }
+        return view('compteHotel');        
+    }
    
 }

@@ -82,7 +82,46 @@
     <div class="container" style="margin-top: 20px;">
         <div class="row">
             @foreach ($chambresProposes as $chambre)
-            <div class="col-md-4 col-sm-6">
+            <div class="card mb-3 mr-2" style="max-width: 540px;">
+                <div class="row no-gutters">
+                    <div class="col-md-4 mr-2">
+                        <a href="#" id="linkImage"></a>
+                    </div>
+                    <div class="col-md-4 mr-2">
+                        <a href="{{route('hotels.show', ['NumHotel'=>$chambre['NumHotel']])}}">
+                            <h2 class="card-title">{{$chambre['NomHotel']}}</h2>
+                        </a>
+                        <a class= "btn btn-primary"  role="button" href="{{route('reservation.show')}}">
+                           Réserver
+                        </a>
+                    </div>
+                    <script type="text/javascript">
+                        // "media/' + 'hotel' + '{{$chambre["NumHotel"]}}' + '.jpg"
+                        document.getElementById('linkImage').innerHTML = '<img class="card-img" src="media/' +'{{$chambre["logoHotel"]}}'+ '.jpg" />';
+                        document.getElementById("linkImage").removeAttribute("id");
+                    </script>
+
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            @if(isset( $chambre['equipement']) && ($chambre['equipement']['wifi']==1) )
+                            <h5 class="card-text"> Wifi &#10003; </h5>
+                            @endif
+                            @if(isset( $chambre['equipement']) && ($chambre['equipement']['parking']==1) )
+                            <h5 class="card-text"> parking &#10003;</h5>
+                            @endif
+                            @if(isset( $chambre['equipement']) && ($chambre['equipement']['salleSport']==1) )
+                            <h5 class="card-text"> salle de sport &#10003;</h5>
+                            @endif
+                            @if(isset( $chambre['equipement']) && ($chambre['equipement']['animalFriendly']==1) )
+                            <h5 class="card-text"> Animal de compagnie &#10003;</h5>
+                            @endif
+                            <p class="card-text"><small class="text-muted">à 5 min de la gare </small></p>
+                            <h5><span class="price"> &#8364; {{$chambre['prix']}}</span></h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="col-md-4 col-sm-6">
                 <div class="product-grid2">
                     <div class="product-image2"> <a href="#" id="linkImage"></a>
                         <div class="product-image" id="imageBox">
@@ -93,17 +132,15 @@
                                 document.getElementById("linkImage").removeAttribute("id");
                             </script>
 
-                            <ul class="social">
-                                <li><a href="#" data-tip="Quick View"><i class="fa"></i></a></li>
-                                <li><a href="#" data-tip="Add to Cart"><i class="fa fa-shopping-cart"></i></a></li>
-                            </ul>
+                            
                         </div>
+                        
                         <div class="product-content">
                             <h3 class="title"><a href="{{route('hotels.show', ['NumHotel'=>$chambre['NumHotel']])}}"> {{$chambre['NomHotel']}}</a></h3> <span class="price"> &#8364; {{$chambre['prix']}}</span>
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
             @endforeach
         </div>
     </div>

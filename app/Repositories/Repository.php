@@ -142,9 +142,9 @@ class Repository
             
             $row = DB::table('MOTDEPASSE')->where('IdCompte', $gerant[0]['NumHotel'])->get()->toArray();
              
-             if ($this->checkPassword($password, $row[0]['MtdPass'])) {
+            if ($this->checkPassword($password, $row[0]['MtdPass'])) {
                      return $gerant[0];
-             }
+            }
 
         } catch (Exception $exception) {
             throw new Exception('Hotel inconnue');
@@ -206,6 +206,10 @@ class Repository
 
     /**##################" Trouver un Hotel  */
 
+    public function getHotel(int $NumHotel) : array
+    {
+        return DB::table('HOTELS')->where('NumHotel',$NumHotel)->get()->toArray();
+    }
     public function hotelsVille($ville)
     {
         if ($ville) {
@@ -319,6 +323,10 @@ class Repository
             if ($nbreLits && !($chambre['NbreLits'] == $nbreLits ) ) {
                 continue;
             }
+            $chambre['equipement'] = $this->equipements($chambre['idEquipement'])[0];
+            $chambre['logoHotel'] =$this->getHotel($chambre['NumHotel'])[0]['logoHotel'];
+            // VarDumper::dump($chambre);
+            // // return;
             $res[] = $chambre;
 
         }

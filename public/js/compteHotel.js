@@ -37,3 +37,13 @@ $(".InformationGenerale").click(function() {
     $(".Paragraphe3").hide();
     $(".Paragraphe4").hide();
   });
+
+  $(document).ready(
+    function(){
+      $(".Paragraphe4").hide();
+      $(".Paragraphe1").hide();
+      $(".Paragraphe2").hide();
+      $(".Paragraphe3").hide();
+      $(".Paragraphe5").hide();
+    }
+);

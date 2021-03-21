@@ -41,3 +41,10 @@ Route::post('/contact', [Controller::class, 'contact'])->name('contact.post');
 
 Route::get('/hotels/{NumHotel}', [Controller::class, 'showHotel'])->where('NumHotel', '[0-9]+')->name('hotels.show');
 
+// Reservations
+
+Route::get('/reservation', [Controller::class, 'showReservationForm'])->name('reservation.show');
+Route::post('/reservation', [Controller::class, 'storeReservation'])->name('reservation.post');
+
+Route::get('/profil', [Controller::class, 'showProfil'])->name('profil');
+

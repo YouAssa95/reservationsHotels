@@ -17,6 +17,7 @@
     @if ($errors->any())
         <div class="alert alert-warning">
             L'hôtel n'a pas pu être ajoutée &#9785;
+            {{$errors}}
         </div>
     @endif
     <!-- ************************************************************* -->

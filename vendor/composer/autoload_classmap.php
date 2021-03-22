@@ -21,7 +21,6 @@ return array(
     'App\\Providers\\EventServiceProvider' => $baseDir . '/app/Providers/EventServiceProvider.php',
     'App\\Providers\\RouteServiceProvider' => $baseDir . '/app/Providers/RouteServiceProvider.php',
     'App\\Repositories\\Data' => $baseDir . '/app/Repositories/Data.php',
-    'App\\Repositories\\Ranking' => $baseDir . '/app/Repositories/Ranking.php',
     'App\\Repositories\\Repository' => $baseDir . '/app/Repositories/Repository.php',
     'Attribute' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
     'Carbon\\Carbon' => $vendorDir . '/nesbot/carbon/src/Carbon/Carbon.php',

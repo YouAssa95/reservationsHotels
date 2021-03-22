@@ -450,7 +450,6 @@ class ComposerStaticInit127210dbfd3c08ca5fe8979d4b124557
         'App\\Providers\\EventServiceProvider' => __DIR__ . '/../..' . '/app/Providers/EventServiceProvider.php',
         'App\\Providers\\RouteServiceProvider' => __DIR__ . '/../..' . '/app/Providers/RouteServiceProvider.php',
         'App\\Repositories\\Data' => __DIR__ . '/../..' . '/app/Repositories/Data.php',
-        'App\\Repositories\\Ranking' => __DIR__ . '/../..' . '/app/Repositories/Ranking.php',
         'App\\Repositories\\Repository' => __DIR__ . '/../..' . '/app/Repositories/Repository.php',
         'Attribute' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
         'Carbon\\Carbon' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Carbon.php',

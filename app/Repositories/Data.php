@@ -8,8 +8,8 @@ function HOTELS()
         return [
             ['NumHotel' => 1, 'logoHotel' => 'ssss','NomHotel' => 'f1','NomGerant' => 'jake','PrenGerant' => 'dirin','emailHotel' => 'jake.f1@gmail.com','cpHotel' => '13005','villeHotel' => 'Marseille','classeHotel' => 2],    
             ['NumHotel' => 2, 'logoHotel' => 'ssss','NomHotel' => 'Renaissance','NomGerant' => 'Capera','PrenGerant' => 'Natalie','emailHotel' => 'Renaissance@gmail.com','cpHotel' => '13001','villeHotel' => 'Marseille','classeHotel' => 3],    
-            ['NumHotel' => 3, 'logoHotel' => 'ssss','NomHotel' => 'AC Hotel','NomGerant' => 'Smith','PrenGerant' => 'Kimberly','emailHotel' => 'AC.Hotel@gmail.com','cpHotel' => '13005','villeHotel' => 'Marseille','classeHotel' => 4],    
-            ['NumHotel' => 4, 'logoHotel' => 'ssss','NomHotel' => 'les Bords De Mer','NomGerant' => 'Taleb','PrenGerant' => 'Nassim','emailHotel' => 'Bords.De.Mer@gmail.com','cpHotel' => '13002','villeHotel' => 'Marseille','classeHotel' => 1],    
+            ['NumHotel' => 3, 'logoHotel' => 'ssss1','NomHotel' => 'AC Hotel','NomGerant' => 'Smith','PrenGerant' => 'Kimberly','emailHotel' => 'AC.Hotel@gmail.com','cpHotel' => '13005','villeHotel' => 'Marseille','classeHotel' => 4],    
+            ['NumHotel' => 4, 'logoHotel' => 'ssss1','NomHotel' => 'les Bords De Mer','NomGerant' => 'Taleb','PrenGerant' => 'Nassim','emailHotel' => 'Bords.De.Mer@gmail.com','cpHotel' => '13002','villeHotel' => 'Marseille','classeHotel' => 1],    
             ['NumHotel' => 5, 'logoHotel' => 'ssss','NomHotel' => 'Grand Hôtel','NomGerant' => 'Conan','PrenGerant' => 'Joliot','emailHotel' =>'Grand.Hotel@gmail.com','cpHotel' => '13001','villeHotel' => 'Paris','classeHotel' => 5],       
         ];
     }
@@ -29,26 +29,27 @@ function HOTELS()
     function EQUIPEMENTS()
     {
         return [
-            ['idEquipemet' => 1, 'wifi' => true,'parking' => true,'salleSport' => true,'animalFriendly' => true,'Fumeur' => true],    
-            ['idEquipemet' => 2, 'wifi' => false,'parking' => true,'salleSport' => true,'animalFriendly' => false,'Fumeur' => true],    
-            ['idEquipemet' => 3, 'wifi' => true,'parking' => false,'salleSport' => true,'animalFriendly' => true,'Fumeur' => true],    
-            ['idEquipemet' => 4, 'wifi' => true,'parking' => true,'salleSport' => true,'animalFriendly' => true,'Fumeur' => false],    
-            ['idEquipemet' => 5, 'wifi' => true,'parking' => true,'salleSport' => false,'animalFriendly' => true,'Fumeur' => true],    
-            ['idEquipemet' => 6, 'wifi' => false,'parking' => false,'salleSport' => true,'animalFriendly' => false,'Fumeur' => true],    
-            ['idEquipemet' => 7, 'wifi' => true,'parking' => false,'salleSport' => true,'animalFriendly' => true,'Fumeur' => false],    
+            ['idEquipement' => 1, 'wifi' => true,'parking' => true,'salleSport' => true,'animalFriendly' => true,'Fumeur' => true],    
+            ['idEquipement' => 2, 'wifi' => false,'parking' => true,'salleSport' => true,'animalFriendly' => false,'Fumeur' => true],    
+            ['idEquipement' => 3, 'wifi' => true,'parking' => false,'salleSport' => true,'animalFriendly' => true,'Fumeur' => true],    
+            ['idEquipement' => 4, 'wifi' => true,'parking' => true,'salleSport' => true,'animalFriendly' => true,'Fumeur' => false],    
+            ['idEquipement' => 5, 'wifi' => true,'parking' => true,'salleSport' => false,'animalFriendly' => true,'Fumeur' => true],    
+            ['idEquipement' => 6, 'wifi' => false,'parking' => false,'salleSport' => true,'animalFriendly' => false,'Fumeur' => true],    
+            ['idEquipement' => 7, 'wifi' => true,'parking' => false,'salleSport' => true,'animalFriendly' => true,'Fumeur' => false],    
 
         ];
     }
 
     function CHAMBRES()
     {
+
         return [
-            ['idChambre'=>1,'NumChambre' => 1, 'NumHotel' => 1 ],
-            ['idChambre'=>2,'NumChambre' => 2, 'NumHotel' => 1],
-            ['idChambre'=>3,'NumChambre' => 3, 'NumHotel' => 2 ],    
-            ['idChambre'=>4,'NumChambre' => 4, 'NumHotel' => 3 ],    
-            ['idChambre'=>5,'NumChambre' => 5, 'NumHotel' => 5 ],    
-            ['idChambre'=>6,'NumChambre' => 6, 'NumHotel' => 5 ]
+            ['idChambre'=>1,'NumChambre' => 1, 'NumHotel' => 1,'NbreLits'=>2,'Surface'=>20,'prix' =>33,'idEquipement'=>1 ],
+            ['idChambre'=>2,'NumChambre' => 2, 'NumHotel' => 1,'NbreLits'=>1,'Surface'=>10,'prix' =>100,'idEquipement'=>3],
+            ['idChambre'=>3,'NumChambre' => 3, 'NumHotel' => 2,'NbreLits'=>2,'Surface'=>20,'prix' =>33 ,'idEquipement'=>4],    
+            ['idChambre'=>4,'NumChambre' => 4, 'NumHotel' => 3 ,'NbreLits'=>2,'Surface'=>20,'prix' =>33,'idEquipement'=>5],    
+            ['idChambre'=>5,'NumChambre' => 5, 'NumHotel' => 5 ,'NbreLits'=>2,'Surface'=>20,'prix' =>33,'idEquipement'=>6],    
+            ['idChambre'=>6,'NumChambre' => 6, 'NumHotel' => 5 ,'NbreLits'=>1,'Surface'=>10,'prix' =>17,'idEquipement'=>2]
         ];
     }     
 

@@ -10,14 +10,9 @@
  <bouton id="buttonAddChambre"  onclick="addchambrehotel()">ajouter autres types de chambres</bouton>
 
 <form  method="POST" action="{{route('registerUneChambre.post')}}" >
-    
-    
-
-
    
-     
-        <!-- ************************************************************* -->
-          <div class="form-group">
+      <!-- **************************************************************************************************************************************************** -->
+      <div class="form-group">
              <label for="ImagChambre">Sélectionner une Image :</label><br>
              <input  type="file" name="ImagChambre" id="ImagChambre" tabindex="0" accept=".png,.JFIF,.pdf" aria-describedby="ImagChambre_feedback" class="form-control @error('ImagChambre') is-invalid @enderror" required><br>
              @error('ImagChambre')

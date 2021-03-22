@@ -59,7 +59,7 @@ CREATE TABLE CHAMBRES(
 	prix integer,
 	idEquipement integer,
     imageCh varchar(40),
-	UNIQUE(NumChambre, NumHotel),
+	-- UNIQUE(NumChambre, NumHotel),
 	FOREIGN KEY(NumHotel) REFERENCES HOTELS(NumHotel)
    	FOREIGN KEY(idEquipement) REFERENCES EQUIPEMENTS(idEquipemet)
 );

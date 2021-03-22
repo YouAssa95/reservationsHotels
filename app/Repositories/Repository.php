@@ -100,7 +100,7 @@ class Repository
         try {
             $client= DB::table('CLIENTS')->where('MailClient', $MailClient)->get()->toArray();
             
-           $row = DB::table('MOTDEPASSE')->where('IdCompte', $client[0]['NumClient'])->get()->toArray();
+           $row = DB::table('MOTDEPASSE')->where('Statut','client')->where('IdCompte', $client[0]['NumClient'])->get()->toArray();
             
             if ($this->checkPassword($password, $row[0]['MtdPass'])) {
                     return $client[0];
@@ -115,7 +115,7 @@ class Repository
             //statu n'est pas présent peux confondre avec idH=idC
             $gerant= DB::table('HOTELS')->where('emailHotel', $Mailgerant)->get()->toArray();
             
-            $row = DB::table('MOTDEPASSE')->where('IdCompte', $gerant[0]['NumHotel'])->get()->toArray();
+            $row = DB::table('MOTDEPASSE')->where('Statut','manager')->where('IdCompte', $gerant[0]['NumHotel'])->get()->toArray();
              
              if ($this->checkPassword($password, $row[0]['MtdPass'])) {
                      return $gerant[0];
@@ -125,18 +125,6 @@ class Repository
             throw new Exception('Hotel inconnue');
         }
     }
-
-   /* function infoComptHotel($NumHotel): array
-    {
-        try {
-            return DB::table('HOTELS')
-                ->where('NumHotel', $NumHotel)
-                ->get()
-                ->toArray();
-        } catch (Exception $exception) {
-            throw new Exception('Hotel inconnue');
-        }
-    }*/
 
     function reservationEnCours($NumClient): array
     {

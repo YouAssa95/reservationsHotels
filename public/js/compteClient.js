@@ -25,4 +25,14 @@ $(".InformationGenerale").click(function() {
     $(".Paragraphe2").hide();
     $(".Paragraphe3").hide();
   });
+
+  $(document).ready(
+    function(){
+      $(".Paragraphe4").hide();
+      $(".Paragraphe1").hide();
+      $(".Paragraphe2").hide();
+      $(".Paragraphe3").hide();
+    
+    }
+);
   

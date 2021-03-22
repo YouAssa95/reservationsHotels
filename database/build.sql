@@ -17,18 +17,19 @@ CREATE TABLE CLIENTS (
 );
 
 CREATE TABLE EQUIPEMENTS (
-    idEquipemet integer PRIMARY KEY AUTOINCREMENT,
-    wifi boolean,
-    parking boolean,
-    salleSport boolean,
-    animalFriendly boolean,
-    Fumeur boolean
+    idEquipement integer PRIMARY KEY AUTOINCREMENT,
+    wifi varchar(40),
+    parking varchar(40),
+    salleSport varchar(40),
+    animalFriendly varchar(40),
+    Fumeur varchar(40)
 );
 
 CREATE TABLE HOTELS(
     NumHotel  integer PRIMARY KEY AUTOINCREMENT,
     NomGerant VARCHAR(40),
     PrenGerant VARCHAR(40), 
+    DateNaissGerant DATE,
     logoHotel VARCHAR(40),
     NomHotel VARCHAR(40),
     emailHotel VARCHAR(40),
@@ -50,26 +51,26 @@ CREATE TABLE RESERVATIONS (
 
 
 CREATE TABLE CHAMBRES(
+	idChambre integer PRIMARY KEY AUTOINCREMENT,
 	NumChambre integer ,
 	NumHotel integer,
 	NbreLits integer,
 	Surface integer,
 	prix integer,
 	idEquipement integer,
-	PRIMARY KEY(NumChambre, NumHotel),
-	FOREIGN KEY(NumHotel) REFERENCES HOTELS(NumHotel),
-   	FOREIGN KEY(idEquipement) REFERENCES EQUIPEMENTS(idEquipemet)
+    imageCh varchar(40),
+	-- UNIQUE(NumChambre, NumHotel),
+	FOREIGN KEY(NumHotel) REFERENCES HOTELS(NumHotel)
+   	FOREIGN KEY(idEquipement) REFERENCES EQUIPEMENTS(idEquipement)
 );
 
 CREATE TABLE CONTENUE_RESERVATION(
     NumReservation integer,
-    NumChambre integer,
-    NumHotel integer,
-    DateDepart Datetime,
+    idChambre integer,
+    DateDepart DATETIME,
+    PRIMARY KEY ( NumReservation,idChambre),
     FOREIGN KEY(NumReservation) REFERENCES RESERVATIONS (NumReservation),
-    FOREIGN KEY(NumChambre) REFERENCES CHAMBRES(NumChambre),
-    FOREIGN KEY(NumHotel) REFERENCES HOTELS(NumHotel),
-    PRIMARY KEY ( NumReservation,NumChambre,NumHotel)
+    FOREIGN KEY(idChambre) REFERENCES CHAMBRES(idChambre)
 );
 
 CREATE TABLE MOTDEPASSE (

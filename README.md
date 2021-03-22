@@ -1,4 +1,4 @@
-# Projet PHP de l'UE Langages du Web du Master CCI
+# Projet PHP groupe 4cls
 
 - Installation des dépendances du projet :
     ~~~

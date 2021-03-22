@@ -25,8 +25,10 @@ class Controller extends BaseController
         $this->repository = $repository;
     }
 /* ----------------------------------------------------------------------------------------------------- */
-    public function welcome()
+    public function welcome(Request $request)
     {
+        $request->session()->forget('HotelId');
+        
         return view('accueil');
     }
 /* ----------------------------------------------------------------------------------------------------- */
@@ -225,6 +227,8 @@ class Controller extends BaseController
             ]);
             $hotelId= $request->session()->get('hotelId');
             // add Chambres :
+
+
 // effacer session probleme unique  
             for ($num=1;$num<= $validatedData['nb_chambre'];$num++){
                 $ChambreId = $this->repository->insertChambre([
@@ -384,7 +388,7 @@ class Controller extends BaseController
                   $request->session()->put(['user'=>$user]);
                     
                 }
-               
+               // admin ???????????????????????????????????????????????????????
                 
                 
                 return redirect()->route('accueil');

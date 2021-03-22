@@ -68,7 +68,7 @@
                 <label class="form-check-label" for="inlineRadio5">Animal de compagnie</label>
             </div>
             <br>
-            <button type="submit" class="btn btn-primary">Rechercher</button>
+            <button type="submit" class="buttonSite">Rechercher</button>
 
         </div>
 
@@ -91,7 +91,8 @@
                         <a href="{{route('hotels.show', ['NumHotel'=>$chambre['NumHotel']])}}">
                             <h2 class="card-title">{{$chambre['NomHotel']}}</h2>
                         </a>
-                        <a class= "btn btn-primary"  role="button" href="{{route('reservation.show')}}">
+                        
+                        <a class= "buttonSite"  role="button" href="{{route('reservation.show')}}">
                            Réserver
                         </a>
                     </div>

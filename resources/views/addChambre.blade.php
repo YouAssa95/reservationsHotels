@@ -6,15 +6,17 @@
 <body onload="hideformulaire()">
 <script src="{{asset('js/addChambre.js')}}"></script>
 
-
- <bouton id="buttonAddChambre"  onclick="addchambrehotel()">ajouter autres types de chambres</bouton>
-
+<div class="Center">
+ <button id="buttonAddChambre"   onclick="addchambrehotel()">ajouter autres types de chambres</button> <br><br>
+  </div>
 <form  method="POST" action="{{route('registerUneChambre.post')}}" >
    
       <!-- **************************************************************************************************************************************************** -->
       <div class="form-group">
              <label for="ImagChambre">Sélectionner une Image :</label><br>
-             <input  type="file" name="ImagChambre" id="ImagChambre" tabindex="0" accept=".png,.JFIF,.pdf" aria-describedby="ImagChambre_feedback" class="form-control @error('ImagChambre') is-invalid @enderror" required><br>
+             <div class="champ">
+              <input  type="file" name="ImagChambre" id="ImagChambre" tabindex="0" accept=".png,.JFIF,.pdf" aria-describedby="ImagChambre_feedback" class="form-control @error('ImagChambre') is-invalid @enderror" required><br>
+              </div>
              @error('ImagChambre')
                <div id="ImagChambre_feedback" class="invalid-feedback">
                   {{ $message }}
@@ -64,8 +66,8 @@
           </div>
   <!-- ************************************************************* -->
           <div class="form-group">
-            <input type="checkbox" id="parking" name="parking" value="parking" aria-describedby="parking_feedback" class="form-control @error('parking') is-invalid @enderror" >
-            <label for="parking"> Parking</label><br>
+            <span><input type="checkbox" id="parking" name="parking" value="parking" aria-describedby="parking_feedback" class="form-control @error('parking') is-invalid @enderror" ></span>
+            <span><label for="parking"> Parking</label></span>
             @error('parking')
                 <div id="parking_feedback" class="invalid-feedback">
                   {{ $message }}
@@ -113,10 +115,14 @@
               @enderror
           </div>
   <!-- ************************************************************* -->
-
+  <div class="Center">
     <button type="submit" >Valider</button><br><br>
+  </div> 
   </form>
-  <div class="retours" ><script src="{{asset('js/retour.js')}}"></script></div>
-
+  <div class="Center">
+  <div class="retours" >
+  <a href="{{route('accueil')}}"> terminer</a>
+    <script src="{{asset('js/retour.js')}}"></script></div><br><br>
+  </div>
   </body>
   @endsection

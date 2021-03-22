@@ -13,7 +13,11 @@ entrerHotel.click(function () {
     location.assign('/entrerUnHotel');
 });
 var buttons = $('<div/>').attr('id', 'buttons')
-buttons.append(trouverHotel, entrerHotel);
+//var imagbutton = $('<div/>').html('<img height="50px" src="media/accuelButton.jpg">');
+//imagbutton.attr('id','imageButton');
+buttons.append(trouverHotel, entrerHotel); //,imagbutton
+
+
 
 // alert(appSettings.message);
 

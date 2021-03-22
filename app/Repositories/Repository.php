@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Hash;
 use Symfony\Component\VarDumper\VarDumper;
 
 use App\Repositories\Data;
+use App\Post;
+use PDF;
 
 class Repository
 {
@@ -76,6 +78,25 @@ class Repository
     function insertContenuReservation(array $ContenuReservation): int
     {
         return DB::table('CONTENUE_RESERVATION')->insertGetId($ContenuReservation);
+    }
+
+    // Utilisation pdf wahab
+
+    public function getPostPdf (Post $post)
+    {
+        /*
+        // L'instance PDF avec une vue : resources/views/posts/show.blade.php
+        $pdf = PDF::loadView('views.testpdf', compact('views'));
+
+        // Lancement du téléchargement du fichier PDF
+        return $pdf->download(\Str::slug($post->title).".pdf");
+        */
+
+        return PDF::loadView('views.testpdf')
+            ->setPaper('a4', 'landscape')
+            ->setWarnings(false)
+            ->save(public_path("storage/documents/fichier.pdf"))
+            ->stream();
     }
 
     /// Requettes de gestion 

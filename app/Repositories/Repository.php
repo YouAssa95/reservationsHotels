@@ -9,6 +9,8 @@ use Symfony\Component\VarDumper\VarDumper;
 use Carbon\Carbon;
 
 use App\Repositories\Data;
+use App\Post;
+use PDF;
 use DateTime;
 
 class Repository
@@ -104,6 +106,24 @@ class Repository
         
     }
 
+    // Utilisation pdf wahab
+
+    public function getPostPdf (Post $post)
+    {
+        /*
+        // L'instance PDF avec une vue : resources/views/posts/show.blade.php
+        $pdf = PDF::loadView('views.testpdf', compact('views'));
+
+        // Lancement du téléchargement du fichier PDF
+        return $pdf->download(\Str::slug($post->title).".pdf");
+        */
+
+        return PDF::loadView('views.testpdf')
+            ->setPaper('a4', 'landscape')
+            ->setWarnings(false)
+            ->save(public_path("storage/documents/fichier.pdf"))
+            ->stream();
+    }
 
     /// Requettes de gestion 
 

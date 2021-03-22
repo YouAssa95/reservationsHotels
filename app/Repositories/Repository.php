@@ -42,7 +42,6 @@ class Repository
 
     function insertChambre(array $Chambre)
     {
-        // VarDumper::dump($Chambre);
         
         return DB::table('CHAMBRES')->insertGetId($Chambre);
     }
@@ -285,13 +284,15 @@ class Repository
     /// check if chambre appartient déjà aux résultats retournés ou non
     /// Pour ne pas afficher les chambres avec les mêmes caractéristiques
 
-    public function appartenance($chambre,$res) 
+    public function appartenance($chambre,$res)  : bool
     {
         foreach ($res as $ch) {
+         
             if (array_slice($ch,2) == array_slice($chambre,2)) {
                 return true;
             }       
         }
+        return false;
     }
 
     public function chambresAvecEquipements($chambres,$equipements,$nbreLits) 
@@ -325,8 +326,7 @@ class Repository
             }
             $chambre['equipement'] = $this->equipements($chambre['idEquipement'])[0];
             $chambre['logoHotel'] =$this->getHotel($chambre['NumHotel'])[0]['logoHotel'];
-            // VarDumper::dump($chambre);
-            // // return;
+            
             $res[] = $chambre;
 
         }

@@ -259,13 +259,16 @@ class Controller extends BaseController
         $chambres = $this->chambresDisponibles(null,date('Y-m-d'));
         // eviter les repetitions
         foreach ($chambres as $chambre) {
+            
+            $chambre['equipement'] = $this->repository->equipements($chambre['idEquipement'])[0];
+            $chambre['logoHotel'] =$this->repository->getHotel($chambre['NumHotel'])[0]['logoHotel'];
+
             if ((count($chambresProposes) >0) && $this->repository->appartenance($chambre,$chambresProposes)) {
                 continue;
             }
-            $chambre['equipement'] = $this->repository->equipements($chambre['idEquipement'])[0];
-            $chambre['logoHotel'] =$this->repository->getHotel($chambre['NumHotel'])[0]['logoHotel'];
             $chambresProposes[]=$chambre;
         }
+        // return;
         return  view('trouverUnHotel',['chambresProposes'=>$chambresProposes]);
     }
     
@@ -306,8 +309,7 @@ class Controller extends BaseController
         /// equipemnts et Nbre de Lits
         $nbreLits =  isset($validatedData['nbreLits']) ? $validatedData['nbreLits']:null;
         $chambresProposes =  $this->repository->chambresAvecEquipements($chambresAvecPrix,$equipements, $nbreLits) ;
-        // VarDumper::dump($chambresProposes);
-        // return;
+      
         session()->flashInput($request->input());
         return  view('trouverUnHotel',['chambresProposes'=>$chambresProposes]);
     }
@@ -347,8 +349,7 @@ class Controller extends BaseController
         
        
         $validatedData = $request->validate($rules, $messages);
-        // VarDumper::dump($validatedData );
-        // return;
+       
 
         
         try {
@@ -506,9 +507,9 @@ class Controller extends BaseController
     {
         $user = $request->session()->get('user');
         if ($user['statut']=='client') {
-            return view('compteClient');
+            return view('compteClient',['user'=>$user]);
         }
-        return view('compteHotel');        
+        return view('compteHotel',['user'=>$user]);        
     }
    
 }

@@ -9,6 +9,7 @@
 <head>
   <meta charset="utf-8">
   <title>Page compte Hotel </title>
+  <link rel="stylesheet" href="css/profil.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 
@@ -27,11 +28,38 @@
   <br><br><button class="AjouterChambre">Ajouter une chambre </button>
 
   <div class="Paragraphe1">
-    <p>Informations générales:</p>
-    <p>Ici on va afficher les informations relatives au compte hotel depuis la base de donees</p>
-    <p>Nom</p>
-    <p>Prenom </p>
-    <p>....</p>
+    <table class="table table-striped">
+      <tbody>
+        <tr>
+          <td>Nom</td>
+          <td>{{$user['lastName']}}</td>
+          <td>
+            <a class="btn btn-secondary" href="/">Modifier</a>
+          </td>
+        </tr>
+        <tr>
+          <td>Prénom</td>
+          <td>{{$user['firstName']}}</td>
+          <td>
+            <a class="btn btn-secondary" href="/">Modifier</a>
+          </td>
+        </tr>
+        <tr>
+          <td>mail</td>
+          <td>{{$user['email']}}</td>
+          <td>
+            <a class="btn btn-secondary" href="/">Modifier</a>
+          </td>
+        </tr>
+        <tr>
+          <td>Mot de passe </td>
+          <td></td>
+          <td>
+            <a class="btn btn-secondary" href="">Modifier</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 
   <div class="Paragraphe2">

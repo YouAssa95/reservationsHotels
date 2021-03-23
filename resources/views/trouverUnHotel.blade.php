@@ -89,9 +89,10 @@
                     </div>
                     <div class="col-md-4 mr-2">
                         <a href="{{route('hotels.show', ['NumHotel'=>$chambre['NumHotel']])}}">
-                            <h2 class="card-title">{{$chambre['NomHotel']}}</h2>
+                            <h2 class="card-title">{{ $chambre['NomHotel'] }} </h2>
+                            
                         </a>
-                        <a class= "btn btn-primary"  role="button" href="{{route('reservation.show')}}">
+                        <a class= "btn btn-primary"  role="button" href="{{route('reservation.show',['idChambre' => $chambre['idChambre']])}}">
                            Réserver
                         </a>
                     </div>

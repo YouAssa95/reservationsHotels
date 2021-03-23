@@ -12,23 +12,50 @@
 </head>
 
 <body>
-  <form action="{{route('reservation.post')}}">
 
-    <label for="lastName"> Entrez votre nom:<br> </label>
-    <input type="name" id="lastName" name="lastName" ><br><br>
+  <div class="container-fluid">
 
-    <label for="firstName">Entrez votre prénom: <br> </label>
-    <input type="name" id="firstName" name="firstName"><br><br>
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="col-md-4 mr-2">
+          <a href="#" id="linkImage"></a>
+        </div>
+        <a href="">
+          <h2 class="card-title">{{$chambre['NomHotel']}}</h2>
+        </a>
+        <p>Adress : {{$chambre['AdresseHotel']}} </p>
+        <p>{{$chambre['villeHotel']}} ({{$chambre['cpHotel']}})</p>
+        <p>classe : {{$chambre['classeHotel']}}</p>
+        <script type="text/javascript">
+          document.getElementById('linkImage').innerHTML = '<img class="card-img" src="media/' + 'ssss' + '.jpg" />';
+          document.getElementById("linkImage").removeAttribute("id");
+        </script>
+      </div>
 
-    <label for="email">Entrez votre adresse mail:<br></label>
-    <input type="email" id="email" name="email" ><br><br>
+      <div class="col-lg-6">
 
+        <div id="imageChambre" class="col-md-4 mr-2">
+          <a href="#" id="linkImage"></a>
+        </div>
 
-    <label for="phone">Entrez votre numero de téléphone:</label><br><br>
-    <input type="tel" id="phone" name="phone" placeholder="07 77 77 77 77" pattern="[0-9]{10}"><br><br>
+    
+       
+        <h5 class="card-text"> Wifi {{$chambre['wifi']}}&#10003; </h5>
 
-    <button type="submit" class="RegisterButton">Valider la réservation</button>
-  </form>
+        
+        
+
+        <p class="card-text"><small class="text-muted">à 5 min de la gare </small></p>
+        <h5><span class="price"> &#8364; </span></h5>
+        <button>Réserver</button>
+        <script type="text/javascript">
+          document.getElementById('linkImage').innerHTML = '<img class="card-img" src="media/' + 'ssss' + '.jpg" />';
+          document.getElementById("linkImage").removeAttribute("id");
+        </script>
+      </div>
+    </div>
+  
+  </div>
 </body>
 
 </HTML>

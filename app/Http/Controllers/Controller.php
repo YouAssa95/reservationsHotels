@@ -466,9 +466,12 @@ class Controller extends BaseController
     }
 
     //// Reservation
-    public function showReservationForm()
+    public function showReservationForm(int $idChambre)
     {
-        return view('reservation');
+        $chambre = $this->repository->getChambre($idChambre);
+
+
+        return view('reservation', ['chambre' => $chambre[0]]);
         // return view('login');
     }
     public function storeReservation(Request $request)

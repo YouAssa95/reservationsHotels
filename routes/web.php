@@ -58,3 +58,4 @@ Route::post('/reservation', [Controller::class, 'storeReservation'])->name('rese
 
 Route::get('/profil', [Controller::class, 'showProfil'])->name('profil');
 
+Route::post('/testpdf', [Controller::class, 'getPostPdf'])->name('getPostPdf');

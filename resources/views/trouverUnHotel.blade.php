@@ -93,7 +93,7 @@
                             
                         </a>
                         <a class= "btn btn-primary"  role="button" href="{{route('reservation.show',['idChambre' => $chambre['idChambre']])}}">
-                           Réserver
+                          voir plus
                         </a>
                     </div>
                     <script type="text/javascript">

@@ -15,6 +15,7 @@ use PhpParser\Node\Stmt\Return_;
 use Symfony\Component\VarDumper\VarDumper;
 use Symfony\Contracts\Service\Attribute\Required;
 use DateTime;
+use Faker\Provider\Barcode;
 
 class Controller extends BaseController
 {
@@ -478,10 +479,9 @@ class Controller extends BaseController
     public function showReservationForm(int $idChambre)
     {
         $chambre = $this->repository->getChambre($idChambre);
-
-
-        return view('reservation', ['chambre' => $chambre[0]]);
-        // return view('login');
+        // VarDumper::dump($chambre);
+        // return;
+       return view('reservation', ['chambre' => $chambre[0]]);
     }
     public function storeReservation(Request $request)
     {

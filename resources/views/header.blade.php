@@ -11,7 +11,7 @@
     <nav>
         <ul>
             <li id="logo">
-                <a href="/"><img height="50px" src="media/bookNow.png"></a>
+                <a href="/"><img height="50px" src="/media/bookNow.png"></a>
             </li>
 
      

@@ -68,7 +68,7 @@
                 <label class="form-check-label" for="inlineRadio5">Animal de compagnie</label>
             </div>
             <br>
-            <button type="submit" class="btn btn-primary">Rechercher</button>
+            <button type="submit" class="buttonSite">Rechercher</button>
 
         </div>
 

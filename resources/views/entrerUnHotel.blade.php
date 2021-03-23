@@ -7,19 +7,25 @@
 @section('content')
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<!-- /* *****************************************************************************************************/ -->
+<CENTER><FONT COLOR="black" SIZE="5" ><strong>
+Crée votre Compte Manager</strong> </CENTER></FONT>
+<CENTER><FONT COLOR="black" SIZE="3"><em><strong>Entrez vous information ainssi que les données de votre Hôtel</strong></em></CENTER></FONT><BR><BR><BR>
+<!-- /* *****************************************************************************************************/ -->
+
 
 <form method="POST" action="{{route('registerUnHotel.post')}}" >
 <!-- novalidate -->
   <div class="partietotal">
 	  <div class="partie1">
-	    <h1> entrer un hôtel</h1>
+	    <h1> données hôtel</h1>
       <!-- ************************************************************* -->
-    @if ($errors->any())
-        <div class="alert alert-warning">
-            L'hôtel n'a pas pu être ajoutée &#9785;
-            {{$errors}}
-        </div>
-    @endif
+      @if ($errors->any())
+          <div class="alert alert-warning">
+              L'hôtel n'a pas pu être ajoutée &#9785;
+              {{$errors}}
+          </div>
+      @endif
     <!-- ************************************************************* -->
         <div class="form-group">
           <label for="logoHotel">Sélectionner un logo :</label><br>
@@ -150,7 +156,7 @@
   
 
     <div class="chambredispo">
-      <div id="0">
+      <h1> données chambre</h1>
         <!-- **************************************************************************************************************************************************** -->
           <div class="form-group">
              <label for="ImagChambre">Sélectionner une Image :</label><br>
@@ -258,7 +264,7 @@
 
     <button type="submit" onclick="addchambrehotel()" >Valider</button><br><br>
   </form>
-
+</div>
   <div class="retours" ><script src="{{asset('js/retour.js')}}"></script></div>
  
 @endsection

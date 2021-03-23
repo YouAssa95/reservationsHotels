@@ -13,6 +13,15 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Controller;
+
+Route::get('/', [Controller::class, 'showRanking'])->name('ranking.show');
+Route::get('/teams/{teamId}', [Controller::class, 'showTeam'])->where('teamId', '[0-9]+')->name('teams.show');
+Route::get('/teams/create', [Controller::class, 'createTeam'])->name('teams.create');
+Route::post('/teams', [Controller::class, 'storeTeam'])->name('teams.store');
+Route::get('/matches/create', [Controller::class, 'createMatch'])->name('matches.create');
+Route::post('/matches', [Controller::class, 'storeMatch'])->name('matches.store');
+Route::post('/wahaby', [Controller::class, 'storeMatch'])->name('team');
+
 Route::get('/', [Controller::class, 'welcome'])->name('accueil');
 Route::get('/entrerUnHotel', [Controller::class, 'entrerUnHotel'])->name('entrerUnHotel');
 Route::post('/entrerUnHotel', [Controller::class, 'registerUnHotel'])->name('registerUnHotel.post');
@@ -40,6 +49,7 @@ Route::get('/contact', [Controller::class, 'showContactForm'])->name('contact');
 Route::post('/contact', [Controller::class, 'contact'])->name('contact.post');
 
 Route::get('/hotels/{NumHotel}', [Controller::class, 'showHotel'])->where('NumHotel', '[0-9]+')->name('hotels.show');
+
 
 // Reservations
 

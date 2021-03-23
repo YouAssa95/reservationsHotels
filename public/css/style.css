@@ -1,10 +1,55 @@
 @import url('https://fonts.googleapis.com/css?family=Advent+Pro|Dancing+Script&display=swap');
 
 body {
+  
   font-family: 'Advent Pro', sans-serif;
   padding: 0;
   margin: 0;
+  
 }
+/* ********************************** */
+#form1{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 10px 20% 50px 20% ;  }
+.Center{
+  text-align: center;
+}
+ 
+  li:hover {
+    background-color: #FB8801;
+    color: #FFFAE1;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+  }
+
+  .buttonSite, button {
+    margin-left: 200px;
+    font-size: 1.5em;
+    background-color: #FFFAE1;
+    border: none;
+    width: 40%;
+    padding: 15px 10px;
+    margin: 1px 0;
+    font-size: 1.2em;
+    font-family: 'Advent Pro', sans-serif;
+    border-radius: 8px;
+  }
+  .buttonSite:hover, button:hover {
+    background-color: #FB8801;
+    color: #FFFAE1;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+  }
+  .champ{
+    width: 60%;
+    position: relative;
+    left: 20%;
+    
+  }
+  /* **************************************** */
+
 ul {
   margin: 0;
   padding: 0;
@@ -45,25 +90,30 @@ li a {
 /* //////////////// Buttons */
 
 #buttons{
+   background: url('accuelButton.jpg') fixed no-repeat 50% 50%;
+   background-size: cover 349px;
+   /* background-color: #FFFAE1; */
+
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  padding: 100px 25% 50px 25% ;  
+  padding: 100px 25% 100px 25% ;  
 }
 
 .accueilButtons {
+  
     font-size: 1.5em;
-    background-color: #FFFAE1;
+    background-color: #fffae1af;
     border: none;
-    width: 20%;
+    width: 30%;
     padding: 15px 10px;
     margin: 1px 0;
     font-size: 1.2em;
     font-family: 'Advent Pro', sans-serif;
     border-radius: 8px;
-  }
+}
   .accueilButtons:hover {
-    background-color: #e55039;
+    background-color: #FB8801;
     color: #FFFAE1;
     cursor: pointer;
     transition: 0.3s ease-in-out;

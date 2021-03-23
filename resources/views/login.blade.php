@@ -3,7 +3,19 @@
 @section('title', 'Mon compte')
 
 @section('content')
-<form method="POST" action="{{route('login.post')}}">
+
+<CENTER><FONT COLOR="black" SIZE="5" ><strong>
+Connectez vous sur votre espace personel Manager ou Client</strong> </CENTER></FONT>
+<CENTER><FONT COLOR="black" SIZE="3"><em><strong>Entrez votre Email et mot de passe </strong></em></CENTER></FONT><BR><BR><BR>
+
+
+
+
+
+<!-- /* ******************************************************************************* */ -->
+
+<div class="Center">
+<form method="POST"  action="{{route('login.post')}}">
   @csrf
   @if ($errors->any())
   <div class="alert alert-warning">
@@ -36,7 +48,9 @@
   @else
   <div class="form-group">
     <label for="email">E-mail</label>
+    <div class="champ">
     <input type="email" id="email" name="email" value="" aria-describedby="email_feedback" class="form-control @error('email') is-invalid @enderror" required>
+    </div>
     @error('email')
     <div id="email_feedback" class="invalid-feedback">
       {{ $message }}
@@ -46,7 +60,9 @@
 
   <div class="form-group">
     <label for="password">Mot de passe</label>
+    <div class="champ">
     <input type="password" id="password" name="password" value="" aria-describedby="password_feedback" class="form-control @error('password') is-invalid @enderror" required>
+    </div>
     @error('password')
     <div id="password_feedback" class="invalid-feedback">
       {{ $message }}
@@ -70,6 +86,9 @@
     <a href="/register/client" style="color: blue; font-size:large"> client</a>
     <a href="/entrerUnHotel" style="color: blue; font-size:large"> hôtel</a>
   </div>
-  <button type="submit" class="btn btn-primary">Se connecter</button>
+  <div class="Center">
+  <button type="submit"  class="RegisterButton">Se connecter</button>
+  </div>
 </form>
+</div>
 @endsection

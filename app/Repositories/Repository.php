@@ -196,6 +196,15 @@ class Repository
 
     /**##################" Trouver un Hotel  */
 
+    public  function getChambre(int $idChambre) : array
+    {
+        return DB::table('CHAMBRES')
+            ->join('HOTELS', 'HOTELS.NumHotel', '=', 'CHAMBRES.NumHotel')
+            ->join('EQUIPEMENTS','EQUIPEMENTS.idEquipement','=','CHAMBRES.idEquipement' )
+            ->where('idChambre', $idChambre)
+            ->get()
+            ->toArray();
+    }
     public function getHotel(int $NumHotel) : array
     {
         return DB::table('HOTELS')->where('NumHotel',$NumHotel)->get()->toArray();
@@ -256,7 +265,7 @@ class Repository
 
     /// equipements pour une chambre donnée
 
-    public function equipements(int $idEquipement)
+    public function equipements(int $idEquipement) 
     {
         
        return DB::table('EQUIPEMENTS')

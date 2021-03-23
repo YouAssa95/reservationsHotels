@@ -13,7 +13,9 @@ entrerHotel.click(function () {
     location.assign('/entrerUnHotel');
 });
 var buttons = $('<div/>').attr('id', 'buttons')
-buttons.append(trouverHotel, entrerHotel);
+buttons.append(trouverHotel, entrerHotel); 
+
+
 
 // alert(appSettings.message);
 
@@ -41,13 +43,15 @@ var prop4 = $('<div/>').addClass("propsitionsImg").append($('<a/>').html('<img s
 
 propositions.append(prop1, prop2, prop3, prop4);
 
-
+$( "#content" ).remove();
 
 ///////////////////////
-$("#content").append(buttons, videoPub, propositions);
+$("body").append(buttons, videoPub, propositions);
 
 $(document).ready(
+   
     function(){
+        
         const player = new Plyr('#myVideo'); /// play automatiquement ??? 
     }
 );

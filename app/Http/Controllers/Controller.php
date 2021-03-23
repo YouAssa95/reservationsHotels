@@ -26,8 +26,10 @@ class Controller extends BaseController
         $this->repository = $repository;
     }
 /* ----------------------------------------------------------------------------------------------------- */
-    public function welcome()
+    public function welcome(Request $request)
     {
+        $request->session()->forget('HotelId');
+        
         return view('accueil');
     }
 /* ----------------------------------------------------------------------------------------------------- */
@@ -226,6 +228,8 @@ class Controller extends BaseController
             ]);
             $hotelId= $request->session()->get('hotelId');
             // add Chambres :
+
+
 // effacer session probleme unique  
             for ($num=1;$num<= $validatedData['nb_chambre'];$num++){
                 $ChambreId = $this->repository->insertChambre([
@@ -385,7 +389,7 @@ class Controller extends BaseController
                   $request->session()->put(['user'=>$user]);
                     
                 }
-               
+               // admin ???????????????????????????????????????????????????????
                 
                 
                 return redirect()->route('accueil');
@@ -472,9 +476,12 @@ class Controller extends BaseController
     }
 
     //// Reservation
-    public function showReservationForm()
+    public function showReservationForm(int $idChambre)
     {
-        return view('reservation');
+        $chambre = $this->repository->getChambre($idChambre);
+
+
+        return view('reservation', ['chambre' => $chambre[0]]);
         // return view('login');
     }
     
@@ -533,6 +540,11 @@ class Controller extends BaseController
                 'prenom' => $request -> input('firstName'),
                 'mail' => $request -> input('email'),
                 'tel' => $request -> input('phone'),
+                //------------------------- trouver hotel
+                'destination' => $request -> input('destination'),
+                'arrive' => $request -> input('DateA'),
+                'depart' => $request -> input('DateD'),
+                'lit' => $request -> input('inputGroupSelect01'),
         ];
 
         // L'instance PDF avec une vue : resources/views/posts/show.blade.php

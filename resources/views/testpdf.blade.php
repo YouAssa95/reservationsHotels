@@ -5,27 +5,29 @@
     <title>Ma page</title>
 </head>
 <body>
-<h1>Résumé de votre réservation</h1>
+<h1>Résumé de votre réservation</h1><br><br>
 
-<div>Bonjour {{$obj->nom}} {{$obj->prenom}}</div>
-<div>Votre réservation n°B2D1925223 est confirmée. 
-Veuillez trouver ci-dessous le détail de votre réservation :</div>
+<div>Bonjour, {{$obj->nom}} {{$obj->prenom}}</div>
+<div>Votre réservation n°B2D1925223 est confirmée.<br><br>
+Veuillez présenter ce ticket de réservation, ainsi que votre carte d'identité à l'accueil de l'hôtel, 
+afin de procéder au payement de votre chambre et d'y avoir accès.<br><br>
+Veuillez trouver ci-dessous le détail de votre réservation :</div><br><br>
 
-<div>-------------------------------------------------------------</div>
+<div>--------------------------------------------------------------------------------------------------------------------------------------</div>
 
-<div>Vos coordonnées :</div>
-<div>{{$obj->nom}}</div>
-<div>{{$obj->prenom}}</div>
-<div>{{$obj->mail}}</div>
-<div>{{$obj->tel}}</div>
+<h3>Vos coordonnées :</h3>
+<div>Nom : {{$obj->nom}}</div>
+<div>Prenom : {{$obj->prenom}}</div>
+<div>Votre adresse mail : {{$obj->mail}}</div>
+<div>Votre numéro de téléphone : {{$obj->tel}}</div><br><br>
 
-<div>-------------------------------------------------------------</div>
+<div>--------------------------------------------------------------------------------------------------------------------------------------</div>
 
-<div>Votre séjour :</div>
-<div>{{$obj->nom}}</div>
-<div>{{$obj->prenom}}</div>
-<div>{{$obj->mail}}</div>
-<div>{{$obj->tel}}</div>
+<h3>Votre séjour :<h3>
+<div>{{$obj->destination}}</div>
+<div>{{$obj->arrive}}</div>
+<div>{{$obj->depart}}</div>
+<div>{{$obj->lit}}</div>
 
 <!-- Saut de page 
 <div style="page-break-after: always;" ></div>-->
@@ -35,4 +37,27 @@ Veuillez trouver ci-dessous le détail de votre réservation :</div>
 
 <style>
 
+h1 {
+    color: #b48608; 
+    font-family: 'Droid serif', 
+    serif; font-size: 36px; 
+    font-weight: 400; 
+    font-style: italic; 
+    line-height: 44px; 
+    margin: 0 0 12px; 
+    text-align: center;
+    
+}
+
+h3 {
+    color: #b48608; 
+    font-family: 'Droid serif', 
+    serif; font-size: 36px; 
+    font-weight: 400; 
+    font-style: italic; 
+    line-height: 44px; 
+    margin: 0 0 12px; 
+    text-align: center;
+    
+}
 </style>

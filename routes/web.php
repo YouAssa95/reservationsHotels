@@ -53,8 +53,9 @@ Route::get('/hotels/{NumHotel}', [Controller::class, 'showHotel'])->where('NumHo
 
 // Reservations
 
-Route::get('/reservation', [Controller::class, 'showReservationForm'])->name('reservation.show');
+Route::get('/reservation/{idChambre}', [Controller::class, 'showReservationForm'])->name('reservation.show');
 Route::post('/reservation', [Controller::class, 'storeReservation'])->name('reservation.post');
 
 Route::get('/profil', [Controller::class, 'showProfil'])->name('profil');
 
+Route::post('/testpdf', [Controller::class, 'getPostPdf'])->name('getPostPdf');

@@ -15,6 +15,7 @@ use PhpParser\Node\Stmt\Return_;
 use Symfony\Component\VarDumper\VarDumper;
 use Symfony\Contracts\Service\Attribute\Required;
 use DateTime;
+use PDF;
 
 class Controller extends BaseController
 {
@@ -475,11 +476,15 @@ class Controller extends BaseController
     }
 
     //// Reservation
-    public function showReservationForm()
+    public function showReservationForm(int $idChambre)
     {
-        return view('reservation');
+        $chambre = $this->repository->getChambre($idChambre);
+
+
+        return view('reservation', ['chambre' => $chambre[0]]);
         // return view('login');
     }
+    
     public function storeReservation(Request $request)
     {
         $rules = [
@@ -520,5 +525,34 @@ class Controller extends BaseController
         }
         return view('compteHotel',['user'=>$user]);        
     }
-   
+
+
+    /* ----------------------------------------------------------------------------------------------------- */
+
+    // Utilisation pdf 
+
+    public function getPostPdf (Request $request)
+    {
+        
+       
+        $obj =  (object) [
+                'nom' => $request -> input('lastName'),
+                'prenom' => $request -> input('firstName'),
+                'mail' => $request -> input('email'),
+                'tel' => $request -> input('phone'),
+                //------------------------- trouver hotel
+                'destination' => $request -> input('destination'),
+                'arrive' => $request -> input('DateA'),
+                'depart' => $request -> input('DateD'),
+                'lit' => $request -> input('inputGroupSelect01'),
+        ];
+
+        // L'instance PDF avec une vue : resources/views/posts/show.blade.php
+        $pdf = PDF::loadView('testpdf', compact('obj'));
+
+        // Lancement du téléchargement du fichier PDF
+        return $pdf->download("ma_reservation.pdf");
+        
+    }
+    
 }

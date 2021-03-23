@@ -91,13 +91,11 @@ li a {
 /* //////////////// Buttons */
 
 #buttons{
-   background-image: url('accuelButton.jpg'); 
-   background-color: #FFFAE1;
-   background-size: 100%;
-   background-repeat: no-repeat;
-   
+   background: url('accuelButton.jpg') fixed no-repeat 50% 50%;
+   background-size: cover 349px;
+   /* background-color: #FFFAE1; */
 
-   display: flex;
+  display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   padding: 100px 25% 100px 25% ;  
@@ -114,7 +112,7 @@ li a {
     font-size: 1.2em;
     font-family: 'Advent Pro', sans-serif;
     border-radius: 8px;
-  }
+}
   .accueilButtons:hover {
     background-color: #FB8801;
     color: #FFFAE1;
@@ -159,9 +157,8 @@ li a {
   #content {
     min-height: calc(100vh - 70px);
   }
-  footer {
-    height: 50px;
-  }
+
+
 
   input, textarea {
     border: none;

@@ -155,7 +155,7 @@ Crée votre Compte Manager</strong> </CENTER></FONT>
 
   
 
-    <div class="chambredispo">
+    <div class="partie2" id="chambre">
       <h1> données chambre</h1>
         <!-- **************************************************************************************************************************************************** -->
           <div class="form-group">
@@ -210,8 +210,9 @@ Crée votre Compte Manager</strong> </CENTER></FONT>
           </div>
   <!-- ************************************************************* -->
           <div class="form-group">
+          <label for="parking"> Parking</label>
             <input type="checkbox" id="parking" name="parking" value="parking" aria-describedby="parking_feedback" class="form-control @error('parking') is-invalid @enderror" >
-            <label for="parking"> Parking</label><br>
+            
             @error('parking')
                 <div id="parking_feedback" class="invalid-feedback">
                   {{ $message }}
@@ -220,8 +221,9 @@ Crée votre Compte Manager</strong> </CENTER></FONT>
           </div>
   <!-- ************************************************************* -->
           <div class="form-group">
+          <label for="wifi">  Connexion Wi-Fi</label><br>
             <input type="checkbox" id="wifi" name="wifi" value="connexion wifi" aria-describedby="wifi_feedback" class="form-control @error('wifi') is-invalid @enderror" >
-            <label for="wifi">  Connexion Wi-Fi</label><br>
+            
             @error('wifi')
                 <div id="wifi_feedback" class="invalid-feedback">
                   {{ $message }}
@@ -230,8 +232,9 @@ Crée votre Compte Manager</strong> </CENTER></FONT>
           </div>
   <!-- ************************************************************* -->
           <div class="form-group">
+          <label for="salleSport">  Salle de sport</label><br>
             <input type="checkbox" id="salleSport" name="salleSport" value="salle de sport" aria-describedby="salleSport_feedback" class="form-control @error('salleSport') is-invalid @enderror" >
-            <label for="salleSport">  Salle de sport</label><br>
+           
             @error('salleSport')
                 <div id="salleSport_feedback" class="invalid-feedback">
                   {{ $message }}
@@ -240,8 +243,18 @@ Crée votre Compte Manager</strong> </CENTER></FONT>
           </div>
   <!-- ************************************************************* -->
           <div class="form-group">
-            <input type="checkbox" id="animalFriendly" name="animalFriendly" value="animal friendly" aria-describedby="animalFriendly_feedback" class="form-control @error('animalFriendly') is-invalid @enderror" >
-            <label for="animalFriendly">  Animaux domestiques admis</label><br>
+        
+          
+              <label class="checkbox" for="animalFriendly"> 
+               Animaux domestiques admis :
+              </label>
+              <input class="input-checkbox" type="checkbox" id="animalFriendly" name="animalFriendly" value="animal friendly" aria-describedby="animalFriendly_feedback" class="form-control @error('animalFriendly') is-invalid @enderror" >   
+
+               
+            
+           
+         
+           
             @error('animalFriendly')
                 <div id="animalFriendly_feedback" class="invalid-feedback">
                   {{ $message }}
@@ -250,8 +263,9 @@ Crée votre Compte Manager</strong> </CENTER></FONT>
           </div>
   <!-- ************************************************************* -->
           <div class="form-group">
+          <label for="animalFriendly">  Fumeur admis</label>
             <input type="checkbox" id="Fumeur" name="Fumeur" value="Fumeur" aria-describedby="Fumeur_feedback" class="form-control @error('Fumeur') is-invalid @enderror">
-            <label for="animalFriendly">  Fumeur admis</label><br>
+            
             @error('Fumeur')
                 <div id="Fumeur_feedback" class="invalid-feedback">
                   {{ $message }}
@@ -262,9 +276,14 @@ Crée votre Compte Manager</strong> </CENTER></FONT>
 
     </div>
 
-    <button type="submit" onclick="addchambrehotel()" >Valider</button><br><br>
-  </form>
+    
+ 
 </div>
-  <div class="retours" ><script src="{{asset('js/retour.js')}}"></script></div>
+<div id="formulButton" class="partie2">  
+<br><button  type="submit" onclick="addchambrehotel()" >Valider</button><br><br>
+</form>
+<div class="retours" ><script src="{{asset('js/retour.js')}}"></script></div>
+</div>
+
  
 @endsection

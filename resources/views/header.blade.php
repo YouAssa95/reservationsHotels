@@ -14,9 +14,9 @@
                 <a href="/"><img height="50px" src="media/bookNow.png"></a>
             </li>
 
-     
+            
             <li id="AboutUs">
-                <a href="/aboutUs"> About us</a>
+                <a href="/aboutUs">About us</a>
             </li>
             @if (session()->has('user'))
             <li id="Logout">

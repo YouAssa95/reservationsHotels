@@ -1,44 +1,72 @@
 
-.partie1 {
-    background-color: gainsboro;
-    height: 500%;
-    width: 450%;
-    float: left;
-    border: 1px solid black;
-    border: 3px solid rgb(126, 128, 18);
+
+  h1{
+    text-align: center;
     
   
+  }
+  /* .checkbox {
+    display: inline-block;
+    vertical-align: top;
+    padding-left: 6px;
+    position: relative;
+  }
+  
+  .checkbox input {
+    position: relative;
+    left: 0px;
+    top: 0;
+  } */
+
+  .partietotal{
+     /* display: flex; */
+     flex-wrap: nowrap;
+     justify-content: space-between;
+     padding: 23px 5px 23px 5px;
+     /* 100px 10% 100px 10% ;   */
+  
+  }
+  .partie2{
+    text-align: center;
+    height: 150%;
+    width: 450px;
+    
+    padding: 0px 20px 50px 20px ;
+    float: right;
+    
+   
+    }
+    #chambre{
+      border: 1px solid black;
+    }
+    #formulButton{
+       width: 500px;
+      text-align: center;
+      /* border: 1px solid black; */
+
+    }
+  .partie1 {
+    padding: 0px 20px 10px 20px ;
+    height: 100%;
+    width: 450px;
+    float: left;
+    border: 1px solid black;
+    /*border: 3px solid rgb(126, 128, 18);*/
      font-size: medium;
      
   }
-  h1{
-    text-align: center;
-  
-  }
-  .chambredispo{
-   
-    
-    padding: 0px 65% 100px 10% ;
-    float: right;
-   
-    }
-  
-   .addchambre {
-   margin: auto;
-    height: 20px;
-    width: 250px;
-    border: 3px solid rgb(126, 128, 18); 
-     padding: 30px;
-    }
-  .partietotal{
-     display: flex;
-     flex-wrap: nowrap;
-     justify-content: space-between;
-     padding: 10px 0px 100px 10% ;  
-  
+  .partie3 {
+    padding: 0px 20px 10px 20px ;
+    height: 100%;
+    width: 950px;
+    /* float: left; */
+    border: 1px solid black;
+    /*border: 3px solid rgb(126, 128, 18);*/
+     font-size: medium;
+     
   }
   
   .chain{
     height: 20px;
-    width: 250px;
+    width: 150px;
   }

@@ -13,10 +13,10 @@
 <body>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     @include('header');
-    @yield('content')
-    <!-- <div class="container" id="content">
+
+    <div class="container" id="content">
         @yield('content')
-    </div> -->
+    </div>
     <script src="{{ asset('js/footer.js') }}"></script>
 </body>
 

@@ -43,13 +43,15 @@ var prop4 = $('<div/>').addClass("propsitionsImg").append($('<a/>').html('<img s
 
 propositions.append(prop1, prop2, prop3, prop4);
 
-
+$( "#content" ).remove();
 
 ///////////////////////
 $("body").append(buttons, videoPub, propositions);
 
 $(document).ready(
+   
     function(){
+        
         const player = new Plyr('#myVideo'); /// play automatiquement ??? 
     }
 );

@@ -6,11 +6,11 @@ class Data{
 function HOTELS()
     {
         return [
-            ['NumHotel' => 1, 'logoHotel' => 'ssss','NomHotel' => 'f1','NomGerant' => 'jake','PrenGerant' => 'dirin','emailHotel' => 'jake.f1@gmail.com','cpHotel' => '13005','villeHotel' => 'Marseille','classeHotel' => 2],    
-            ['NumHotel' => 2, 'logoHotel' => 'ssss','NomHotel' => 'Renaissance','NomGerant' => 'Capera','PrenGerant' => 'Natalie','emailHotel' => 'Renaissance@gmail.com','cpHotel' => '13001','villeHotel' => 'Marseille','classeHotel' => 3],    
-            ['NumHotel' => 3, 'logoHotel' => 'ssss1','NomHotel' => 'AC Hotel','NomGerant' => 'Smith','PrenGerant' => 'Kimberly','emailHotel' => 'AC.Hotel@gmail.com','cpHotel' => '13005','villeHotel' => 'Marseille','classeHotel' => 4],    
-            ['NumHotel' => 4, 'logoHotel' => 'ssss1','NomHotel' => 'les Bords De Mer','NomGerant' => 'Taleb','PrenGerant' => 'Nassim','emailHotel' => 'Bords.De.Mer@gmail.com','cpHotel' => '13002','villeHotel' => 'Marseille','classeHotel' => 1],    
-            ['NumHotel' => 5, 'logoHotel' => 'ssss','NomHotel' => 'Grand Hôtel','NomGerant' => 'Conan','PrenGerant' => 'Joliot','emailHotel' =>'Grand.Hotel@gmail.com','cpHotel' => '13001','villeHotel' => 'Paris','classeHotel' => 5],       
+            ['NumHotel' => 1, 'logoHotel' => 'ssss','NomHotel' => 'f1','NomGerant' => 'jake','PrenGerant' => 'dirin','emailHotel' => 'jake.f1@gmail.com','AdresseHotel'=>'16 Bd de valmy ','cpHotel' => '13005','villeHotel' => 'Marseille','classeHotel' => 2],    
+            ['NumHotel' => 2, 'logoHotel' => 'ssss','NomHotel' => 'Renaissance','NomGerant' => 'Capera','PrenGerant' => 'Natalie','emailHotel' => 'Renaissance@gmail.com','AdresseHotel'=>'16 Bd de valmy ','cpHotel' => '13001','villeHotel' => 'Marseille','classeHotel' => 3],    
+            ['NumHotel' => 3, 'logoHotel' => 'ssss1','NomHotel' => 'AC Hotel','NomGerant' => 'Smith','PrenGerant' => 'Kimberly','emailHotel' => 'AC.Hotel@gmail.com','cpHotel' => '13005','AdresseHotel'=>'16 Bd de valmy ','villeHotel' => 'Marseille','classeHotel' => 4],    
+            ['NumHotel' => 4, 'logoHotel' => 'ssss1','NomHotel' => 'les Bords De Mer','NomGerant' => 'Taleb','PrenGerant' => 'Nassim','emailHotel' => 'Bords.De.Mer@gmail.com','AdresseHotel'=>'16 Bd de valmy ','cpHotel' => '13002','villeHotel' => 'Marseille','classeHotel' => 1],    
+            ['NumHotel' => 5, 'logoHotel' => 'ssss','NomHotel' => 'Grand Hôtel','NomGerant' => 'Conan','PrenGerant' => 'Joliot','emailHotel' =>'Grand.Hotel@gmail.com','cpHotel' => '13001','AdresseHotel'=>'16 Bd de valmy ','villeHotel' => 'Paris','classeHotel' => 5],       
         ];
     }
 

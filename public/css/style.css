@@ -2,9 +2,10 @@
 
 body {
   
-  font-family: 'Advent Pro', sans-serif;
+  font-family: 'Bookman Old Style','Arial Narrow', Arial, sans-serif;
   padding: 0;
   margin: 0;
+  background-image: url("arrière-plan1.jpg");
   
 }
 /* ********************************** */
@@ -29,7 +30,7 @@ body {
     font-size: 1.5em;
     background-color: #FFFAE1;
     border: none;
-    width: 40%;
+    width: 50%;
     padding: 15px 10px;
     margin: 1px 0;
     font-size: 1.2em;

@@ -15,7 +15,8 @@
 
 <body>
 
-    <form method="POST" action="{{route('trouverUnHotel.post')}}">
+     <form method="POST" action="{{route('trouverUnHotel.post')}}"> 
+    
 
         <!-- Première rangée -->
         <div class="row" role="group" aria-label="...">

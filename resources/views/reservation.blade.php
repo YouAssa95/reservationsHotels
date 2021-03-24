@@ -16,10 +16,12 @@
 </head>
 
 <body>
+ 
 
   <div class="container-fluid">
 
     <div class="row">
+    <!-- //// Partie hotel  -->
       <div class="col-lg-6">
         <div class="col-md-4 mr-2">
           <a href="#" id="linkImage"></a>
@@ -30,7 +32,7 @@
         <p id="classeH"> </p>
         <p> {{$chambre['AdresseHotel']}} </p>
         <p>{{$chambre['villeHotel']}} ({{$chambre['cpHotel']}})</p>
-
+        <p class="card-text"><small class="text-muted">à 5 min de la gare </small></p>
         <p hidden id="classeD">{{$chambre['classeHotel']}}</p>
 
         <script id="script1" type="text/javascript">
@@ -47,6 +49,7 @@
         </script>
       </div>
 
+              <!-- //// Partie chambre   -->
       <div class="col-lg-6">
         <div id="imageChambre" class="col-md-6 mr-2">
           <div id="imageCh"></div>
@@ -64,7 +67,7 @@
         
 
         @if(isset($chambre['wifi']))
-        <h5 class="card-text"> Wifi {{$chambre['wifi']}} &#10003; </h5>
+        <h5 class="card-text"> Wifi  &#10003; </h5>
         @endif
         @if($chambre['parking'])
         <h5 class="card-text"> parking &#10003;</h5>
@@ -83,9 +86,10 @@
         @endif
 
 
-        <p class="card-text"><small class="text-muted">à 5 min de la gare </small></p>
+        
         <h5><span class="price"> {{$chambre['prix']}} &#8364; </span></h5>
-        <button >Réserver</button>
+        <a href="{{route('reservationShowForm',['idChambre' => $chambre['idChambre']])}}" role="button" class="btn btn-primary">Réserver</a>
+        <!-- <button ></button> -->
         <script type="text/javascript">
           document.getElementById('imageCh').innerHTML = '<img class="card-img" src="/media/' + 'proposition1.jpg" />';
           // document.getElementById("linkImage").removeAttribute("id");

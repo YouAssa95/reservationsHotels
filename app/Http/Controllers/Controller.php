@@ -15,8 +15,8 @@ use PhpParser\Node\Stmt\Return_;
 use Symfony\Component\VarDumper\VarDumper;
 use Symfony\Contracts\Service\Attribute\Required;
 use DateTime;
-use Faker\Provider\Barcode;
-
+// use PDF;
+use Barryvdh\DomPDF\Facade as PDF;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
@@ -373,7 +373,8 @@ class Controller extends BaseController
                     $user = ['firstName'=>$client['PrenClient'],
                     'lastName' => $client['NomClient'],
                     'email'=>$client['MailClient'],
-                    'statut'=>'client'
+                    'statut'=>'client',
+                    'NumClient' =>$client['NumClient']
                 ];
                     $request->session()->put(['user'=>$user]);
                 } 
@@ -389,8 +390,15 @@ class Controller extends BaseController
                   $request->session()->put(['user'=>$user]);
                     
                 }
-               // admin ???????????????????????????????????????????????????????
-                
+
+                if ($request->session()->has('redirectedReservation')) {
+                    $ch =$request->session()->get('chambre');
+                    $user = $request->session()->get('user');
+                    // VarDumper::dump($user);
+                    // return;
+
+                    return redirect()->route('reservationShowForm',['idChambre'=>$ch['idChambre'],'user'=>$user, 'chambre'=>$ch]);
+                }
                 
                 return redirect()->route('accueil');
                 
@@ -476,13 +484,24 @@ class Controller extends BaseController
     }
 
     //// Reservation
-    public function showReservationForm(int $idChambre)
+    public function showReservation(int $idChambre)
     {
+        
         $chambre = $this->repository->getChambre($idChambre);
-        // VarDumper::dump($chambre);
-        // return;
+        
        return view('reservation', ['chambre' => $chambre[0]]);
     }
+
+    public function reservationShowForm(Request $request,int $idChambre)
+    {
+        $chambre = $this->repository->getChambre($idChambre);
+        if (!$request->session()->has('user')) {
+            $request->session()->put(['redirectedReservation'=>true,'chambre'=>$chambre[0]]);
+            return redirect()->route('login');
+        }
+        return view('reservationForm');
+    }
+    
     public function storeReservation(Request $request)
     {
         $rules = [
@@ -523,5 +542,56 @@ class Controller extends BaseController
         }
         return view('compteHotel',['user'=>$user]);        
     }
-   
+
+
+    /* ----------------------------------------------------------------------------------------------------- */
+
+    // Utilisation pdf 
+
+    public function getPostPdf (Request $request)
+    {
+        // ajouter la réservation à la base de données 
+        $chambre = $request ->session()->get('chambre');
+        // VarDumper::dump($chambre);
+        // return;
+        $reservation =['DateArrive'=> $request -> input('dateA'),'DateDepart'=> $request -> input('dateD'),'NumClient'=>$request->session()->get('user')['NumClient']];
+        $NumReservation=$this->repository->insertReservation($reservation);
+
+        $dateDepart = $request -> input('dateD');
+
+        $time = "23:59:00";
+        $datetime = "$dateDepart $time";
+        $contenuReservation = ['NumReservation'=>$NumReservation];//,'idChambre'=>$chambre['idChambre'],'DateDepart'=> $datetime];
+        $this->repository->insertContenuReservation($contenuReservation);
+        // VarDumper::dump($chambre);
+        // return;
+
+        $obj =  (object) [
+                'nom' => $request -> input('lastName'),
+                'prenom' => $request -> input('firstName'),
+                'mail' => $request -> input('email'),
+                'tel' => $request -> input('phone'),
+                //------------------------- trouver hotel
+                
+                'Hotel' => $chambre['NomHotel'],
+                'adresse' => $chambre['AdresseHotel'],
+                'cpHotel'=> $chambre['cpHotel'],
+                'destination' => $chambre['villeHotel'],
+                'arrive' => $request -> input('dateA'),
+                'depart' => $request -> input('dateD'),
+                'NumChambre'=> $chambre['NumChambre'],
+                'prix'=> $chambre['prix'],
+                'lit' => $request -> session()->get('chambre')['NbreLits'],
+        ];
+
+        // VarDumper::dump($obj);
+        // return;
+        // L'instance PDF avec une vue : resources/views/posts/show.blade.php
+        $pdf = PDF::loadView('testpdf', compact('obj'));
+
+        // Lancement du téléchargement du fichier PDF
+        return $pdf->download("ma_reservation.pdf");
+        
+    }
+    
 }

@@ -1,5 +1,8 @@
    
     @extends('base')
+    @section('head')
+<link rel="stylesheet" href="{{ asset('css/styleEntrerUnHotel.css') }}">
+@endsection
     @section('title', 'add chambre')
 
 @section('content')
@@ -8,9 +11,9 @@
 
 <div class="Center">
  <button id="buttonAddChambre"   onclick="addchambrehotel()">ajouter autres types de chambres</button> <br><br>
-  </div>
+  
 <form  method="POST" action="{{route('registerUneChambre.post')}}" >
-   
+<div class="partie3">
       <!-- **************************************************************************************************************************************************** -->
       <div class="form-group">
              <label for="ImagChambre">Sélectionner une Image :</label><br>
@@ -26,7 +29,9 @@
   <!-- ************************************************************* -->
           <div class="form-group">
             <label for="nb_chambre">nombre de chambres :</label><br>
-            <input type="number" id="nb_chambre" name="nb_chambre" placeholder="nombre de chambres" value="{{ old('nb_chambre') }}"  aria-describedby="nb_chambre_feedback" class="form-control @error('nb_chambre') is-invalid @enderror" required><br>
+            <div class="champ">
+              <input type="number" id="nb_chambre" name="nb_chambre" placeholder="nombre de chambres" value="{{ old('nb_chambre') }}"  aria-describedby="nb_chambre_feedback" class="form-control @error('nb_chambre') is-invalid @enderror" required><br>
+            </div>
             @error('nb_chambre')
               <div id="nb_chambre_feedback" class="invalid-feedback">
                 {{ $message }}
@@ -36,8 +41,10 @@
   <!-- ************************************************************* -->
           <div class="form-group">
             <label for="NbreLits">nombre de lit par chambres :</label><br>
-            <input type="number" id="NbreLits" name="NbreLits" placeholder="nombre de lit" value="{{ old('NbreLits') }}"  aria-describedby="NbreLits_feedback" class="form-control @error('NbreLits') is-invalid @enderror" required><br>
-            @error('NbreLits')
+            <div class="champ">
+              <input type="number" id="NbreLits" name="NbreLits" placeholder="nombre de lit" value="{{ old('NbreLits') }}"  aria-describedby="NbreLits_feedback" class="form-control @error('NbreLits') is-invalid @enderror" required><br>
+            </div>
+              @error('NbreLits')
               <div id="NbreLits_feedback" class="invalid-feedback">
                 {{ $message }}
               </div>
@@ -47,8 +54,10 @@
       
           <div class="form-group">
             <label for="Surface">Surface d'un chambre en m² :</label><br>
-            <input type="number" id="Surface" name="Surface" placeholder="Surface" value="{{ old('Surface') }}"  aria-describedby="Surface_feedback" class="form-control @error('Surface') is-invalid @enderror" required><br>
-            @error('Surface')
+            <div class="champ">
+              <input type="number" id="Surface" name="Surface" placeholder="Surface" value="{{ old('Surface') }}"  aria-describedby="Surface_feedback" class="form-control @error('Surface') is-invalid @enderror" required><br>
+            </div>
+              @error('Surface')
               <div id="Surface_feedback" class="invalid-feedback">
                 {{ $message }}
               </div>
@@ -57,7 +66,9 @@
   <!-- ************************************************************* -->
           <div class="form-group">
             <label for="prix">prix d'un chambres :</label><br>
-            <input type="number" id="prix" name="prix" placeholder="prix" value="{{ old('prix') }}"  aria-describedby="prix_feedback" class="form-control @error('prix') is-invalid @enderror" required><br>
+            <div class="champ">
+              <input type="number" id="prix" name="prix" placeholder="prix" value="{{ old('prix') }}"  aria-describedby="prix_feedback" class="form-control @error('prix') is-invalid @enderror" required><br>
+            </div>
             @error('prix')
               <div id="prix_feedback" class="invalid-feedback">
                 {{ $message }}
@@ -115,6 +126,8 @@
               @enderror
           </div>
   <!-- ************************************************************* -->
+
+  </div>
   <div class="Center">
     <button type="submit" >Valider</button><br><br>
   </div> 

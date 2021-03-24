@@ -588,7 +588,7 @@ class Controller extends BaseController
         // return;
         // L'instance PDF avec une vue : resources/views/posts/show.blade.php
         $pdf = PDF::loadView('testpdf', compact('obj'));
-
+        
         // Lancement du téléchargement du fichier PDF
         return $pdf->download("ma_reservation.pdf");
         
